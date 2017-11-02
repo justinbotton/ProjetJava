@@ -38,6 +38,7 @@ public class Hero {
 	public static final int degatHachette = 2;
 	public static final int degatArc = 3;
 	public static final int degatMasse = 3;
+	public static final int degatKatana = 5;
 	public static final String ptVie = " points de vie !";
 	
 	private static Icon icon;
@@ -50,7 +51,10 @@ public class Hero {
 	private String armeDroite;
 	private int vitesseAttaque;
 	private ArrayList<String> inventaireArme = new ArrayList<String>();
-	public int tailleInventaireArme;
+	private int tailleInventaireArme;
+	private int xp;
+	private String etat;
+	
 	
 
 	/**
@@ -64,19 +68,23 @@ public class Hero {
 		this.armeDroite = "fourchette";
 		this.vitesseAttaque = 1;
 		this.niveau = 1;
+		this.xp = 0;
 		this.inventaireArme.add("fourchette");
 		this.tailleInventaireArme = 1;
+		this.etat = "vivant";
 	}
 	/**
 	 * constructeur 2.
 	 * @param selectHero est le hero selectionne par le player
 	 */
 	public Hero(String selectHero) {
+		this.etat = "vivant";
+		this.niveau = 1;
+		this.xp = 0;
 		switch(selectHero) {
 			case "Elfe" : 
 				System.out.println("je suis un Elfle !!");
 				this.classe = "Elfe";
-				this.niveau = 1;
 				this.endurance = enduranceElfle;
 				this.vie = 2 * this.endurance;
 				this.force = forceElfle;
@@ -90,7 +98,6 @@ public class Hero {
 			case "Nain" : 
 				System.out.println("je suis un Nain !!");
 				this.classe = "Nain";
-				this.niveau = 1;
 				this.endurance = enduranceNain;
 				this.vie = 2 * this.endurance;
 				this.force = forceNain;
@@ -101,7 +108,6 @@ public class Hero {
 			case "Orque" : 
 				System.out.println("je suis un Orque !!");
 				this.classe = "Orque";
-				this.niveau = 1;
 				this.endurance = enduranceOrque;
 				this.vie = 2 * this.endurance;
 				this.force = forceOrque;
@@ -112,7 +118,6 @@ public class Hero {
 			case "Humain" : 
 				System.out.println("je suis un Humain !!");
 				this.classe = "Humain";
-				this.niveau = 1;
 				this.endurance = enduranceHumain;
 				this.vie = 2 * this.endurance;
 				this.force = forceHumain;
@@ -122,7 +127,6 @@ public class Hero {
 				break;
 			default : 
 				System.out.println("je suis un ... heu... j'ai pas choisi !!");
-				this.niveau = 1;
 				this.force = forceHumain;
 				this.endurance = enduranceHumain;
 				this.vie = 2 * this.endurance;
@@ -185,15 +189,34 @@ public class Hero {
 		return inventaireArme;
 	}
 	public void setInventaireArme(ArrayList<String> inventaireArme) {
-		for (int i = 0; i < inventaireArme.size(); i++) {
-			this.inventaireArme.add(inventaireArme.get(i));
-		}
+		this.inventaireArme = inventaireArme;
 	}
 	public int getTailleInventaireArme() {
 		return tailleInventaireArme;
 	}
 	public void setTailleInventaireArme(int tailleInventaireArme) {
 		this.tailleInventaireArme = tailleInventaireArme;
+	}
+	public int getXp() {
+		return xp;
+	}
+	public void setXp(int xp) {
+		this.xp = xp;
+	}
+	
+	public void ajoutXp(int xp) {
+		this.xp += xp;
+	}
+	public void ajoutInventaire(ArrayList<String> objet) {
+		for (int i = 0; i < objet.size(); i++) {
+			this.inventaireArme.add(objet.get(i));
+		}
+	}
+	public String getEtat() {
+		return etat;
+	}
+	public void setEtat(String etat) {
+		this.etat = etat;
 	}
 	/**
 	 * 
@@ -225,6 +248,10 @@ public class Hero {
 			degat = (degatMasse + degatPrimaire) * vitesseDAttaque;
 			s = "BOUM ! Tu perds " + degat + ptVie;
 			break;
+		case "cathana" : 
+			degat = (degatKatana + degatPrimaire) * vitesseDAttaque;
+			s = "TCHINK ! Tu perds " + degat + ptVie;
+			break;
 		default : 
 			degat = degatPrimaire * vitesseDAttaque;
 			s = "Tu perds " + degat + ptVie;
@@ -232,7 +259,14 @@ public class Hero {
 		}
 		return s;
 	}
+	public void setDegat(int d) {
+		this.vie -= d;
+	}	
 	
+	/*
+	 * commentaire de definition :  chaque joueur choisi un loot 
+	 * via un alea pour savoir qui commence
+	 */
 	public void ramasser(ArrayList<String> drop) {
 		Object[] possibilities = {drop.get(0), drop.get(1)};
 		Component frame = null;
@@ -247,7 +281,7 @@ public class Hero {
 		if ((s != null) && (s.length() > 0)) {
 		    //System.out.println(s);
 		    System.out.println("loot choisi : " + s);
-		    this.setInventaireArme(drop);
+		    this.ajoutInventaire(drop);
 		    System.out.println(this.getInventaireArme());
 		    return;
 		}
@@ -257,6 +291,7 @@ public class Hero {
 	 * @param args .
 	 */
 	public static void main(String[] args) {
+		
 		Object[] possibilities = {"Elfe", "Nain", "Orque", "Humain"};
 		Component frame = null;
 		String s = (String) JOptionPane.showInputDialog(
@@ -277,6 +312,8 @@ public class Hero {
 		    drop.add("epee");
 		    drop.add("gourde");
 		    h.ramasser(drop);
+		    System.out.println(h.xp);
+		    System.out.println(h.niveau);
 		    return;
 		}
 
