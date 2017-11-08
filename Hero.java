@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @version 0.1
  *
  */
-public class Hero extends Personnage{
+public class Hero extends Personnage {
 	
 	public static final int forceElfle = 4;
 	public static final int enduranceElfle = 4;
@@ -198,13 +198,6 @@ public class Hero extends Personnage{
 			break;
 		}
 		return s;
-	}
-	/**
-	 * applique les degats au heros.
-	 * @param d >0.
-	 */
-	public void setDegat(int d) {
-		this.vie -= d;
 	}	
 	
 	/**

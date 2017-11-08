@@ -9,7 +9,8 @@ import java.util.ArrayList;
  * @author louis & justin & philemon
  *
  */
-public class Ennemi {
+public class Ennemi extends Personnage {
+	
 	public static final int forceGobelin = 2;
 	public static final int enduranceGobelin = 10;
 	public static final int vitesseAttaqueGobelin = 1;
@@ -27,27 +28,13 @@ public class Ennemi {
 	//public static final int vitesseAttaqueGrandMage = 1; pas utile
 	public static final int forceSamourai = 8;
 	public static final int enduranceSamourai = 40;
-	public static final int degatEpee = 3;
-	public static final int degatHachette = 3;
-	public static final int degatArc = 3;
-	public static final int degatMasse = 3;
-	public static final int degatKatana = 5;
-	public static final String ptVie = " points de vie !";
 	
-	private String classe;
-	private String type; //mob ou boss
-	private int vie;
-	private int force;
-	private int endurance;
-	private int niveau;
-	private String armeDroite;
-	private int vitesseAttaque;
-	private String etat;
 
 	/**
 	 * 
 	 */
 	public Ennemi() {
+		super();
 		this.classe = "gobelin";
 		this.type = "mob";
 		this.force = forceGobelin;
@@ -166,95 +153,6 @@ public class Ennemi {
 		}
 	}
 	
-	
-	public String getClasse() {
-		return classe;
-	}
-	public void setClasse(String classe) {
-		this.classe = classe;
-	}
-	public int getVie() {
-		return vie;
-	}
-	public void setVie(int vie) {
-		this.vie = vie;
-	}
-	public int getForce() {
-		return force;
-	}
-	public void setForce(int force) {
-		this.force = force;
-	}
-	public int getEndurance() {
-		return endurance;
-	}
-	public void setEndurance(int endurance) {
-		this.endurance = endurance;
-	}
-	public int getNiveau() {
-		return niveau;
-	}
-	public void setNiveau(int niveau) {
-		this.niveau = niveau;
-	}
-	public String getArmeDroite() {
-		return armeDroite;
-	}
-	public void setArmeDroite(String armeDroite) {
-		this.armeDroite = armeDroite;
-	}
-	public int getVitesseAttaque() {
-		return vitesseAttaque;
-	}
-	public void setVitesseAttaque(int vitesseAttaque) {
-		this.vitesseAttaque = vitesseAttaque;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	public String getEtat() {
-		return etat;
-	}
-	public void setEtat(String etat) {
-		this.etat = etat;
-	}
-	
-	public void attaque(Hero h) {
-		int degatPrimaire =  this.force + this.niveau;
-		int degat = 0;
-		int vitesseDAttaque = this.vitesseAttaque;
-		switch(this.armeDroite) {
-		case "epee" : 
-			degat = (degatEpee + degatPrimaire) * vitesseDAttaque;
-			break;
-		case "arc" : 
-			degat = (degatArc + degatPrimaire) * vitesseDAttaque;
-			break;
-		case "hachette" : 
-			degat = (degatHachette + degatPrimaire) * vitesseDAttaque;
-			break;
-		case "masse" : 
-			degat = (degatMasse + degatPrimaire) * vitesseDAttaque;
-			break;
-		case "cathana" : 
-			degat = (degatKatana + degatPrimaire) * vitesseDAttaque;
-			break;
-		default : 
-			degat = degatPrimaire * vitesseDAttaque;
-			break;
-		}
-		h.setDegat(degat);
-	}
-	/**
-	 * applique les degats a l ennemi.
-	 * @param d >0.
-	 */
-	public void setDegat(int d) {
-		this.vie -= d;
-	}
 
 	/**
 	 * @param args

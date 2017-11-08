@@ -26,6 +26,7 @@ public class Personnage {
 	protected String armeDroite;
 	protected int vitesseAttaque;
 	protected String etat;
+	protected String type;
 
 	/**
 	 * 
@@ -81,6 +82,12 @@ public class Personnage {
 	}
 	public void setEtat(String etat) {
 		this.etat = etat;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	/**
 	 * fonction d attaque.
