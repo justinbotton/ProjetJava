@@ -64,7 +64,7 @@ public class HeroEvolue extends Hero{
 	 */
 	public static void main(String[] args) {
 		HeroEvolue champion = new HeroEvolue("Nain");
-		System.out.println(champion.attaque());
+		System.out.println(champion.attaqueTest());
 		//System.out.println(champion.getClasse());
 
 	}

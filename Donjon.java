@@ -45,6 +45,7 @@ public class Donjon {
 		double rand = (Math.random() * 2);
 		int bossNum = (int) rand + 1;
 		this.boss = new Ennemi(990 + bossNum, sommeNiveau);
+		System.out.println(this.getBoss().getClasse());
 	}
 	public Ennemi[] getVague1() {
 		return vague1;
@@ -142,13 +143,13 @@ public class Donjon {
 	public static void main(String[] args) {
 		boolean isBoss = false;
 		Donjon d;
-		if (args[0].compareTo("BOSS") != 0) {
+		/*if (args[0].compareTo("BOSS") != 0) {
 			d = new Donjon();
 		}
-		else {
+		else {*/
 			d = new Donjon("boss", 1);
 			isBoss = true;
-		}
+		//}
 		for (int i = 0; i < d.vague1.length; i++) {
 			Ennemi e = d.vague1[i];
 			System.out.println(e.getClasse() + " " + e.getVie() + " " + e.getForce());
@@ -168,6 +169,7 @@ public class Donjon {
 		}
 		else {
 			System.out.print("BOSS : ");
+			//System.out.print("BOSS : " + d.getBoss().getClasse());
 		}
 	}
 
