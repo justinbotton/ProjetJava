@@ -80,7 +80,12 @@ public class Ennemi extends Personnage {
 		int ajustement = (int) (sommeNiveau / 2);
 		int ajustVitesse = (int) (ajustement / 4);
 		this.etat = "vivant";
-		this.niveau =  ajustement;
+		if (ajustement != 0) {
+			this.niveau =  ajustement;
+		}
+		else {
+			this.niveau = 1;
+		}
 		this.type = "mob";
 		switch(choix) {
 		case 1 : 
