@@ -72,9 +72,9 @@ public class Jeu {
 			appelVagues[0] = "oui";
 			d.main(appelVagues);
 			i--;
-			// + tous le reste a faire dans un donjon
+			// + tous le reste a faire dans un donjon (resolution combat...)
 		}
-		//j.setEnVie(0); exemple si les heros meurent avant le boss
+		//j.setEnVie(0); //exemple si les heros meurent avant le boss
 		// => donjon boss ne se fait pas
 		if (j.getEnVie() > 0) {
 			int sumNiveau = 0;

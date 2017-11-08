@@ -28,7 +28,7 @@ public class Ennemi {
 	public static final int forceSamourai = 8;
 	public static final int enduranceSamourai = 40;
 	public static final int degatEpee = 3;
-	public static final int degatHachette = 2;
+	public static final int degatHachette = 3;
 	public static final int degatArc = 3;
 	public static final int degatMasse = 3;
 	public static final int degatKatana = 5;
@@ -247,6 +247,13 @@ public class Ennemi {
 			break;
 		}
 		h.setDegat(degat);
+	}
+	/**
+	 * applique les degats a l ennemi.
+	 * @param d >0.
+	 */
+	public void setDegat(int d) {
+		this.vie -= d;
 	}
 
 	/**

@@ -3,6 +3,8 @@
  */
 package info;
 
+import java.util.ArrayList;
+
 /**
  * @author louis
  *	UN donjon est constitue de 3 vagues de mobs, et une partie est compose de 5 donjon.
@@ -16,6 +18,7 @@ public class Donjon {
 	private Ennemi[] vague2;
 	private Ennemi[] vague3;
 	private Ennemi boss;
+	private ArrayList<String> loot;
 
 	/**
 	 * 
@@ -67,9 +70,29 @@ public class Donjon {
 	public void setBoss(Ennemi boss) {
 		this.boss = boss;
 	}
-	/*
+	public ArrayList<String> getloot() {
+		return loot;
+	}
+	public void setloot(ArrayList<String> loot) {
+		this.loot = loot;
+	}
+	
+	public ArrayList<String> lootDonjon(int donjonNum, int nombrePlayer) {
+		ArrayList<String> listLoot = null;
+		int xloot = 4; //nombre de loot dans la BD
+		int[] tab = new int[donjonNum * nombrePlayer];
+		for (int i = 0; i < tab.length; i++) {
+			tab[i] = (int) (Math.random() * xloot + 1);
+			listLoot.add("loot"); // ajoute le loot choisi dans la BD a la liste
+		}
+		return listLoot;
+	}
+	
+	/**
 	 * @param a > 0
-	 * cree une vague avec plus ou moins de mob selon la vague
+	 * @param sommeNiveau est la somme des niveau des joueurs
+	 * @return une vague d ennemi
+	 * cree une vague avec plus ou moins de mob selon la vague.
 	 * les ennemis de la vague sont plus ou moins fort selon 
 	 * la somme des niveaux des joueurs
 	 */

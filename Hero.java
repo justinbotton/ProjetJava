@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @version 0.1
  *
  */
-public class Hero {
+public class Hero extends Personnage{
 	
 	public static final int forceElfle = 4;
 	public static final int enduranceElfle = 4;
@@ -33,27 +33,12 @@ public class Hero {
 	public static final int enduranceHumain = 3;
 	public static final int vitesseAttaqueHumain = 1;
 	public static final int tailleInventaireArmeBase = 2;
-	public static final int degatFourchette = 1;
-	public static final int degatEpee = 3;
-	public static final int degatHachette = 2;
-	public static final int degatArc = 3;
-	public static final int degatMasse = 3;
-	public static final int degatKatana = 5;
-	public static final String ptVie = " points de vie !";
 	
 	private static Icon icon;
 	
-	private String classe;
-	private int vie;
-	private int force;
-	private int endurance;
-	private int niveau;
-	private String armeDroite;
-	private int vitesseAttaque;
 	private ArrayList<String> inventaireArme = new ArrayList<String>();
 	private int tailleInventaireArme;
 	private int xp;
-	private String etat;
 	
 	
 
@@ -61,10 +46,11 @@ public class Hero {
 	 * constructeur.
 	 */
 	public Hero() {
+		super();
 		this.classe = "euh... j'ai pas choisi de classe moi !!";
 		this.force = 2;
 		this.endurance = enduranceHumain;
-		this.vie = 2 * this.endurance;
+		this.vie = 2 * super.endurance;
 		this.armeDroite = "fourchette";
 		this.vitesseAttaque = 1;
 		this.niveau = 1;
@@ -143,48 +129,7 @@ public class Hero {
 	private static void setIcon(Icon icon) {
 		Hero.icon = icon;
 	}
-	public int getNiveau() {
-		return niveau;
-	}
-	public void setNiveau(int niveau) {
-		this.niveau = niveau;
-	}
-	public int getVie() {
-		return vie;
-	}
-	public void setVie(int vie) {
-		this.vie = vie;
-	}
-	public int getForce() {
-		return force;
-	}
-	public void setForce(int force) {
-		this.force = force;
-	}
-	public int getEndurance() {
-		return endurance;
-	}
-	public void setEndurance(int endurance) {
-		this.endurance = endurance;
-	}
-	public String getArmeDroite() {
-		return armeDroite;
-	}
-	public void setArmeDroite(String armeDroite) {
-		this.armeDroite = armeDroite;
-	}
-	public String getClasse() {
-		return this.classe;
-	}
-	public void setClasse(String classe) {
-		this.classe = classe;
-	}
-	public int getVitesseAttaque() {
-		return vitesseAttaque;
-	}
-	public void setVitesseAttaque(int vitesseAttaque) {
-		this.vitesseAttaque = vitesseAttaque;
-	}
+	
 	public ArrayList<String> getInventaireArme() {
 		return inventaireArme;
 	}
@@ -212,17 +157,12 @@ public class Hero {
 			this.inventaireArme.add(objet.get(i));
 		}
 	}
-	public String getEtat() {
-		return etat;
-	}
-	public void setEtat(String etat) {
-		this.etat = etat;
-	}
+
 	/**
 	 * 
 	 * @return une phrase immersive comprennant les degats applique.
 	 */
-	public String attaque() {
+	public String attaqueTest() {
 		int degatPrimaire =  this.force + this.niveau;
 		int degat = 0;
 		int vitesseDAttaque = this.vitesseAttaque;
@@ -259,13 +199,18 @@ public class Hero {
 		}
 		return s;
 	}
+	/**
+	 * applique les degats au heros.
+	 * @param d >0.
+	 */
 	public void setDegat(int d) {
 		this.vie -= d;
 	}	
 	
-	/*
+	/**
 	 * commentaire de definition :  chaque joueur choisi un loot 
-	 * via un alea pour savoir qui commence
+	 * via un alea pour savoir qui commence.
+	 * @param drop array d items
 	 */
 	public void ramasser(ArrayList<String> drop) {
 		Object[] possibilities = {drop.get(0), drop.get(1)};
@@ -307,7 +252,7 @@ public class Hero {
 		if ((s != null) && (s.length() > 0)) {
 		    //System.out.println(s);
 		    Hero h = new Hero(s);
-		    System.out.println(h.attaque());
+		    System.out.println(h.attaqueTest());
 		    ArrayList<String> drop = new ArrayList<String>();
 		    drop.add("epee");
 		    drop.add("gourde");
