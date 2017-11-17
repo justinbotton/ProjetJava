@@ -40,7 +40,7 @@ public class Ennemi extends Personnage {
 		this.force = forceGobelin;
 		this.endurance = enduranceGobelin;
 		this.vie = 2 * this.endurance;
-		this.armeDroite = "hachette";
+		this.armeDroite = new Arme("hachette", 3);
 		this.vitesseAttaque = vitesseAttaqueGobelin;
 		this.niveau = 1;
 		this.etat = "vivant";
@@ -90,70 +90,44 @@ public class Ennemi extends Personnage {
 		switch(choix) {
 		case 1 : 
 			//System.out.println("Vous affrontez un goblein !!");
-			this.classe = "gobelin";
-			this.endurance = enduranceGobelin + ajustement;
-			this.vie = 2 * this.endurance;
-			this.force = forceGobelin + ajustement;
-			this.armeDroite = "hachette";
-			this.vitesseAttaque = vitesseAttaqueGobelin + ajustVitesse;
+			Arme armeGob = new Arme("hachette", 3);
+			this.setUpPersonnage("gobelin", enduranceGobelin + ajustement, 2 * enduranceGobelin, forceGobelin + ajustement, armeGob, vitesseAttaqueGobelin + ajustVitesse);
 			break;
 		case 2 : 
 			//System.out.println("Vous affrontez un troll !!");
-			this.classe = "troll";
-			this.endurance = enduranceTroll + ajustement;
-			this.vie = 2 * this.endurance;
-			this.force = forceTroll + ajustement;
-			this.armeDroite = "masse";
-			this.vitesseAttaque = vitesseAttaqueTroll + ajustVitesse;
+			Arme armeTroll = new Arme("masse", 3);
+			this.setUpPersonnage("troll", enduranceTroll + ajustement, 2 * enduranceTroll, forceTroll + ajustement, armeTroll, vitesseAttaqueTroll + ajustVitesse);
 			break;
 		case 3 : 
 			//System.out.println("Vous affrontez un groupe de gobelin !!");
-			this.classe = "groupe gobelin";
-			this.endurance = enduranceGroupeGobelin + ajustement;
-			this.vie = 2 * this.endurance;
-			this.force = forceGroupeGobelin + ajustement;
-			this.armeDroite = "hachette";
-			this.vitesseAttaque = vitesseAttaqueGroupeGobelin + ajustVitesse;
+			Arme armeGGob = new Arme("hachette", 3);
+			this.setUpPersonnage("groupe gobelin", enduranceGroupeGobelin + ajustement, 2 * enduranceGroupeGobelin, forceGroupeGobelin + ajustement, armeGGob, vitesseAttaqueGroupeGobelin + ajustVitesse);
 			break;
 		case 4 : 
 			//System.out.println("Vous affrontez un magicien noir !!");
-			this.classe = "magicien noir";
-			this.endurance = enduranceMagicienNoir + ajustement;
-			this.vie = 2 * this.endurance;
-			this.force = forceMagicienNoir + ajustement;
-			this.armeDroite = "baton";
-			this.vitesseAttaque = vitesseAttaqueMagicienNoir + ajustVitesse;
+			Arme armeMag = new Arme("baton", 3);
+			this.setUpPersonnage("magicien noir", enduranceMagicienNoir + ajustement, 2 * enduranceMagicienNoir, forceMagicienNoir + ajustement, armeMag, vitesseAttaqueMagicienNoir + ajustVitesse);
 			break;
 		case 991 :
 			// boss 1
 			this.classe = "grand mage";
 			this.type = "boss";
-			this.endurance = enduranceGrandMage + ajustement;
-			this.vie = 3 * this.endurance;
 			this.niveau = ajustement + 1;
-			this.force = forceGrandMage + ajustement; 
-			this.armeDroite = "baton";
-			this.vitesseAttaque = ajustVitesse;
+			Arme armeGMag = new Arme("baton", 4);
+			this.setUpPersonnage("gobelin", enduranceGrandMage + ajustement, 2 * enduranceGrandMage, forceGrandMage + ajustement, armeGMag, ajustVitesse);
 			break;
 		case 992 :
 			// boss 2
 			this.classe = "samourai";
 			this.type = "boss";
-			this.endurance = enduranceSamourai + ajustement;
-			this.vie = 3 * this.endurance;
 			this.niveau = ajustement + 1;
-			this.force = forceSamourai + ajustement; 
-			this.armeDroite = "katana";
-			this.vitesseAttaque = ajustVitesse;
+			Arme armeSam = new Arme("katana", 5);
+			this.setUpPersonnage("gobelin", enduranceSamourai + ajustement, 2 * enduranceSamourai, forceSamourai + ajustement, armeSam, ajustVitesse);
 			break;
 		default : 
 			//System.out.println("Vous affrontez un gobelin !!");
-			this.classe = "gobelin";
-			this.endurance = enduranceGobelin + ajustement;
-			this.vie = 2 * this.endurance;
-			this.force = forceGobelin + ajustement;
-			this.armeDroite = "hachette";
-			this.vitesseAttaque = vitesseAttaqueGobelin + ajustVitesse;
+			Arme armeDefaut = new Arme("hachette", 3);
+			this.setUpPersonnage("gobelin", enduranceGobelin + ajustement, 2 * enduranceGobelin, forceGobelin + ajustement, armeDefaut, vitesseAttaqueGobelin + ajustVitesse);
 			break;
 		}
 	}

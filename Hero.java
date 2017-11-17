@@ -35,9 +35,10 @@ public class Hero extends Personnage {
 	public static final int tailleInventaireArmeBase = 2;
 	
 	private static Icon icon;
-	
-	private ArrayList<String> inventaireArme = new ArrayList<String>();
-	private int tailleInventaireArme;
+	/*
+	 * pour une future maj
+	private ArrayList<Arme> inventaireArme = new ArrayList<Arme>();
+	private int tailleInventaireArme;*/
 	private int xp;
 	
 	
@@ -47,16 +48,15 @@ public class Hero extends Personnage {
 	 */
 	public Hero() {
 		super();
-		this.classe = "euh... j'ai pas choisi de classe moi !!";
-		this.force = 2;
-		this.endurance = enduranceHumain;
-		this.vie = 2 * super.endurance;
-		this.armeDroite = "fourchette";
-		this.vitesseAttaque = 1;
+		Arme arme = new Arme("fourchette", 1);
+		this.setUpPersonnage("euh... j'ai pas choisi de classe moi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme, vitesseAttaqueHumain);
 		this.niveau = 1;
 		this.xp = 0;
-		this.inventaireArme.add("fourchette");
+		/*
+		 * pour une future maj
+		this.inventaireArme.add(armeDroite);
 		this.tailleInventaireArme = 1;
+		*/
 		this.etat = "vivant";
 	}
 	/**
@@ -70,70 +70,43 @@ public class Hero extends Personnage {
 		switch(selectHero) {
 			case "Elfe" : 
 				System.out.println("je suis un Elfle !!");
-				this.classe = "Elfe";
-				this.endurance = enduranceElfle;
-				this.vie = 2 * this.endurance;
-				this.force = forceElfle;
-				this.armeDroite = "arc";
-				this.vitesseAttaque = vitesseAttaqueElfe;
-				this.inventaireArme.add("arc");
-				this.inventaireArme.add("epee");
-				System.out.println(this.inventaireArme);
-				this.tailleInventaireArme = tailleInventaireArmeBase;
+				Arme arme = new Arme("arc", 3);
+				this.setUpPersonnage("Elfe", enduranceElfle, 2 * enduranceElfle, forceElfle, arme, vitesseAttaqueElfe);
 				break;
 			case "Nain" : 
 				System.out.println("je suis un Nain !!");
-				this.classe = "Nain";
-				this.endurance = enduranceNain;
-				this.vie = 2 * this.endurance;
-				this.force = forceNain;
-				this.armeDroite = "hachette";
-				this.vitesseAttaque = vitesseAttaqueNain;
-				this.tailleInventaireArme = tailleInventaireArmeBase;
+				Arme arme2 = new Arme("hachette", 3);
+				this.setUpPersonnage("Nain", enduranceNain, 2 * enduranceNain, forceNain, arme2, vitesseAttaqueNain);
 				break;
 			case "Orque" : 
 				System.out.println("je suis un Orque !!");
-				this.classe = "Orque";
-				this.endurance = enduranceOrque;
-				this.vie = 2 * this.endurance;
-				this.force = forceOrque;
-				this.armeDroite = "masse";
-				this.vitesseAttaque = vitesseAttaqueOrque;
-				this.tailleInventaireArme = tailleInventaireArmeBase;
+				Arme arme3 = new Arme("masse", 3);
+				this.setUpPersonnage("Orque", enduranceOrque, 2 * enduranceOrque, forceOrque, arme3, vitesseAttaqueOrque);
 				break;
 			case "Humain" : 
 				System.out.println("je suis un Humain !!");
-				this.classe = "Humain";
-				this.endurance = enduranceHumain;
-				this.vie = 2 * this.endurance;
-				this.force = forceHumain;
-				this.armeDroite = "epee";
-				this.vitesseAttaque = vitesseAttaqueHumain;
-				this.tailleInventaireArme = tailleInventaireArmeBase;
+				Arme arme4 = new Arme("epee", 1);
+				this.setUpPersonnage("Huamin", enduranceHumain, 2 * enduranceHumain, forceHumain, arme4, vitesseAttaqueHumain);
 				break;
 			default : 
 				System.out.println("je suis un ... heu... j'ai pas choisi !!");
-				this.force = forceHumain;
-				this.endurance = enduranceHumain;
-				this.vie = 2 * this.endurance;
-				this.armeDroite = "defaut";
-				this.vitesseAttaque = 1;
-				this.tailleInventaireArme = tailleInventaireArmeBase;
+				Arme arme5 = new Arme("epee", 1);
+				this.setUpPersonnage("je suis un ... heu... j'ai pas choisi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme5, vitesseAttaqueHumain);
 				break;
 		}
 	}
-
 	private static Icon getIcon() {
 		return icon;
 	}
 	private static void setIcon(Icon icon) {
 		Hero.icon = icon;
 	}
-	
-	public ArrayList<String> getInventaireArme() {
+	/*
+	 * pour une future maj
+	public ArrayList<Arme> getInventaireArme() {
 		return inventaireArme;
 	}
-	public void setInventaireArme(ArrayList<String> inventaireArme) {
+	public void setInventaireArme(ArrayList<Arme> inventaireArme) {
 		this.inventaireArme = inventaireArme;
 	}
 	public int getTailleInventaireArme() {
@@ -141,7 +114,7 @@ public class Hero extends Personnage {
 	}
 	public void setTailleInventaireArme(int tailleInventaireArme) {
 		this.tailleInventaireArme = tailleInventaireArme;
-	}
+	}*/
 	public int getXp() {
 		return xp;
 	}
@@ -151,76 +124,48 @@ public class Hero extends Personnage {
 	
 	public void ajoutXp(int xp) {
 		this.xp += xp;
+		if (this.xp >= capLevel()) {
+			this.niveau++;
+			this.xp -= capLevel();	
+		}
 	}
-	public void ajoutInventaire(ArrayList<String> objet) {
+	/**
+	 * @return le nombre d xp pour passer au niveau suivant
+	 */
+	public int capLevel() {
+		return 500 * this.niveau; // mettre formule du genre exponentielle
+	}
+	/*
+	 * pour une future maj
+	 * 
+	public void ajoutInventaire(ArrayList<Arme> objet) {
 		for (int i = 0; i < objet.size(); i++) {
 			this.inventaireArme.add(objet.get(i));
 		}
-	}
-
-	/**
-	 * 
-	 * @return une phrase immersive comprennant les degats applique.
-	 */
-	public String attaqueTest() {
-		int degatPrimaire =  this.force + this.niveau;
-		int degat = 0;
-		int vitesseDAttaque = this.vitesseAttaque;
-		String s = null;
-		switch(this.armeDroite) {
-		case "fourchette" : 
-			degat = (degatFourchette + degatPrimaire) * vitesseDAttaque;
-			s = "TCHIC ! Tu perds " + degat + ptVie;
-			break;
-		case "epee" : 
-			degat = (degatEpee + degatPrimaire) * vitesseDAttaque;
-			s = "DING ! Tu perds " + degat + ptVie;
-			break;
-		case "arc" : 
-			degat = (degatArc + degatPrimaire) * vitesseDAttaque;
-			s = "FUUIT ! Tu perds " + degat + ptVie;
-			break;
-		case "hachette" : 
-			degat = (degatHachette + degatPrimaire) * vitesseDAttaque;
-			s = "TCHING ! Tu perds " + degat + ptVie;
-			break;
-		case "masse" : 
-			degat = (degatMasse + degatPrimaire) * vitesseDAttaque;
-			s = "BOUM ! Tu perds " + degat + ptVie;
-			break;
-		case "cathana" : 
-			degat = (degatKatana + degatPrimaire) * vitesseDAttaque;
-			s = "TCHINK ! Tu perds " + degat + ptVie;
-			break;
-		default : 
-			degat = degatPrimaire * vitesseDAttaque;
-			s = "Tu perds " + degat + ptVie;
-			break;
-		}
-		return s;
-	}	
+	}*/
 	
 	/**
 	 * commentaire de definition :  chaque joueur choisi un loot 
 	 * via un alea pour savoir qui commence.
 	 * @param drop array d items
 	 */
-	public void ramasser(ArrayList<String> drop) {
-		Object[] possibilities = {drop.get(0), drop.get(1)};
+	public void ramasser(ArrayList<Loot> drop) {
+		int taille = drop.size();
+		Object[] possibilities = new Object[taille];
+		for (int i = 0; i < taille; i++) {
+			possibilities[i] = drop.get(i).getNom();
+		}
 		Component frame = null;
-		String s = (String) JOptionPane.showInputDialog(
-		                    frame,
-		                    "Choose your loot :\n",
-		                    "Customized Dialog",
-		                    JOptionPane.PLAIN_MESSAGE,
-		                    icon,
-		                    possibilities,
-		                    "oui");
+		String s = (String) JOptionPane.showInputDialog(frame, "Choose your loot :\n", "Customized Dialog",
+		                    							JOptionPane.PLAIN_MESSAGE, icon, possibilities,	"oui");
 		if ((s != null) && (s.length() > 0)) {
-		    //System.out.println(s);
 		    System.out.println("loot choisi : " + s);
-		    this.ajoutInventaire(drop);
-		    System.out.println(this.getInventaireArme());
+		    switch(s) {
+		    // ajouter le loot si arme et desintegrer et ajout xp sinon^^ par rapport a la db
+		    case "s" :
+		    break;
+		    }
+		    
 		    return;
 		}
 	}
@@ -245,17 +190,14 @@ public class Hero extends Personnage {
 		if ((s != null) && (s.length() > 0)) {
 		    //System.out.println(s);
 		    Hero h = new Hero(s);
-		    System.out.println(h.attaqueTest());
-		    ArrayList<String> drop = new ArrayList<String>();
-		    drop.add("epee");
-		    drop.add("gourde");
+		    ArrayList<Loot> drop = new ArrayList<Loot>();
+		    drop.add(new Loot("epee", 100));
+		    drop.add(new Loot("gourde", 20));
 		    h.ramasser(drop);
-		    System.out.println(h.xp);
-		    System.out.println(h.niveau);
 		    return;
 		}
 
-		//If you're here, the return value was null/empty.
+		//If here, the return value s is null/empty.
 		System.out.println("Come on, choose your Hero !");
 
 	}
