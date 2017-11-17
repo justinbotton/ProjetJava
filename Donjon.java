@@ -44,7 +44,19 @@ public class Donjon {
 		this.vague2 = genererVague(2, sommeNiveau);
 		double rand = (Math.random() * 2);
 		int bossNum = (int) rand + 1;
-		this.boss = new Ennemi(990 + bossNum, sommeNiveau);
+		String s;
+		switch(rand) {
+			case 1 : 
+				s = "grand mage";
+				break;
+			case 2 : 
+				s = "samurai";
+				break;
+			default : 
+				s = "grand mage";
+				break;
+		}
+		this.boss = new Ennemi(s, sommeNiveau);
 		System.out.println(this.getBoss().getClasse());
 	}
 	public Ennemi[] getVague1() {
@@ -113,7 +125,25 @@ public class Donjon {
 		for (int i = 0; i < v.length; i++) {
 			rand =  Math.random() * 4;
 			int numero = (int) rand + 1;
-			v[i] = new Ennemi(numero, sommeNiveau);
+			String s;
+			switch(rand) {
+				case 1 : 
+					s = "gobelin";
+					break;
+				case 2 : 
+					s = "troll";
+					break;
+				case 3 : 
+					s = "groupe gobelin";
+					break;
+				case 4 : 
+					s = "magicien noir";
+					break;
+				default : 
+					s = "gobelin";
+					break;
+			}
+			v[i] = new Ennemi(s, sommeNiveau);
 		}
 		
 		// verifie qu il n y ait jamais plus de 2 troll/magicien noir
