@@ -1,3 +1,4 @@
+package info;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class Ennemi extends Personnage {
 	
 
 	/**
-	 * Constructeur Ennemi
+	 * constructeur vide de ennemi.
 	 */
 	public Ennemi() {
 		super();
@@ -42,37 +43,44 @@ public class Ennemi extends Personnage {
 		this.etat = "vivant";
 	}
 	/**
-	 * Constructeur Ennemi avec deux arguments
+	 * constructeur.
+	 * @param selectEnnemi : ennemi choisi
+	 * @param sommeNiveau :  somme niveau des joueurs
 	 */
 	public Ennemi(String selectEnnemi, int sommeNiveau) {
+		super();
 		switch(selectEnnemi) {
 			case "gobelin" : 
-				new Ennemi(1, sommeNiveau);
+				setEnnemi(1, sommeNiveau);
 				break;
 			case "troll" : 
-				new Ennemi(2, sommeNiveau);
+				setEnnemi(2, sommeNiveau);
 				break;
 			case "groupe gobelin" : 
-				new Ennemi(3, sommeNiveau);
+				setEnnemi(3, sommeNiveau);
 				break;
 			case "magicien noir" : 
-				new Ennemi(4, sommeNiveau);
+				setEnnemi(4, sommeNiveau);
 				break;
-			/*case "boss" : 
-				new Ennemi(991,sommeNiveau);
-				break;*/
+			case "grand mage" : 
+				setEnnemi(991,sommeNiveau);
+				break;
+			case "samourai" : 
+				setEnnemi(992,sommeNiveau);
+				break;
 			default : 
-				new Ennemi(1, sommeNiveau);
+				setEnnemi(1, sommeNiveau);
 				break;
 		}
 	}
+	
 	/**
 	 * @param choix est le random qui choisi l ennemi qui fera 
 	 * 		partie de la vague
 	 * @param sommeNiveau est un entier pour ajuster les caracteristiques 
 	 * 		des ennemis en fonction du niveau du groupe de joueur
 	 */
-	public Ennemi(int choix, int sommeNiveau) {
+	public void setEnnemi(int choix, int sommeNiveau) {
 		int ajustement = (int) (sommeNiveau / 2);
 		int ajustVitesse = (int) (ajustement / 4);
 		this.etat = "vivant";
@@ -84,7 +92,7 @@ public class Ennemi extends Personnage {
 		}
 		this.type = "mob";
 		switch(choix) {
-		case 1 : 
+		case 1 : 	
 			//System.out.println("Vous affrontez un goblein !!");
 			Arme armeGob = new Arme("hachette", 3);
 			this.setUpPersonnage("gobelin", enduranceGobelin + ajustement, 2 * enduranceGobelin, forceGobelin + ajustement, armeGob, vitesseAttaqueGobelin + ajustVitesse);
@@ -110,7 +118,7 @@ public class Ennemi extends Personnage {
 			this.type = "boss";
 			this.niveau = ajustement + 1;
 			Arme armeGMag = new Arme("baton", 4);
-			this.setUpPersonnage("gobelin", enduranceGrandMage + ajustement, 2 * enduranceGrandMage, forceGrandMage + ajustement, armeGMag, ajustVitesse);
+			this.setUpPersonnage("grand mage", enduranceGrandMage + ajustement, 2 * enduranceGrandMage, forceGrandMage + ajustement, armeGMag, 1 + ajustVitesse);
 			break;
 		case 992 :
 			// boss 2
@@ -118,7 +126,7 @@ public class Ennemi extends Personnage {
 			this.type = "boss";
 			this.niveau = ajustement + 1;
 			Arme armeSam = new Arme("katana", 5);
-			this.setUpPersonnage("gobelin", enduranceSamourai + ajustement, 2 * enduranceSamourai, forceSamourai + ajustement, armeSam, ajustVitesse);
+			this.setUpPersonnage("samourai", enduranceSamourai + ajustement, 2 * enduranceSamourai, forceSamourai + ajustement, armeSam, 1+ ajustVitesse);
 			break;
 		default : 
 			//System.out.println("Vous affrontez un gobelin !!");
@@ -130,10 +138,11 @@ public class Ennemi extends Personnage {
 	
 
 	/**
-	 * @param args
+	 * @param args.
 	 */
 	public static void main(String[] args) {
-		Ennemi e = new Ennemi(4,5);
+		Ennemi e = new Ennemi("magicien noir",5);
+		//Ennemi e = new Ennemi(1,5);
 		System.out.println(e.getClasse());
 		System.out.println(e.force);
 		System.out.println(e.vitesseAttaque);
