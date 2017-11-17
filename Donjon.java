@@ -143,13 +143,13 @@ public class Donjon {
 	public static void main(String[] args) {
 		boolean isBoss = false;
 		Donjon d;
-		/*if (args[0].compareTo("BOSS") != 0) {
+		if (args[0].compareTo("BOSS") != 0) {
 			d = new Donjon();
 		}
-		else {*/
+		else {
 			d = new Donjon("boss", 1);
 			isBoss = true;
-		//}
+		}
 		for (int i = 0; i < d.vague1.length; i++) {
 			Ennemi e = d.vague1[i];
 			System.out.println(e.getClasse() + " " + e.getVie() + " " + e.getForce());
