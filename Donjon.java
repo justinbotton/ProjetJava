@@ -24,24 +24,24 @@ public class Donjon {
 	 * 
 	 */
 	public Donjon() {
-		this.vague1 = vague(1, 2);
-		this.vague2 = vague(2, 2);
-		this.vague3 = vague(3, 2);
+		this.vague1 = genererVague(1, 2);
+		this.vague2 = genererVague(2, 2);
+		this.vague3 = genererVague(3, 2);
 	}
 	/**
 	 * 
 	 */
 	public Donjon(int sommeNiveau) {
-		this.vague1 = vague(1, sommeNiveau);
-		this.vague2 = vague(2, sommeNiveau);
-		this.vague3 = vague(3, sommeNiveau);
+		this.vague1 = genererVague(1, sommeNiveau);
+		this.vague2 = genererVague(2, sommeNiveau);
+		this.vague3 = genererVague(3, sommeNiveau);
 	}
 	/**
 	 * 
 	 */
 	public Donjon(String boss, int sommeNiveau) {
-		this.vague1 = vague(1, sommeNiveau);
-		this.vague2 = vague(2, sommeNiveau);
+		this.vague1 = genererVague(1, sommeNiveau);
+		this.vague2 = genererVague(2, sommeNiveau);
 		double rand = (Math.random() * 2);
 		int bossNum = (int) rand + 1;
 		this.boss = new Ennemi(990 + bossNum, sommeNiveau);
@@ -97,7 +97,7 @@ public class Donjon {
 	 * les ennemis de la vague sont plus ou moins fort selon 
 	 * la somme des niveaux des joueurs
 	 */
-	private Ennemi[] vague(int a, int sommeNiveau) {
+	private Ennemi[] genererVague(int a, int sommeNiveau) {
 		Ennemi[] v;
 		
 		// choisi la taille de la vague en fonction de son numero
@@ -131,7 +131,7 @@ public class Donjon {
 				}
 			}
 			if (countMage > 2 || countTroll > 2) {
-				return vague(a, sommeNiveau);
+				return genererVague(a, sommeNiveau);
 			}
 		}
 		return v;
@@ -143,13 +143,13 @@ public class Donjon {
 	public static void main(String[] args) {
 		boolean isBoss = false;
 		Donjon d;
-		/*if (args[0].compareTo("BOSS") != 0) {
+		if (args[0].compareTo("BOSS") != 0) {
 			d = new Donjon();
 		}
-		else {*/
+		else {
 			d = new Donjon("boss", 1);
 			isBoss = true;
-		//}
+		}
 		for (int i = 0; i < d.vague1.length; i++) {
 			Ennemi e = d.vague1[i];
 			System.out.println(e.getClasse() + " " + e.getVie() + " " + e.getForce());

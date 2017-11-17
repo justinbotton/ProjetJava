@@ -10,12 +10,13 @@ import java.util.ArrayList;
  *
  */
 public class Personnage {
-	public static final int degatFourchette = 1;
+	/*public static final int degatFourchette = 1;
 	public static final int degatEpee = 3;
 	public static final int degatHachette = 3;
 	public static final int degatArc = 3;
 	public static final int degatMasse = 3;
-	public static final int degatKatana = 5;
+	public static final int degatBaton = 4;
+	public static final int degatKatana = 5;*/
 	public static final String ptVie = " points de vie !";
 	
 	protected String classe;
@@ -23,7 +24,7 @@ public class Personnage {
 	protected int force;
 	protected int endurance;
 	protected int niveau;
-	protected String armeDroite;
+	protected Arme armeDroite;
 	protected int vitesseAttaque;
 	protected String etat;
 	protected String type;
@@ -34,6 +35,7 @@ public class Personnage {
 	public Personnage() {
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 	public int getNiveau() {
 		return niveau;
@@ -59,10 +61,10 @@ public class Personnage {
 	public void setEndurance(int endurance) {
 		this.endurance = endurance;
 	}
-	public String getArmeDroite() {
+	public Arme getArmeDroite() {
 		return armeDroite;
 	}
-	public void setArmeDroite(String armeDroite) {
+	public void setArmeDroite(Arme armeDroite) {
 		this.armeDroite = armeDroite;
 	}
 	public String getClasse() {
@@ -95,31 +97,28 @@ public class Personnage {
 	 */
 	public void attaque(Personnage p) {
 		int degatPrimaire =  this.force + this.niveau;
-		int degat = 0;
 		int vitesseDAttaque = this.vitesseAttaque;
-		switch(this.armeDroite) {
-		case "epee" : 
-			degat = (degatEpee + degatPrimaire) * vitesseDAttaque;
-			break;
-		case "arc" : 
-			degat = (degatArc + degatPrimaire) * vitesseDAttaque;
-			break;
-		case "hachette" : 
-			degat = (degatHachette + degatPrimaire) * vitesseDAttaque;
-			break;
-		case "masse" : 
-			degat = (degatMasse + degatPrimaire) * vitesseDAttaque;
-			break;
-		case "cathana" : 
-			degat = (degatKatana + degatPrimaire) * vitesseDAttaque;
-			break;
-		default : 
-			degat = degatPrimaire * vitesseDAttaque;
-			break;
+		int degat = 0;
+		if (this.armeDroite != null) {
+			degat = (this.armeDroite.getDegat() + degatPrimaire) * vitesseDAttaque;
+		}
+		else {
+			degat =  degatPrimaire * vitesseDAttaque;
 		}
 		p.setDegat(degat);
 	}
-
+	/**
+	 *  set les parametre de base du personnage.
+	 *  
+	 */
+	public void setUpPersonnage(String classe, int endurance, int vie, int force, Arme armeDroite, int vitesseAttaque){
+		this.classe = classe;
+		this.endurance = endurance;
+		this.vie = vie;
+		this.force = force;
+		this.armeDroite = armeDroite;
+		this.vitesseAttaque = vitesseAttaque;
+	}
 	/**
 	 * applique les degats a l ennemi.
 	 * @param d >0.
