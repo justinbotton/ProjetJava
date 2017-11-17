@@ -6,8 +6,8 @@ package info;
 import java.util.ArrayList;
 
 /**
- * @author louis
- *	UN donjon est constitue de 3 vagues de mobs, et une partie est compose de 5 donjon.
+ * @author louis & justin & philemon
+ *	Un donjon est constitue de 3 vagues de mobs, et une partie est compose de 5 donjon.
  *	Le 5e donjon ne possede que 2 vague de mobs mais termine par un Boss.
  *	Vague 1 : 2 mobs
  *	Vague 2 : 3 mobs
@@ -18,7 +18,7 @@ public class Donjon {
 	private Ennemi[] vague2;
 	private Ennemi[] vague3;
 	private Ennemi boss;
-	private ArrayList<String> loot;
+	private ArrayList<String> loot = new ArrayList<String>();
 
 	/**
 	 * 
@@ -57,7 +57,6 @@ public class Donjon {
 				break;
 		}
 		this.boss = new Ennemi(s, sommeNiveau);
-		System.out.println(this.getBoss().getClasse());
 	}
 	public Ennemi[] getVague1() {
 		return vague1;
@@ -89,16 +88,16 @@ public class Donjon {
 	public void setloot(ArrayList<String> loot) {
 		this.loot = loot;
 	}
-	
-	public ArrayList<String> lootDonjon(int donjonNum, int nombrePlayer) {
-		ArrayList<String> listLoot = null;
-		int xloot = 4; //nombre de loot dans la BD
-		int[] tab = new int[donjonNum * nombrePlayer];
-		for (int i = 0; i < tab.length; i++) {
-			tab[i] = (int) (Math.random() * xloot + 1);
-			listLoot.add("loot"); // ajoute le loot choisi dans la BD a la liste
+	/**
+	 * 
+	 * @param donjonNum numero du donjon.
+	 * @param nombrePlayer nombre de joueurs
+	 */
+	public void lootDonjon(int donjonNum, int nombrePlayer) {
+		for (int i = 0; i < donjonNum * nombrePlayer; i++) {
+			this.loot.add("epee");
 		}
-		return listLoot;
+		this.loot.add("carte");
 	}
 	
 	/**
