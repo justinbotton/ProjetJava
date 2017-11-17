@@ -2,10 +2,15 @@
  * 
  */
 package info;
+
 import java.awt.Component;
 
 import java.io.*;
 import java.lang.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.*;
 
 import javax.swing.Icon;
@@ -160,15 +165,45 @@ public class Hero extends Personnage {
 		                    							JOptionPane.PLAIN_MESSAGE, icon, possibilities,	"oui");
 		if ((s != null) && (s.length() > 0)) {
 		    System.out.println("loot choisi : " + s);
-		    switch(s) {
-		    // ajouter le loot si arme et desintegrer et ajout xp sinon^^ par rapport a la db
-		    case "s" :
-		    break;
-		    }
 		    
-		    return;
+		    Connection c = null;
+		      Statement select = null;
+		      try {
+		         Class.forName("org.postgresql.Driver");
+		         c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ProjetJava", "postgres", "sql");
+		         select = c.createStatement();
+		         ResultSet query = select.executeQuery("SELECT weaponDamage, lootXpValue from tbLoot WHERE lootName = \'"+s+"\'");
+		         int weapDam = 0;
+		         int lootXp = 0;
+		         while(query.next()) {
+		        	 weapDam = query.getInt("weaponDamage");
+		        	 lootXp = query.getInt("lootXpValue");
+		        	 //System.out.println(weapDam);
+		         }
+		         if(weapDam>0) {
+		        	 if(this.getArmeDroite().getDegat() < weapDam) {
+		        		 System.out.println(weapDam+" "+s);
+		        		 Arme a = new Arme(s, weapDam);
+		        		 this.setArmeDroite(a);
+		        	 }
+		         } else {
+		        	 System.out.println(lootXp);
+		        	 this.ajoutXp(lootXp);
+		         }
+		         query.close();
+		         select.close();
+		         c.close();
+		      } catch (Exception e) {
+		         e.printStackTrace();
+		         System.err.println(e.getClass().getName()+": "+e.getMessage());
+		         System.exit(0);
+		      }
+		      System.out.println("Opération effectuée");
+		    
 		}
 	}
+	
+	
 	
 	/**
 	 * @param args .

@@ -1,7 +1,3 @@
-/**
- * 
- */
-package info;
 
 import java.util.ArrayList;
 
@@ -31,7 +27,7 @@ public class Ennemi extends Personnage {
 	
 
 	/**
-	 * 
+	 * Constructeur Ennemi
 	 */
 	public Ennemi() {
 		super();
@@ -46,7 +42,7 @@ public class Ennemi extends Personnage {
 		this.etat = "vivant";
 	}
 	/**
-	 * 
+	 * Constructeur Ennemi avec deux arguments
 	 */
 	public Ennemi(String selectEnnemi, int sommeNiveau) {
 		switch(selectEnnemi) {
