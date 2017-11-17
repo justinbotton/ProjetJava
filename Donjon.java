@@ -45,7 +45,7 @@ public class Donjon {
 		double rand = (Math.random() * 2);
 		int bossNum = (int) rand + 1;
 		String s;
-		switch(rand) {
+		switch(bossNum) {
 			case 1 : 
 				s = "grand mage";
 				break;
@@ -126,7 +126,7 @@ public class Donjon {
 			rand =  Math.random() * 4;
 			int numero = (int) rand + 1;
 			String s;
-			switch(rand) {
+			switch(numero) {
 				case 1 : 
 					s = "gobelin";
 					break;

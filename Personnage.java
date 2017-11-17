@@ -125,6 +125,10 @@ public class Personnage {
 	 */
 	public void setDegat(int d) {
 		this.vie -= d;
+		if (this.vie <= 0) {
+			this.setVie(0);
+			this.setEtat("mort");
+		}
 	}
 	/**
 	 * @param args
