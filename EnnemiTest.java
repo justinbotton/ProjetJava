@@ -43,7 +43,7 @@ public class EnnemiTest {
 		//fail("Not yet implemented");
 		assertNotNull(e);
 		assertEquals("gobelin", e.getClasse());
-		Arme a = new Arme("hachette",3);
+		Arme a = e.getArmeDroite();
 		assertEquals("hachette", a.getNom());
 		assertEquals(3, a.getDegat());
 		assertEquals("mob", e.getType());
@@ -63,7 +63,7 @@ public class EnnemiTest {
 		//fail("Not yet implemented");
 		assertNotNull(e2);
 		assertEquals("gobelin", e2.getClasse());
-		Arme a = new Arme("hachette",3);
+		Arme a = e2.getArmeDroite();
 		assertEquals("hachette", a.getNom());
 		assertEquals(3, a.getDegat());
 		assertEquals("mob", e2.getType());

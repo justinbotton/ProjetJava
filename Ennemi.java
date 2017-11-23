@@ -143,10 +143,10 @@ public class Ennemi extends Personnage {
 	public static void main(String[] args) {
 		Ennemi e = new Ennemi("magicien noir",5);
 		//Ennemi e = new Ennemi(1,5);
-		System.out.println(e.getClasse());
-		System.out.println(e.force);
-		System.out.println(e.vitesseAttaque);
-		System.out.println(e.niveau);
+		//System.out.println(e.getClasse());
+		//System.out.println(e.force);
+		//System.out.println(e.vitesseAttaque);
+		//System.out.println(e.niveau);
 		
 
 	}

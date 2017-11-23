@@ -123,6 +123,7 @@ public class DonjonTest {
 			if (d1.getVague3()[0].getClass().equals("magicien noir")) {
 				mage2 ++;
 			}
+			
 		}
 		if(mage > 2 || troll > 2) {
 			fail();

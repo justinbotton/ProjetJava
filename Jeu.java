@@ -5,6 +5,7 @@ package info;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Observable;
 
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
@@ -13,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author louis & justin & philemon
  *
  */
-public class Jeu {
+public class Jeu extends Observable{
 	private int enVie;
 	private int nombreJoueur;
 	private Hero[] joueur;
@@ -31,7 +32,7 @@ public class Jeu {
 		for (int i = 0; i < nombreJoueur; i++) {
 			Hero h = new Hero();
 			String[] args = null;
-			h.main(args);
+			//h.main(args);
 			joueur[i] = h;
 		}
 		Donjon d;
@@ -39,9 +40,10 @@ public class Jeu {
 		int i = 4;
 		while (i > 0 && this.getEnVie() > 0) {
 			d = new Donjon();
-			String[] appelVagues = new String[1];
-			appelVagues[0] = "oui";
-			d.main(appelVagues);
+			String appelVagues;
+			appelVagues = "oui";
+			//d.main(appelVagues);
+			d.afficheMob(appelVagues);
 			i--;
 			// + tous le reste a faire dans un donjon (resolution combat...)
 		}
@@ -55,10 +57,10 @@ public class Jeu {
 				}
 			}
 			boss = new Donjon("boss", sumNiveau);
-			String[] appelBoss = new String[1];
-			appelBoss[0] = "BOSS";
-			boss.main(appelBoss);
-			System.out.println(boss.getBoss().getClasse());
+			String appelBoss;
+			appelBoss = "BOSS";
+			boss.afficheMob(appelBoss);
+			//System.out.println(boss.getBoss().getClasse());
 		}
 	}
 

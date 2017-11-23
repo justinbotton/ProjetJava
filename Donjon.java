@@ -165,14 +165,12 @@ public class Donjon {
 		}
 		return v;
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+	
+	
+	public static void afficheMob(String boss) {
 		boolean isBoss = false;
 		Donjon d;
-		if (args[0].compareTo("BOSS") != 0) {
+		if (boss.compareTo("BOSS") != 0) {
 			d = new Donjon();
 		}
 		else {
@@ -181,23 +179,23 @@ public class Donjon {
 		}
 		for (int i = 0; i < d.vague1.length; i++) {
 			Ennemi e = d.vague1[i];
-			System.out.println(e.getClasse() + " " + e.getVie() + " " + e.getForce());
+			//System.out.println(e.getClasse() + " " + e.getVie() + " " + e.getForce());
 		}
 		System.out.println("\n");
 		for (int i = 0; i < d.vague2.length; i++) {
 			Ennemi e = d.vague2[i];
-			System.out.println(e.getClasse() + " " + e.getVie()+ " " + e.getForce());
+			//System.out.println(e.getClasse() + " " + e.getVie()+ " " + e.getForce());
 		}
 		System.out.println("\n");
 		if (!isBoss) {
 			for (int i = 0; i < d.vague3.length; i++) {
 				Ennemi e = d.vague3[i];
-				System.out.println(e.getClasse() + " " + e.getVie()+ " " + e.getForce());
+				//System.out.println(e.getClasse() + " " + e.getVie()+ " " + e.getForce());
 			}
-			System.out.println("\n");
+			//System.out.println("\n");
 		}
 		else {
-			System.out.print("BOSS : ");
+			//System.out.print("BOSS : ");
 			//System.out.print("BOSS : " + d.getBoss().getClasse());
 		}
 	}
