@@ -19,6 +19,7 @@ public class JeuMVC {
 		//Creation du modele
 		
 		 j = new Jeu();
+		 j.setNombreJoueur(2);
 
 		//Creation des controleurs : Un pour chaque vue
 		//Chaque controleur doit avoir une reference vers le modele pour pouvoir le commander
@@ -44,7 +45,7 @@ public class JeuMVC {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new JeuMVC();
-				System.out.println("coucou2");
+				//System.out.println("coucou2");
 			}
 		});
 	}

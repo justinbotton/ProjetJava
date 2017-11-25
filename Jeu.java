@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 public class Jeu extends Observable{
 	private int enVie;
 	private int nombreJoueur;
-	private Hero[] joueur;
+	private ArrayList<Hero> joueur;
 
 	/**
 	 * 
@@ -27,14 +27,8 @@ public class Jeu extends Observable{
 		String[] args = null;
 		h.main(args);*/
 		this.enVie = 1;
-		this.nombreJoueur = 1;
-		joueur = new Hero[this.nombreJoueur];
-		for (int i = 0; i < nombreJoueur; i++) {
-			Hero h = new Hero();
-			String[] args = null;
-			//h.main(args);
-			joueur[i] = h;
-		}
+		//this.nombreJoueur = 1;
+		joueur = new ArrayList<Hero>();
 		Donjon d;
 		Donjon boss;
 		int i = 4;
@@ -76,11 +70,14 @@ public class Jeu extends Observable{
 	public void setNombreJoueur(int nombreJoueur) {
 		this.nombreJoueur = nombreJoueur;
 	}
-	public Hero[] getJoueur() {
+	public ArrayList<Hero> getJoueur() {
 		return joueur;
 	}
-	public void setJoueur(Hero[] joueur) {
+	public void setJoueur(ArrayList<Hero> joueur) {
 		this.joueur = joueur;
+	}
+	public void ajoutJoueur(Hero h) {
+		this.joueur.add(h);
 	}
 
 	/**
