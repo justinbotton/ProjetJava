@@ -30,8 +30,8 @@ public class Jeu extends Observable {
 		/*Hero h = new Hero();
 		String[] args = null;
 		h.main(args);*/
-		this.enVie = 1;
-		//this.nombreJoueur = 1;
+		this.enVie = 2;
+		this.nombreJoueur = 2;
 		joueur = new ArrayList<Hero>();
 		//donjons14 = new ArrayList<Donjon>();
 		
@@ -143,6 +143,46 @@ public class Jeu extends Observable {
 			donj = new Donjon("boss", sumNiv);
 			setChanged();
 	        notifyObservers();
+		}
+	}
+	
+	/**
+	 * @param vagueNum > 0 & <=3.
+	 * @param choixMob >0 & <= 2 pour vague1, <= 3 pour vague2, <= 5 pour vague3
+	 * @param joueurNum est le numero du joueur 1 || 2
+	 */
+	public String combat(int vagueNum,int choixMob, int joueurNum) {
+		if (vagueNum == 1) {
+			//Hero he = this.joueur.get(joueurNum-1);
+			//Ennemi e = donj.getVague1()[choixMob - 1];
+			this.joueur.get(joueurNum-1).attaque(donj.getVague1()[choixMob - 1]);
+			setChanged();
+	        notifyObservers();
+	        return donj.getVague1()[choixMob - 1].getEtat();
+		}
+		return "d";
+	}
+	public void afficheVague(int vagueNum) {
+		if (vagueNum == 1) {
+			Ennemi[] vag = this.getDonj().getVague1();
+			System.out.println("1 : " + vag[0].getClasse());
+			System.out.println("2 : " + vag[1].getClasse());
+			
+		}
+		if (vagueNum == 2) {
+			Ennemi[] vag = this.getDonj().getVague2();
+			System.out.println("1 : " + vag[0].getClasse());
+			System.out.println("2 : " + vag[1].getClasse());
+			System.out.println("3 : " + vag[2].getClasse());
+			
+		}
+		if (vagueNum == 2) {
+			Ennemi[] vag = this.getDonj().getVague3();
+			System.out.println("1 : " + vag[0].getClasse());
+			System.out.println("2 : " + vag[1].getClasse());
+			System.out.println("3 : " + vag[2].getClasse());
+			System.out.println("4 : " + vag[3].getClasse());
+			System.out.println("5 : " + vag[4].getClasse());	
 		}
 	}
 	

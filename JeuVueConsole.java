@@ -24,6 +24,12 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	private void printHelp(){
 		this.affiche("Choisissez un chiffre entre 0 et 9");
 	}
+	private void printTuto() {
+		this.affiche("Vous serez face a des choix pour vous battre ou récolter \n"+"des ressources. "
+				+ "Tapez un chiffre entre 0 et 9 pour effectuer votre choix \n"
+				+ "Vous jouez a tour de rôle jusqu'a ce que mort s'en suive ou \n"
+				+ "jusqu'a ce que vous ayez vaincu le Boss maitre du Donjon. \n");
+	}
 	private void ended() {
 		this.end = true;
 	}
@@ -48,14 +54,51 @@ public class JeuVueConsole extends JeuVue implements Observer {
 					
 					affiche("---------- La partie va commencer ----------");
 					
-					while (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() < 5 ) {
+					while (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() < 5 ) { // boucle des donjons
 						jControl.creationDonjons(); // affiche("---------- Création des donjons ... ----------");
 													// affiche("---------- Création des vagues d'ennemi ... ----------");
 						
+						Donjon d = jControl.jeu.getDonj();
+						int vagueNum = 1;
+						boolean boss = false;
+						if (d.getBoss() != null) {
+							boss = true;
+						}
+						while(vagueNum < 3) { // boucle des vagues 1-2 + gere xp
+							int choixMob = 0;
+							boolean endVague = false;
+							while (!endVague) {
+								jControl.afficheVague(vagueNum);
+								choixMob = scan.nextInt(); //==> gere le zero ligne gestion0 en dessous marche pas pour ici
+								//gestion0(choixMob);
+								jControl.combat(vagueNum, choixMob,  1); //1 est le num joueur => a traiter
+								if (jControl.allDead(vagueNum)) {
+									endVague = true;
+								}
+							}
+							vagueNum++;
+						}
+						if (!boss) { //vague 3 + gerer xp
+							
+						}
+						else { //boss
+							
+						}
+						
+						//gerer loot 
+						
+						// jControl.gestionLoot un truc dans le genre
 
 					}
 					
 					
+					/* TEST POUR COMPRENDRE UN TRUC
+					 * Hero h = jControl.jeu.getJoueur().get(0);
+					h.setForce(8000000);
+					//jControl.jeu.getJoueur().add(h);
+					for (Hero u : jControl.jeu.getJoueur()) {
+						System.out.println(u.getForce());
+					}*/
 					
 					affiche("---------- La partie est finie ! ----------");
 					ended();
@@ -74,19 +117,21 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 	}
 	private void gestion0(int i) {
-		affiche("Voulez-vous vraiment quitter ? y or n");
-		String c = scan.next();
-		if (c.length() != 1) {
-			affiche("Format d'input incorrect");
-		}
-		switch(c) {
-		case "y" :
-			ended();
-			System.exit(0);
-			break;
-		case "n" :
-		default :
-		}
+		
+			affiche("Voulez-vous vraiment quitter ? y or n");
+			String c = scan.next();
+			if (c.length() != 1) {
+				affiche("Format d'input incorrect");
+			}
+			switch(c) {
+			case "y" :
+				ended();
+				System.exit(0);
+				break;
+			case "n" :
+			default :
+			}
+		
 	}
 	private void gestionMenu0(int i) {
 		correctInput(i);

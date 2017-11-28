@@ -75,14 +75,61 @@ public class JeuController {
 
 	public void creationDonjons() {
 		jeu.creationDonjons();
-		if (jeu.getDonjonNum() < 5) {
+		int num = jeu.getDonjonNum();
+		if (num < 5) {
 			jVue.affiche("---------- Création du donjon " + jeu.getDonjonNum() + " ... ----------");
 			jVue.affiche("---------- Création des 3 vagues d'ennemi ... ----------\n");
+			story(num);
 		}
-		if (jeu.getDonjonNum() == 5) {
-			jVue.affiche("---------- Création du donjon " + jeu.getDonjonNum() + " ... ----------");
+		if (num == 5) {
+			jVue.affiche("---------- Création du donjon 5 ... ----------");
 			jVue.affiche("---------- Création des 2 vagues d'ennemi ... ----------");
 			jVue.affiche("---------- Création du boss ... ----------\n");
+		}
+	}
+	public void combat(int vagueNum,int choixMob, int joueurNum) {
+		String s = jeu.combat(vagueNum, choixMob, joueurNum);
+		if (s.compareTo("mort") == 0) {
+			jVue.affiche("Votre coup a tué votre ennemi.");
+		}
+		jVue.affiche("Votre ennemi n'a pas succombé à votre attaque.\n");
+	}
+	public boolean allDead(int vagueNum) {
+		if (vagueNum == 1) {
+			for (Ennemi e : jeu.getDonj().getVague1()) {
+				if (e.getEtat().compareTo("vivant") == 0) {
+					return false;
+				}
+			}
+		}
+		else if (vagueNum == 2) {
+			for (Ennemi e : jeu.getDonj().getVague2()) {
+				if (e.getEtat().compareTo("vivant") == 0) {
+					return false;
+				}
+			}
+		}
+		else if (vagueNum == 3) {
+			for (Ennemi e : jeu.getDonj().getVague3()) {
+				if (e.getEtat().compareTo("vivant") == 0) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	public void afficheVague(int vagueNum) {
+		jVue.affiche("Quel ennemi allez vous attaquer ?");
+		jeu.afficheVague(vagueNum);
+	}
+	public void story(int num) {
+		if (num == 1) {
+			jVue.affiche("Vous arrivez face à votre premier donjon. Serez-vous assez fort que pour vaincre ceux qui l'habite ?");
+			jVue.affiche("Vous poussez la porte d'entrée et arrivez dans une première salle.\n");
+		}
+		if (num == 2) {
+			jVue.affiche("Vous avez vaincu votre premier donjon. Mais ne vous reposez pas, le suivant vous attend !");
+			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
 		}
 	}
 

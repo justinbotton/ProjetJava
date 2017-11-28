@@ -19,7 +19,7 @@ public class JeuMVC {
 		//Creation du modele
 		
 		 j = new Jeu();
-		 j.setNombreJoueur(2);
+		 //j.setNombreJoueur(2);
 
 		//Creation des controleurs : Un pour chaque vue
 		//Chaque controleur doit avoir une reference vers le modele pour pouvoir le commander
@@ -28,7 +28,7 @@ public class JeuMVC {
 		 jControlConsole = new JeuController(j);
 				 
 		//Creation des vues.
-		//Chaque vue doit connaatre son controleur et avoir une reference vers le modele pour pouvoir l'observer
+		//Chaque vue doit connaitre son controleur et avoir une reference vers le modele pour pouvoir l'observer
 		
 		 //jGUI = new JeuVueGUI(j, jControlGUI);
 		 jConsole = new JeuVueConsole(j, jControlConsole);

@@ -17,7 +17,7 @@ public class Donjon {
 	private Ennemi[] vague1;
 	private Ennemi[] vague2;
 	private Ennemi[] vague3;
-	private Ennemi boss;
+	private Ennemi boss = null;
 	private ArrayList<String> loot = new ArrayList<String>();
 
 	/**
