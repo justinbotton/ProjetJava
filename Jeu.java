@@ -14,11 +14,14 @@ import javax.swing.JOptionPane;
  * @author louis & justin & philemon
  *
  */
-public class Jeu extends Observable{
+public class Jeu extends Observable {
 	private int enVie;
 	private int nombreJoueur;
 	private ArrayList<Hero> joueur;
 	private boolean inGame = false;
+	//private ArrayList<Donjon> donjons14;
+	private Donjon donj;
+	int donjonNum = 0;
 
 	/**
 	 * 
@@ -30,33 +33,8 @@ public class Jeu extends Observable{
 		this.enVie = 1;
 		//this.nombreJoueur = 1;
 		joueur = new ArrayList<Hero>();
-		Donjon d;
-		Donjon boss;
-		int i = 4;
-		while (i > 0 && this.getEnVie() > 0) {
-			d = new Donjon();
-			String appelVagues;
-			appelVagues = "oui";
-			//d.main(appelVagues);
-			d.afficheMob(appelVagues);
-			i--;
-			// + tous le reste a faire dans un donjon (resolution combat...)
-		}
-		//j.setEnVie(0); //exemple si les heros meurent avant le boss
-		// => donjon boss ne se fait pas
-		if (this.getEnVie() > 0) {
-			int sumNiveau = 0;
-			for (Hero h : this.getJoueur()) {
-				if (h.getVie() > 0) {
-					sumNiveau = sumNiveau + h.getNiveau();
-				}
-			}
-			boss = new Donjon("boss", sumNiveau);
-			String appelBoss;
-			appelBoss = "BOSS";
-			boss.afficheMob(appelBoss);
-			//System.out.println(boss.getBoss().getClasse());
-		}
+		//donjons14 = new ArrayList<Donjon>();
+		
 	}
 
 	public int getEnVie() {
@@ -80,7 +58,18 @@ public class Jeu extends Observable{
 	public void ajoutJoueur(Hero h) {
 		this.joueur.add(h);
 	}
-	
+	public Donjon getDonj() {
+		return donj;
+	}
+	public void setDonj(Donjon donj) {
+		this.donj = donj;
+	}
+	public int getDonjonNum() {
+		return donjonNum;
+	}
+	public void setDonjonNum(int donjonNum) {
+		this.donjonNum = donjonNum;
+	}
 	public void choixPerso(int i) {
 		switch(i){
 			case 1 :
@@ -125,15 +114,39 @@ public class Jeu extends Observable{
 		}
 		else if (i == 2) {
 			if (joueur == 1) {
-				System.out.println(".......... Création des joueurs ..........");
+				System.out.println("---------- Création des joueurs ---------- \n");
 			}
-			System.out.println("choix personnage joueur "+ joueur + ": ");
+			System.out.println("Selection du personnage du joueur "+ joueur + ": ");
 			System.out.println("1 : Elfe");
 			System.out.println("2 : Nain");
 			System.out.println("3 : Orque");
 			System.out.println("4 : Humain");
 		}
 	}
+	/**
+	 * cree les donjon 1 a 4.
+	 */
+	public void creationDonjons() {
+		int sumNiv = 0;
+		for (Hero h : this.getJoueur()) {
+			sumNiv += h.getNiveau();
+		}
+		if (donjonNum < 5 && this.getEnVie() > 0) {
+			/*Donjon d = new Donjon(sumNiv);
+			donjons14.add(d);*/
+			donj = new Donjon(sumNiv);
+			donjonNum++;
+			setChanged();
+	        notifyObservers();
+		}
+		if (donjonNum == 5) {
+			donj = new Donjon("boss", sumNiv);
+			setChanged();
+	        notifyObservers();
+		}
+	}
+	
+	
 	/**
 	 * @param args
 	 */

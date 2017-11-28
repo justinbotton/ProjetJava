@@ -167,7 +167,7 @@ public class Donjon {
 	}
 	
 	
-	public static void afficheMob(String boss) {
+	public static void afficheMob(String boss, int sommeNiveau) {
 		boolean isBoss = false;
 		Donjon d;
 		if (boss.compareTo("BOSS") != 0) {

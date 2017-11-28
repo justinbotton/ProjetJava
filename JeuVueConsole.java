@@ -44,25 +44,37 @@ public class JeuVueConsole extends JeuVue implements Observer {
 					
 					i = scan.nextInt();
 					gestionMenu2(i); // gestion choix joueur 2
-					System.out.println(".......... La partie va commencer ..........");
 					
-					System.out.println(".......... La partie est finie ! ..........");
+					
+					affiche("---------- La partie va commencer ----------");
+					
+					while (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() < 5 ) {
+						jControl.creationDonjons(); // affiche("---------- Création des donjons ... ----------");
+													// affiche("---------- Création des vagues d'ennemi ... ----------");
+						
+
+					}
+					
+					
+					
+					affiche("---------- La partie est finie ! ----------");
 					ended();
 				}
 				catch(InputMismatchException e){
-					affiche("Format d'input incorrect");
-					printHelp();
+					//affiche("Format d'input incorrect");
+					//printHelp();
+					//System.exit(0);
 				}
 			}
 		}
 	}
 	private void correctInput(int i) {
 		if (i < 0 || i > 9) {
-			affiche("entree incorrect (choisissez entre 0-9)");
+			affiche("Choix non disponnible.");
 		}
 	}
 	private void gestion0(int i) {
-		System.out.println("Voulez-vous vraiment quitter ? y or n");
+		affiche("Voulez-vous vraiment quitter ? y or n");
 		String c = scan.next();
 		if (c.length() != 1) {
 			affiche("Format d'input incorrect");
@@ -107,6 +119,8 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 		i++;
 	}
+	
+	
 
 	@Override
 	public void affiche(String string) {

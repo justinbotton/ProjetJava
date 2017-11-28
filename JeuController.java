@@ -73,13 +73,18 @@ public class JeuController {
 		}
 	}
 
-	public void methode2(int numLivre) {
-		//model.rendre(numLivre);
-		//vue.affiche("Livre rendu.");
-		
-		//TODO
+	public void creationDonjons() {
+		jeu.creationDonjons();
+		if (jeu.getDonjonNum() < 5) {
+			jVue.affiche("---------- Création du donjon " + jeu.getDonjonNum() + " ... ----------");
+			jVue.affiche("---------- Création des 3 vagues d'ennemi ... ----------\n");
+		}
+		if (jeu.getDonjonNum() == 5) {
+			jVue.affiche("---------- Création du donjon " + jeu.getDonjonNum() + " ... ----------");
+			jVue.affiche("---------- Création des 2 vagues d'ennemi ... ----------");
+			jVue.affiche("---------- Création du boss ... ----------\n");
+		}
 	}
-
 
 	public void addView(JeuVue jVue) {
 		this.jVue = jVue;
