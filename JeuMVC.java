@@ -26,7 +26,7 @@ public class JeuMVC {
 		
 		 jControlGUI = new JeuController(j);
 		 jControlConsole = new JeuController(j);
-		
+				 
 		//Creation des vues.
 		//Chaque vue doit connaatre son controleur et avoir une reference vers le modele pour pouvoir l'observer
 		

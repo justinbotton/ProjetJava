@@ -5,6 +5,7 @@ import java.io.*;
 
 public class JeuVueConsole extends JeuVue implements Observer {
 	protected Scanner scan;
+	private volatile boolean end = false;
 	
 	public JeuVueConsole(Jeu j, JeuController jControl) {
 		super(j, jControl);
@@ -15,7 +16,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println(j);
+		//System.out.println(j);
 		printHelp();
 		
 	}
@@ -118,12 +119,14 @@ public class JeuVueConsole extends JeuVue implements Observer {
 				//printHelp();
 		}
 	}
-	
-	int i = 0;
+	private void ended() {
+		this.end = true;
+	}
+	int i = 1;
 	private class ReadInput implements Runnable{
 		public void run() {
-			while(true){
-				try{
+			while(!end){
+				try {
 					jControl.printTextMenu(i);
 					/*String c = scan.next();
 					if(c.length()!=1){
@@ -132,18 +135,42 @@ public class JeuVueConsole extends JeuVue implements Observer {
 					}*/
 					
 					i = scan.nextInt();
-					if(i<0 || i> 9){
+					if (i < 0 || i > 9) {
 						affiche("entree incorrect");
 						printHelp();
 						continue;
 					}
 					if (i == 0) {
+						System.out.println("Voulez-vous vraiment quitter ? y or n");
+						String c = scan.next();
+						if (c.length() != 1) {
+							affiche("Format d'input incorrect");
+						}
+						switch(c) {
+						case "y" :
+							ended();
+							System.exit(0);
+							break;
+						case "n" :
+							continue;
+						default :
+							continue;
+						}
+					}
+					if (i == 1) {
 						jControl.menu(i);
 						i++;
-						continue;
+						//continue;
 					}
-					if (i == 1) {}
-					else if(i == 2) {
+					i = scan.nextInt();
+					if (i == 2) {
+						System.out.println("choix effectue joueur 1 : ");
+						jControl.choixPersonnage(i);
+						i++;
+					}
+					i = scan.nextInt();
+					if (i == 3) {
+						System.out.println("choix effectue joueur 2 : ");
 						jControl.choixPersonnage(i);
 						i++;
 						//System.out.println("choix personnage joueur 1 : ");

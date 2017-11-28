@@ -18,6 +18,7 @@ public class Jeu extends Observable{
 	private int enVie;
 	private int nombreJoueur;
 	private ArrayList<Hero> joueur;
+	private boolean inGame;
 
 	/**
 	 * 
@@ -79,7 +80,64 @@ public class Jeu extends Observable{
 	public void ajoutJoueur(Hero h) {
 		this.joueur.add(h);
 	}
+	
+	public void choixPerso(int i) {
+		switch(i){
+			case 0 :
+				System.exit(0);
+				break;
+			case 1 :
+				Hero elfe = new Hero("elfe");
+				this.ajoutJoueur(elfe);
+				setChanged();
+		        notifyObservers();
+				break;
+			case 2 : 
+				Hero nain = new Hero("nain");
+				this.ajoutJoueur(nain);
+				setChanged();
+		        notifyObservers();
+				//jControl.methode(i);
+				break;
+			case 3 : 
+				Hero orque = new Hero("nain");
+				this.ajoutJoueur(orque);
+				setChanged();
+		        notifyObservers();
+				//jControl.methode(i);
+				break;
+			case 4 : 
+				Hero humain = new Hero("nain");
+				this.ajoutJoueur(humain);
+				setChanged();
+		        notifyObservers();
+				//jControl.methode(i);
+				break;
+			default :
+				Hero humain2 = new Hero("nain");
+				this.ajoutJoueur(humain2);
+				setChanged();
+		        notifyObservers();
+				//printHelp();
+		}
+	}
 
+	public void printMenuText(int i){
+		if (i == 1 && !inGame) {
+			System.out.println("1 : Jouer");
+			System.out.println("0 : Quitter");
+			System.out.println("Pour quitter a tout moment, appuyer sur 0.");
+			inGame = true;
+			
+		}
+		else if (i == 2) {
+			System.out.println("choix personnage joueur 1 : ");
+			System.out.println("1 : Elfe");
+			System.out.println("2 : Nain");
+			System.out.println("3 : Orque");
+			System.out.println("4 : Humain");
+		}
+	}
 	/**
 	 * @param args
 	 */

@@ -181,12 +181,12 @@ public class Donjon {
 			Ennemi e = d.vague1[i];
 			//System.out.println(e.getClasse() + " " + e.getVie() + " " + e.getForce());
 		}
-		System.out.println("\n");
+		//System.out.println("\n");
 		for (int i = 0; i < d.vague2.length; i++) {
 			Ennemi e = d.vague2[i];
 			//System.out.println(e.getClasse() + " " + e.getVie()+ " " + e.getForce());
 		}
-		System.out.println("\n");
+		//System.out.println("\n");
 		if (!isBoss) {
 			for (int i = 0; i < d.vague3.length; i++) {
 				Ennemi e = d.vague3[i];

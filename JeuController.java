@@ -23,12 +23,11 @@ public class JeuController {
 	public void menu(int num) {
 		switch(num){
 		case 0 :
-			System.out.println("Voulez-vous vraiment quitter ? y or n");
+			jVue.affiche("Voulez-vous vraiment quitter ? y or n");
 			System.exit(0);
 			break;
 		case 1 :
-			//jControl.methode(i);
-			System.out.println("1");
+			jeu.printMenuText(2);
 			break;
 		case 2 : 
 			System.exit(0);
@@ -42,54 +41,38 @@ public class JeuController {
 	}
 	
 	public void printTextMenu(int i){
-		if (i == 0) {
-			System.out.println("1 : Jouer");
-			System.out.println("2 : Quitter");
-			System.out.println("Pour quitter a tout moment, appuyer sur 0.");
+		if (i == 1) {
+			jeu.printMenuText(1);
 			
 		}
-		else if (i == 1) {
-			System.out.println("choix personnage joueur 1 : ");
-			System.out.println("1 : Elfe");
-			System.out.println("2 : Nain");
-			System.out.println("3 : Orque");
-			System.out.println("4 : Humain");
+		else if (i == 2) {
+			jeu.printMenuText(2);
 		}
 	}
 	public void choixPersonnage(int i) {
 		switch(i){
 			case 0 : 
-				System.out.println("Voulez-vous vraiment quitter ? y or n");
+				jVue.affiche("Voulez-vous vraiment quitter ? y or n");
 				break;
 			case 1 :
-				//jControl.methode(i);
-				Hero elfe = new Hero("elfe");
-				jeu.ajoutJoueur(elfe);
-				System.out.println("elfe");
+				jeu.choixPerso(1);
+				jVue.affiche("Personnage choisi : Elfe !");
 				break;
 			case 2 : 
-				Hero nain = new Hero("nain");
-				jeu.ajoutJoueur(nain);
-				System.out.println("nain");
-				//jControl.methode(i);
+				jeu.choixPerso(2);
+				jVue.affiche("Personnage choisi : Nain !");
 				break;
 			case 3 : 
-				Hero orque = new Hero("nain");
-				jeu.ajoutJoueur(orque);
-				System.out.println("orque");
-				//jControl.methode(i);
+				jeu.choixPerso(3);
+				jVue.affiche("Personnage choisi : Orque !");
 				break;
 			case 4 : 
-				Hero humain = new Hero("nain");
-				jeu.ajoutJoueur(humain);
-				System.out.println("humain");
-				//jControl.methode(i);
+				jeu.choixPerso(4);
+				jVue.affiche("Personnage choisi : Humain !");
 				break;
 			default :
-				Hero humain2 = new Hero("nain");
-				jeu.ajoutJoueur(humain2);
-				jVue.affiche("Operation incorrecte : vous etes par defaut un humain.");
-				//printHelp();
+				jeu.choixPerso(4);
+				jVue.affiche("Personnage par defaut choisi : Humain !");
 		}
 	}
 
