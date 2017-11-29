@@ -160,29 +160,73 @@ public class Jeu extends Observable {
 	        notifyObservers();
 	        return donj.getVague1()[choixMob - 1].getEtat();
 		}
-		return "d";
+		if (vagueNum == 2) {
+			this.joueur.get(joueurNum-1).attaque(donj.getVague2()[choixMob - 1]);
+			setChanged();
+	        notifyObservers();
+	        return donj.getVague2()[choixMob - 1].getEtat();
+		}
+		if (vagueNum == 3) {
+			this.joueur.get(joueurNum-1).attaque(donj.getVague3()[choixMob - 1]);
+			setChanged();
+	        notifyObservers();
+	        return donj.getVague3()[choixMob - 1].getEtat();
+		}
+		return "mauvais numéro de vague";
+	}
+	public boolean checkVagueClean(int vagueNum) {
+		if (vagueNum == 1) {
+			for (Ennemi en : this.getDonj().getVague1()) {
+				if (en.getEtat().compareTo("vivant") == 0) {return false;}
+			}
+			return true;
+		}
+		if (vagueNum == 2) {
+			for (Ennemi en : this.getDonj().getVague2()) {
+				if (en.getEtat().compareTo("vivant") == 0) {return false;}
+			}
+			return true;
+		}
+		if (vagueNum == 3) {
+			for (Ennemi en : this.getDonj().getVague3()) {
+				if (en.getEtat().compareTo("vivant") == 0) {return false;}
+			}
+			return true;
+		}
+		return false;
 	}
 	public void afficheVague(int vagueNum) {
 		if (vagueNum == 1) {
 			Ennemi[] vag = this.getDonj().getVague1();
-			System.out.println("1 : " + vag[0].getClasse());
-			System.out.println("2 : " + vag[1].getClasse());
-			
+			if (vag[0].getEtat().compareTo("vivant") == 0) {System.out.println("1 : " + vag[0].getClasse());}
+			if (vag[1].getEtat().compareTo("vivant") == 0) {System.out.println("2 : " + vag[1].getClasse());}
+			if (vag[0].getEtat().compareTo("mort") == 0 && (vag[1].getEtat().compareTo("mort") == 0)) {
+				System.out.println("vague terminee !");
+			}
 		}
 		if (vagueNum == 2) {
 			Ennemi[] vag = this.getDonj().getVague2();
-			System.out.println("1 : " + vag[0].getClasse());
-			System.out.println("2 : " + vag[1].getClasse());
-			System.out.println("3 : " + vag[2].getClasse());
+			if (vag[0].getEtat().compareTo("vivant") == 0) {System.out.println("1 : " + vag[0].getClasse());}
+			if (vag[1].getEtat().compareTo("vivant") == 0) {System.out.println("2 : " + vag[1].getClasse());}
+			if (vag[2].getEtat().compareTo("vivant") == 0) {System.out.println("3 : " + vag[2].getClasse());}
+			if (vag[0].getEtat().compareTo("mort") == 0 && (vag[1].getEtat().compareTo("mort") == 0) 
+					&& (vag[2].getEtat().compareTo("mort") == 0)) {
+				System.out.println("vague terminee !");
+			}
 			
 		}
-		if (vagueNum == 2) {
+		if (vagueNum == 3) {
 			Ennemi[] vag = this.getDonj().getVague3();
-			System.out.println("1 : " + vag[0].getClasse());
-			System.out.println("2 : " + vag[1].getClasse());
-			System.out.println("3 : " + vag[2].getClasse());
-			System.out.println("4 : " + vag[3].getClasse());
-			System.out.println("5 : " + vag[4].getClasse());	
+			if (vag[0].getEtat().compareTo("vivant") == 0) {System.out.println("1 : " + vag[0].getClasse());}
+			if (vag[1].getEtat().compareTo("vivant") == 0) {System.out.println("2 : " + vag[1].getClasse());}
+			if (vag[2].getEtat().compareTo("vivant") == 0) {System.out.println("3 : " + vag[2].getClasse());}
+			if (vag[3].getEtat().compareTo("vivant") == 0) {System.out.println("4 : " + vag[3].getClasse());}
+			if (vag[4].getEtat().compareTo("vivant") == 0) {System.out.println("5 : " + vag[4].getClasse());}
+			if (vag[0].getEtat().compareTo("mort") == 0 && (vag[1].getEtat().compareTo("mort") == 0) 
+				&& (vag[2].getEtat().compareTo("mort")) == 0 && (vag[3].getEtat().compareTo("mort") == 0)
+				&& (vag[4].getEtat().compareTo("mort") == 0)) {
+				System.out.println("vague terminee !");
+			}
 		}
 	}
 	

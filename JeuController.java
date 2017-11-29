@@ -90,9 +90,15 @@ public class JeuController {
 	public void combat(int vagueNum,int choixMob, int joueurNum) {
 		String s = jeu.combat(vagueNum, choixMob, joueurNum);
 		if (s.compareTo("mort") == 0) {
-			jVue.affiche("Votre coup a tué votre ennemi.");
+			jVue.affiche("Votre coup a tué votre ennemi.\n");
+			if (jeu.checkVagueClean(vagueNum)) {
+				jVue.affiche("Pièce clean. Vous avez annéanti les forces ennemies qui entravaient votre chemin.");
+				jVue.affiche("Vous passez donc dans la pièce suivante !\n");
+			}
 		}
-		jVue.affiche("Votre ennemi n'a pas succombé à votre attaque.\n");
+		else {
+			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque.\n");
+		}
 	}
 	public boolean allDead(int vagueNum) {
 		if (vagueNum == 1) {
@@ -131,6 +137,9 @@ public class JeuController {
 			jVue.affiche("Vous avez vaincu votre premier donjon. Mais ne vous reposez pas, le suivant vous attend !");
 			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
 		}
+		if (num == 3) {jVue.affiche("toto1");}
+		if (num == 4) {jVue.affiche("toto2");}
+		if (num == 5) {jVue.affiche("toto3");}
 	}
 
 	public void addView(JeuVue jVue) {

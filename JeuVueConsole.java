@@ -37,7 +37,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	
 	private class ReadInput implements Runnable{
 		int i = 1;
-		int joueur = 1;
+		int playerTurn = 1;
 		public void run() {
 			while(!end){
 				try {
@@ -65,21 +65,36 @@ public class JeuVueConsole extends JeuVue implements Observer {
 							boss = true;
 						}
 						while(vagueNum < 3) { // boucle des vagues 1-2 + gere xp
-							int choixMob = 0;
+							int choixMob = 1;
 							boolean endVague = false;
 							while (!endVague) {
+								displayTurn(playerTurn);
 								jControl.afficheVague(vagueNum);
-								choixMob = scan.nextInt(); //==> gere le zero ligne gestion0 en dessous marche pas pour ici
-								//gestion0(choixMob);
-								jControl.combat(vagueNum, choixMob,  1); //1 est le num joueur => a traiter
-								if (jControl.allDead(vagueNum)) {
-									endVague = true;
+								choixMob = scan.nextInt(); 
+								while (!correctInput(choixMob)) { // gerer chiffre 0-9 non compris dans la liste
+									choixMob = scan.nextInt();
 								}
+								
+								endVague = resolveFight(vagueNum, choixMob, playerTurn);
+								playerTurn = upTurn(playerTurn);
 							}
 							vagueNum++;
 						}
 						if (!boss) { //vague 3 + gerer xp
-							
+							int choixMob = 1;
+							boolean endVague = false;
+							while (!endVague) {
+								displayTurn(playerTurn);
+								jControl.afficheVague(vagueNum);
+								choixMob = scan.nextInt();
+								while (!correctInput(choixMob)) {
+									choixMob = scan.nextInt();
+								}
+								
+								endVague = resolveFight(vagueNum, choixMob, playerTurn); 
+								playerTurn = upTurn(playerTurn);
+							}
+							vagueNum++;
 						}
 						else { //boss
 							
@@ -88,7 +103,11 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						//gerer loot 
 						
 						// jControl.gestionLoot un truc dans le genre
-
+						
+						//jControl.jeu.setEnVie(0);
+						if (jControl.jeu.getEnVie() <= 0) {
+							affiche("Vous avez succomber aux forces du Donjon. Vous avez perdu !");
+						}
 					}
 					
 					
@@ -111,12 +130,14 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			}
 		}
 	}
-	private void correctInput(int i) {
+	private boolean correctInput(int i) {
 		if (i < 0 || i > 9) {
 			affiche("Choix non disponnible.");
+			return false;
 		}
+		return true;
 	}
-	private void gestion0(int i) {
+	private void gestion0() {
 		
 			affiche("Voulez-vous vraiment quitter ? y or n");
 			String c = scan.next();
@@ -136,7 +157,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	private void gestionMenu0(int i) {
 		correctInput(i);
 		if (i == 0) {
-			gestion0(0);
+			gestion0();
 		}
 		if (i == 1) {
 			jControl.menu(i,1);
@@ -146,7 +167,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	private void gestionMenu1(int i) {
 		correctInput(i);
 		if (i == 0) {
-			gestion0(0);
+			gestion0();
 		}
 		else {
 			jControl.choixPersonnage(i);
@@ -157,14 +178,40 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	private void gestionMenu2(int i) {
 		correctInput(i);
 		if (i == 0) {
-			gestion0(0);
+			gestion0();
 		}
 		else {
 			jControl.choixPersonnage(i);
 		}
 		i++;
 	}
-	
+	/**
+	 * resoud le combat.
+	 * @param vagueNum > 0 && <= 3
+	 * @param choixMob
+	 * @param joueurNum 1 || 2
+	 * @return
+	 */
+	private boolean resolveFight(int vagueNum, int choixMob, int joueurNum) {
+		if (choixMob == 0) {
+			gestion0();
+		}
+		jControl.combat(vagueNum, choixMob,  1); //1 est le num joueur => a traiter
+		if (jControl.allDead(vagueNum)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	public int upTurn(int t) {
+		if (t == 2) {return 1;}
+		if (t == 1) {return 2;}
+		else {return -1;}
+	}
+	public void displayTurn(int pTurn) {
+		affiche("-- JOUEUR " + pTurn + " : A vous d'attaquer --");
+	}
 	
 
 	@Override
