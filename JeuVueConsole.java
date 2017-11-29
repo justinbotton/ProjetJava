@@ -6,6 +6,7 @@ import java.io.*;
 public class JeuVueConsole extends JeuVue implements Observer {
 	protected Scanner scan;
 	private volatile boolean end = false;
+	private int i = 1;
 	
 	public JeuVueConsole(Jeu j, JeuController jControl) {
 		super(j, jControl);
@@ -36,7 +37,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	
 	
 	private class ReadInput implements Runnable{
-		int i = 1;
+		//int i = 1;
 		int playerTurn = 1;
 		public void run() {
 			while(!end){
@@ -52,7 +53,9 @@ public class JeuVueConsole extends JeuVue implements Observer {
 					gestionMenu2(i); // gestion choix joueur 2
 					
 					
-					affiche("---------- La partie va commencer ----------");
+					affiche("---------- Votre partie de Beat The Donjon va commencer... ----------");
+					affiche("*** Attention, durant vos phases d'attaques, si vous choisissez une ***\n"
+							+ "*** proposition n'existant plus, vous perdrez votre tour d'attaque. ***\n");
 					
 					while (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() < 5 ) { // boucle des donjons
 						jControl.creationDonjons(); // affiche("---------- Création des donjons ... ----------");
@@ -76,6 +79,9 @@ public class JeuVueConsole extends JeuVue implements Observer {
 								}
 								
 								endVague = resolveFight(vagueNum, choixMob, playerTurn);
+								if (playerTurn == 2) { // si tour jour 2 passe => alors tour mob
+									mobFight();
+								}
 								playerTurn = upTurn(playerTurn);
 							}
 							vagueNum++;
@@ -150,6 +156,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 				System.exit(0);
 				break;
 			case "n" :
+				i = scan.nextInt();
 			default :
 			}
 		
@@ -196,7 +203,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		if (choixMob == 0) {
 			gestion0();
 		}
-		jControl.combat(vagueNum, choixMob,  1); //1 est le num joueur => a traiter
+		jControl.combat(vagueNum, choixMob,  joueurNum);
 		if (jControl.allDead(vagueNum)) {
 			return true;
 		}
@@ -204,13 +211,16 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			return false;
 		}
 	}
-	public int upTurn(int t) {
+	private int upTurn(int t) {
 		if (t == 2) {return 1;}
 		if (t == 1) {return 2;}
 		else {return -1;}
 	}
-	public void displayTurn(int pTurn) {
+	private void displayTurn(int pTurn) {
 		affiche("-- JOUEUR " + pTurn + " : A vous d'attaquer --");
+	}
+	private void mobFight() {
+		affiche("mob fight gestion ==> TO DO");
 	}
 	
 
