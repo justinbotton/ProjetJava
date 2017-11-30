@@ -54,22 +54,27 @@ public class JeuController {
 			case 1 :
 				jeu.choixPerso(1);
 				jVue.affiche("Personnage choisi : Elfe !\n");
+				System.out.println(jeu.getJoueur().get(0).getClasse());
 				break;
 			case 2 : 
 				jeu.choixPerso(2);
 				jVue.affiche("Personnage choisi : Nain !\n");
+				System.out.println(jeu.getJoueur().get(0).getClasse());
 				break;
 			case 3 : 
 				jeu.choixPerso(3);
 				jVue.affiche("Personnage choisi : Orque !\n");
+				System.out.println(jeu.getJoueur().get(0).getClasse());
 				break;
 			case 4 : 
 				jeu.choixPerso(4);
 				jVue.affiche("Personnage choisi : Humain !\n");
+				System.out.println(jeu.getJoueur().get(0).getClasse());
 				break;
 			default :
 				jeu.choixPerso(4);
 				jVue.affiche("Personnage par defaut choisi : Humain !\n");
+				System.out.println(jeu.getJoueur().get(0).getClasse());
 		}
 	}
 
@@ -79,7 +84,7 @@ public class JeuController {
 		if (num < 5) {
 			jVue.affiche("---------- Création du donjon " + jeu.getDonjonNum() + " ... ----------");
 			jVue.affiche("---------- Création des 3 vagues d'ennemi ... ----------\n");
-			story(num);
+			histoire(num);
 		}
 		if (num == 5) {
 			jVue.affiche("---------- Création du donjon 5 ... ----------");
@@ -128,7 +133,7 @@ public class JeuController {
 		jVue.affiche("Quel ennemi allez vous attaquer ?");
 		jeu.afficheVague(vagueNum);
 	}
-	public void story(int num) {
+	public void histoire(int num) {
 		if (num == 1) {
 			jVue.affiche("Vous arrivez face à votre premier donjon. Serez-vous assez fort que pour vaincre ceux qui l'habite ?");
 			jVue.affiche("Vous poussez la porte d'entrée et arrivez dans une première salle.\n");
@@ -140,6 +145,40 @@ public class JeuController {
 		if (num == 3) {jVue.affiche("toto1");}
 		if (num == 4) {jVue.affiche("toto2");}
 		if (num == 5) {jVue.affiche("toto3");}
+	}
+	
+	public void tourMob(int vague) {
+		if (encoreMob(vague)) {
+			String etatJoueur = jeu.combatMob(vague);
+			if (etatJoueur.compareTo("mort") == 0) {
+				jVue.affiche("Vous n'avez pas été assez résistant, joueur " + jeu.getJoueurMort() + " ! Vous etes mort dans d'attroces souffrances... \n");
+				jeu.mortDUnJoueur();
+			}
+		}
+	}
+	public boolean encoreMob(int vague) {
+		if (vague == 1) {
+			for (Ennemi e : jeu.getDonj().getVague1()) {
+				if (e.getEtat().compareTo("vivant") == 0) {
+					return true;
+				}
+			}
+		}
+		if (vague == 2) {
+			for (Ennemi e : jeu.getDonj().getVague2()) {
+				if (e.getEtat().compareTo("vivant") == 0) {
+					return true;
+				}
+			}
+		}
+		if (vague == 3) {
+			for (Ennemi e : jeu.getDonj().getVague3()) {
+				if (e.getEtat().compareTo("vivant") == 0) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public void addView(JeuVue jVue) {

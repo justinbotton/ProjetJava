@@ -21,6 +21,7 @@ public class Jeu extends Observable {
 	private boolean inGame = false;
 	//private ArrayList<Donjon> donjons14;
 	private Donjon donj;
+	private int joueurMort;
 	int donjonNum = 0;
 
 	/**
@@ -70,6 +71,25 @@ public class Jeu extends Observable {
 	public void setDonjonNum(int donjonNum) {
 		this.donjonNum = donjonNum;
 	}
+	public boolean isInGame() {
+		return inGame;
+	}
+	public void setInGame(boolean inGame) {
+		this.inGame = inGame;
+	}
+	public int getJoueurMort() {
+		return joueurMort;
+	}
+	public void setJoueurMort(int joueurMort) {
+		this.joueurMort = joueurMort;
+	}
+	
+	public void mortDUnJoueur() {
+		this.enVie = this.enVie - 1;
+		setChanged();
+        notifyObservers();
+	}
+
 	public void choixPerso(int i) {
 		switch(i){
 			case 1 :
@@ -227,6 +247,103 @@ public class Jeu extends Observable {
 				&& (vag[4].getEtat().compareTo("mort") == 0)) {
 				System.out.println("vague terminee !");
 			}
+		}
+	}
+	
+	public int nbrAlea(int x) {
+		double rand = (Math.random() * x) + 1;
+		return (int) rand;
+	}
+	/**
+	 * @param vague numero de vague.
+	 * @return l etat du joueur attaque 
+	 */
+	public String combatMob(int vague) {
+		int joueurAttaque = nbrAlea(2);
+		// change le joueur cible si joueur random deja mort
+		/*if (joueur.get(joueurAttaque-1).getEtat().compareTo("mort") == 0) {
+			if (joueurAttaque == 1) {
+				joueurAttaque = 2;
+			}
+			else {
+				joueurAttaque = 1;
+			}
+		}*/
+		if (vague == 1) {
+			int attaquant = nbrAlea(2);
+			Ennemi e = donj.getVague1()[attaquant - 1];
+			if (attaquantEnVie(attaquant, vague)) {
+				String s =  mobAttaque(e, joueurAttaque);
+				checkMort(s,  joueurAttaque);
+				return s;
+			}
+			else {
+				Ennemi e2 = new Ennemi();
+				if (attaquant == 1) {
+					e2 = donj.getVague1()[attaquant - 1 + 1]; // mob 1 de la liste
+				}
+				if (attaquant == 2) {
+					e2 = donj.getVague1()[attaquant - 1 - 1]; // mob 0 de la liste
+				}
+				String s =  mobAttaque(e2, joueurAttaque);
+				checkMort(s,  joueurAttaque);
+				return s;
+			}
+		}
+		if (vague == 2) {
+			int attaquant = nbrAlea(3);
+			while (!attaquantEnVie(attaquant, vague)) {
+				attaquant = nbrAlea(3);
+			}
+			Ennemi e = donj.getVague2()[attaquant - 1];
+			String s =  mobAttaque(e, joueurAttaque);
+			checkMort(s,  joueurAttaque);
+			return s;
+		}
+		if (vague == 3) {
+			int attaquant = nbrAlea(5);
+			while (!attaquantEnVie(attaquant, vague)) {
+				attaquant = nbrAlea(5);
+			}
+			Ennemi e = donj.getVague3()[attaquant - 1];
+			String s =  mobAttaque(e, joueurAttaque);
+			checkMort(s,  joueurAttaque);
+			return s;
+		}
+		return "fail combat";
+	}
+	public String mobAttaque(Ennemi e, int joueurAttaque) {
+		Hero h = joueur.get(joueurAttaque - 1);
+		int vieAvant = h.getVie();
+		System.out.println("Le " + e.getClasse() + " attaque joueur "+ joueurAttaque + " !");
+		e.attaque(h);
+		int degatDonne = vieAvant - h.getVie();
+		System.out.println("Il vous a fait perdre : " + degatDonne + " points de vie !\n");
+		setChanged();
+        notifyObservers();
+        return joueur.get(joueurAttaque - 1).getEtat();
+	}
+	
+	public boolean attaquantEnVie(int attaquant, int vague) {
+		if (vague == 1) {
+			Ennemi att = this.donj.getVague1()[attaquant - 1];
+			return (att.getEtat().compareTo("vivant") == 0);
+		}
+		if (vague == 2) {
+			Ennemi att = this.donj.getVague2()[attaquant - 1];
+			return (att.getEtat().compareTo("vivant") == 0);
+		}
+		if (vague == 3) {
+			Ennemi att = this.donj.getVague3()[attaquant - 1];
+			return (att.getEtat().compareTo("vivant") == 0);
+		}
+		return false;
+	}
+	public void checkMort(String s, int joueur) {
+		if (s.compareTo("mort") == 0) {
+			this.joueurMort = joueur;
+			setChanged();
+	        notifyObservers();
 		}
 	}
 	

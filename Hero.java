@@ -26,52 +26,53 @@ import javax.swing.JOptionPane;
 public class Hero extends Personnage {
 	
 	/**
-	 * caracteristiques de la classe elfe
+	 * caracteristiques de la classe elfe.
 	 */
 	public static final int forceElfle = 4;
 	public static final int enduranceElfle = 40;
 	public static final int vitesseAttaqueElfe = 1;
 	
 	/**
-	 * caracteristiques de la classe nain
+	 * caracteristiques de la classe nain.
 	 */
 	public static final int forceNain = 3;
 	public static final int enduranceNain = 60;
 	public static final int vitesseAttaqueNain = 1;
 	
 	/**
-	 * caracteristiques de la classe orque
+	 * caracteristiques de la classe orque.
 	 */
 	public static final int forceOrque = 1;
 	public static final int enduranceOrque = 80;
 	public static final int vitesseAttaqueOrque = 1;
 	
 	/**
-	 * caracteristiques de la classe humain
+	 * caracteristiques de la classe humain.
 	 */
 	public static final int forceHumain = 5;
-	public static final int enduranceHumain = 30;
+	//public static final int enduranceHumain = 30;
+	public static final int enduranceHumain = 1;
 	public static final int vitesseAttaqueHumain = 1;
 	//public static final int tailleInventaireArmeBase = 2;
 	
 	/**
-	 * boite de selection
+	 * boite de selection.
 	 */
 	private static Icon icon;
 	
 	/*
-	 * pour une future maj
+	 * pour une future maj.
 	private ArrayList<Arme> inventaireArme = new ArrayList<Arme>();
 	private int tailleInventaireArme;*/
 	
 	/**
-	 * experience d un hero
+	 * experience d un hero.
 	 */
 	private int xp;
 	
 
 	/**
-	 * constructeur sans argument
+	 * constructeur sans argument.
 	 */
 	public Hero() {
 		super();
@@ -88,10 +89,11 @@ public class Hero extends Personnage {
 	}
 	
 	/**
-	 * constructeur avec argument
+	 * constructeur avec argument.
 	 * @param selectHero : hero choisi par le joueur
 	 */
 	public Hero(String selectHero) {
+		super();
 		this.etat = "vivant";
 		this.niveau = 1;
 		this.xp = 0;
@@ -100,6 +102,7 @@ public class Hero extends Personnage {
 				//System.out.println("je suis un Elfle !!");
 				Arme arme = new Arme("arc", 3);
 				this.setUpPersonnage("Elfe", enduranceElfle, 2 * enduranceElfle, forceElfle, arme, vitesseAttaqueElfe);
+				//setUpHero("Elfe", enduranceElfle, 2 * enduranceElfle, forceElfle, arme, vitesseAttaqueElfe);
 				break;
 			case "Nain" : 
 				//System.out.println("je suis un Nain !!");
@@ -122,6 +125,14 @@ public class Hero extends Personnage {
 				this.setUpPersonnage("je suis un...heu...je n ai pas choisi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme5, vitesseAttaqueHumain);
 				break;
 		}
+	}
+	public void setUpHero(String classe, int endurance, int vie, int force, Arme armeDroite, int vitesseAttaque){
+		this.classe = classe;
+		this.endurance = endurance;
+		this.vie = vie;
+		this.force = force;
+		this.armeDroite = armeDroite;
+		this.vitesseAttaque = vitesseAttaque;
 	}
 	
 	/*
@@ -147,7 +158,7 @@ public class Hero extends Personnage {
 	}*/
 	
 	/**
-	 * @Getter XP
+	 * @Getter XP.
 	 * @return : recupere l xp du hero
 	 */
 	public int getXp() {
@@ -155,7 +166,7 @@ public class Hero extends Personnage {
 	}
 	
 	/**
-	 * @Setter XP
+	 * @Setter XP.
 	 * @param xp : remplace l xp d un hero par le parametre xp
 	 */
 	public void setXp(int xp) {
@@ -163,8 +174,7 @@ public class Hero extends Personnage {
 	}
 	
 	/**
-	 * 
-	 * ajoute l xp en parametre a celle du hero
+	 * ajoute l xp en parametre a celle du hero.
 	 * @param xp : xp a ajouter
 	 */
 	public void ajoutXp(int xp) {
@@ -176,7 +186,7 @@ public class Hero extends Personnage {
 	}
 	
 	/**
-	 * Xp a obtenir pour passer au niveau suivant
+	 * Xp a obtenir pour passer au niveau suivant.
 	 * @return xp maximum du niveau du hero
 	 */
 	public int capLevel() {
@@ -184,7 +194,7 @@ public class Hero extends Personnage {
 	}
 	
 	/*
-	 * pour une future maj
+	 * pour une future maj.
 	 * 
 	public void ajoutInventaire(ArrayList<Arme> objet) {
 		for (int i = 0; i < objet.size(); i++) {
@@ -193,7 +203,7 @@ public class Hero extends Personnage {
 	}*/
 	
 	/**
-	 * Converti un objet Loot en Xp pour le hero, si le Loot est une arme meilleur, remplace l arme du Hero
+	 * Converti un objet Loot en Xp pour le hero, si le Loot est une arme meilleur, remplace l arme du Hero.
 	 * @param drop : ArrayList contenant des objets Loot
 	 */
 	public void ramasser(ArrayList<Loot> drop) {
@@ -248,7 +258,7 @@ public class Hero extends Personnage {
 	
 	
 	/**
-	 * methode d execution
+	 * methode d execution.
 	 * @param args .
 	 */
 	public static void main(String[] args) {
@@ -267,11 +277,12 @@ public class Hero extends Personnage {
 		//If a string is choose, say what hero player choose.
 		if ((s != null) && (s.length() > 0)) {
 		    //System.out.println(s);
-		    Hero h = new Hero(s);
-		    ArrayList<Loot> drop = new ArrayList<Loot>();
+		    Hero h = new Hero("Elfe");
+		    System.out.println(h.getClasse());
+		    /*ArrayList<Loot> drop = new ArrayList<Loot>();
 		    drop.add(new Loot("epee", 100));
 		    drop.add(new Loot("gourde", 20));
-		    h.ramasser(drop);
+		    h.ramasser(drop);*/
 		    return;
 		}
 
