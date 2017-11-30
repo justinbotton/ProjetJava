@@ -52,8 +52,8 @@ public class HeroTest {
 		assertEquals("fourchette", h1.getArmeDroite().getNom());
 		assertEquals(1, h1.getArmeDroite().getDegat());
 		assertEquals("euh... je n ai pas choisi de classe moi !!", h1.getClasse());
-		assertEquals(3, h1.getEndurance());
-		assertEquals(6, h1.getVie());
+		assertEquals(30, h1.getEndurance());
+		assertEquals(60, h1.getVie());
 		assertEquals(5, h1.getForce());
 		assertEquals(1, h1.getVitesseAttaque());
 		assertEquals(1, h1.getNiveau());
@@ -109,18 +109,18 @@ public class HeroTest {
 		assertEquals(1, defaut.getArmeDroite().getDegat());
 		
 		//test de l endurance
-		assertEquals(4, elfe.getEndurance());
-		assertEquals(6, nain.getEndurance());
-		assertEquals(8, orque.getEndurance());
-		assertEquals(3, humain.getEndurance());
-		assertEquals(3, defaut.getEndurance());
+		assertEquals(40, elfe.getEndurance());
+		assertEquals(60, nain.getEndurance());
+		assertEquals(80, orque.getEndurance());
+		assertEquals(30, humain.getEndurance());
+		assertEquals(30, defaut.getEndurance());
 		
 		//test de la vie
-		assertEquals(8, elfe.getVie());
-		assertEquals(12, nain.getVie());
-		assertEquals(16, orque.getVie());
-		assertEquals(6, humain.getVie());
-		assertEquals(6, defaut.getVie());
+		assertEquals(80, elfe.getVie());
+		assertEquals(120, nain.getVie());
+		assertEquals(160, orque.getVie());
+		assertEquals(60, humain.getVie());
+		assertEquals(60, defaut.getVie());
 		
 		//test de la force
 		assertEquals(4, elfe.getForce());

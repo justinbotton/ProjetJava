@@ -10,15 +10,10 @@ import java.util.ArrayList;
  *
  */
 public class Personnage {
-	/*public static final int degatFourchette = 1;
-	public static final int degatEpee = 3;
-	public static final int degatHachette = 3;
-	public static final int degatArc = 3;
-	public static final int degatMasse = 3;
-	public static final int degatBaton = 4;
-	public static final int degatKatana = 5;*/
-	public static final String ptVie = " points de vie !";
 	
+	/**
+	 * 
+	 */
 	protected String classe;
 	protected int vie;
 	protected int force;
@@ -130,12 +125,4 @@ public class Personnage {
 			this.setEtat("mort");
 		}
 	}
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

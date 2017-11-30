@@ -29,28 +29,28 @@ public class Hero extends Personnage {
 	 * caracteristiques de la classe elfe
 	 */
 	public static final int forceElfle = 4;
-	public static final int enduranceElfle = 4;
+	public static final int enduranceElfle = 40;
 	public static final int vitesseAttaqueElfe = 1;
 	
 	/**
-	 * caracteristiques de la classe elfe
+	 * caracteristiques de la classe nain
 	 */
 	public static final int forceNain = 3;
-	public static final int enduranceNain = 6;
+	public static final int enduranceNain = 60;
 	public static final int vitesseAttaqueNain = 1;
 	
 	/**
 	 * caracteristiques de la classe orque
 	 */
 	public static final int forceOrque = 1;
-	public static final int enduranceOrque = 8;
+	public static final int enduranceOrque = 80;
 	public static final int vitesseAttaqueOrque = 1;
 	
 	/**
 	 * caracteristiques de la classe humain
 	 */
 	public static final int forceHumain = 5;
-	public static final int enduranceHumain = 3;
+	public static final int enduranceHumain = 30;
 	public static final int vitesseAttaqueHumain = 1;
 	//public static final int tailleInventaireArmeBase = 2;
 	
