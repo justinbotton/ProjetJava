@@ -5,8 +5,8 @@ package info;
 
 import java.awt.Component;
 
-import java.io.*;
-import java.lang.*;
+//import java.io.*;
+//import java.lang.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,36 +25,58 @@ import javax.swing.JOptionPane;
  */
 public class Hero extends Personnage {
 	
+	/**
+	 * caracteristiques de la classe elfe
+	 */
 	public static final int forceElfle = 4;
 	public static final int enduranceElfle = 4;
 	public static final int vitesseAttaqueElfe = 1;
+	
+	/**
+	 * caracteristiques de la classe elfe
+	 */
 	public static final int forceNain = 3;
 	public static final int enduranceNain = 6;
 	public static final int vitesseAttaqueNain = 1;
+	
+	/**
+	 * caracteristiques de la classe orque
+	 */
 	public static final int forceOrque = 1;
 	public static final int enduranceOrque = 8;
 	public static final int vitesseAttaqueOrque = 1;
+	
+	/**
+	 * caracteristiques de la classe humain
+	 */
 	public static final int forceHumain = 5;
 	public static final int enduranceHumain = 3;
 	public static final int vitesseAttaqueHumain = 1;
-	public static final int tailleInventaireArmeBase = 2;
+	//public static final int tailleInventaireArmeBase = 2;
 	
+	/**
+	 * boite de selection
+	 */
 	private static Icon icon;
+	
 	/*
 	 * pour une future maj
 	private ArrayList<Arme> inventaireArme = new ArrayList<Arme>();
 	private int tailleInventaireArme;*/
-	private int xp;
 	
+	/**
+	 * experience d un hero
+	 */
+	private int xp;
 	
 
 	/**
-	 * constructeur.
+	 * constructeur sans argument
 	 */
 	public Hero() {
 		super();
 		Arme arme = new Arme("fourchette", 1);
-		this.setUpPersonnage("euh... j'ai pas choisi de classe moi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme, vitesseAttaqueHumain);
+		this.setUpPersonnage("euh... je n ai pas choisi de classe moi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme, vitesseAttaqueHumain);
 		this.niveau = 1;
 		this.xp = 0;
 		/*
@@ -64,9 +86,10 @@ public class Hero extends Personnage {
 		*/
 		this.etat = "vivant";
 	}
+	
 	/**
-	 * constructeur 2.
-	 * @param selectHero est le hero selectionne par le player
+	 * constructeur avec argument
+	 * @param selectHero : hero choisi par le joueur
 	 */
 	public Hero(String selectHero) {
 		this.etat = "vivant";
@@ -90,22 +113,24 @@ public class Hero extends Personnage {
 				break;
 			case "Humain" : 
 				//System.out.println("je suis un Humain !!");
-				Arme arme4 = new Arme("epee", 1);
-				this.setUpPersonnage("Huamin", enduranceHumain, 2 * enduranceHumain, forceHumain, arme4, vitesseAttaqueHumain);
+				Arme arme4 = new Arme("epee", 3);
+				this.setUpPersonnage("Humain", enduranceHumain, 2 * enduranceHumain, forceHumain, arme4, vitesseAttaqueHumain);
 				break;
 			default : 
 				//System.out.println("je suis un ... heu... j'ai pas choisi !!");
-				Arme arme5 = new Arme("epee", 1);
-				this.setUpPersonnage("je suis un ... heu... j'ai pas choisi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme5, vitesseAttaqueHumain);
+				Arme arme5 = new Arme("fourchette", 1);
+				this.setUpPersonnage("je suis un...heu...je n ai pas choisi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme5, vitesseAttaqueHumain);
 				break;
 		}
 	}
+	
+	/*
 	private static Icon getIcon() {
 		return icon;
 	}
 	private static void setIcon(Icon icon) {
 		Hero.icon = icon;
-	}
+	}*/
 	/*
 	 * pour une future maj
 	public ArrayList<Arme> getInventaireArme() {
@@ -120,26 +145,44 @@ public class Hero extends Personnage {
 	public void setTailleInventaireArme(int tailleInventaireArme) {
 		this.tailleInventaireArme = tailleInventaireArme;
 	}*/
+	
+	/**
+	 * @Getter XP
+	 * @return : recupere l xp du hero
+	 */
 	public int getXp() {
 		return xp;
 	}
+	
+	/**
+	 * @Setter XP
+	 * @param xp : remplace l xp d un hero par le parametre xp
+	 */
 	public void setXp(int xp) {
 		this.xp = xp;
 	}
 	
+	/**
+	 * 
+	 * ajoute l xp en parametre a celle du hero
+	 * @param xp : xp a ajouter
+	 */
 	public void ajoutXp(int xp) {
 		this.xp += xp;
-		if (this.xp >= capLevel()) {
+		if (this.xp >= this.capLevel()) {
+			this.xp -= this.capLevel();	
 			this.niveau++;
-			this.xp -= capLevel();	
 		}
 	}
+	
 	/**
-	 * @return le nombre d xp pour passer au niveau suivant
+	 * Xp a obtenir pour passer au niveau suivant
+	 * @return xp maximum du niveau du hero
 	 */
 	public int capLevel() {
 		return 500 * this.niveau; // mettre formule du genre exponentielle
 	}
+	
 	/*
 	 * pour une future maj
 	 * 
@@ -150,9 +193,8 @@ public class Hero extends Personnage {
 	}*/
 	
 	/**
-	 * commentaire de definition :  chaque joueur choisi un loot 
-	 * via un alea pour savoir qui commence.
-	 * @param drop array d items
+	 * Converti un objet Loot en Xp pour le hero, si le Loot est une arme meilleur, remplace l arme du Hero
+	 * @param drop : ArrayList contenant des objets Loot
 	 */
 	public void ramasser(ArrayList<Loot> drop) {
 		int taille = drop.size();
@@ -206,6 +248,7 @@ public class Hero extends Personnage {
 	
 	
 	/**
+	 * methode d execution
 	 * @param args .
 	 */
 	public static void main(String[] args) {
