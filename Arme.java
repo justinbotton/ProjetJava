@@ -8,17 +8,19 @@ package info;
  *
  */
 public class Arme {
+	
 	/**
 	 * nom de l arme.
 	 */
 	private String nom;
+	
 	/**
 	 * degat de l arme.
 	 */
 	private int degat;
 	
 	/**
-	 * construit une arme.
+	 * constructeur sans argument.
 	 */
 	public Arme() {
 		this.nom = "epee";
@@ -26,34 +28,42 @@ public class Arme {
 	}
 	
 	/**
-	 * construit une arme.
-	 * @param nom : nom de l arme.
-	 * @param degat : degat de l arme.
+	 * constructeur avec arguments.
+	 * @param nom : nom 
+	 * @param degat : degat
 	 */
 	public Arme(String nom, int degat) {
 		this.nom = nom;
 		this.degat = degat;
 	}
+	
 	/**
-	 * @return le nom de l arme 
+	 * @Getter nom.
+	 * @return nom : le nom de l arme 
 	 */
 	public String getNom() {
 		return nom;
 	}
+	
 	/** 
-	 * @param nom : nom a mettre pour l arme.
+	 * @Setter nom
+	 * @param nom : remplace le nom courant par celui en argument
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+	
 	/**
-	 * @return les degat de l arme
+	 * @Getter degat.
+	 * @return degat : les degat de l arme
 	 */
 	public int getDegat() {
 		return degat;
 	}
+	
 	/** 
-	 * @param degat : degat de l arme.
+	 * @Setter degat
+	 * @param degat : remplace les degats courant par ceux en argument
 	 */
 	public void setDegat(int degat) {
 		this.degat = degat;
