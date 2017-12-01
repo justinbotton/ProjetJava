@@ -2,7 +2,11 @@ package info;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
-
+/**
+ * 
+ * @author louis & justin & philemon
+ *
+ */
 public class JeuVueConsole extends JeuVue implements Observer {
 	protected Scanner scan;
 	private volatile boolean end = false;
@@ -53,33 +57,54 @@ public class JeuVueConsole extends JeuVue implements Observer {
 					i = scan.nextInt();
 					gestionMenu2(i); // gestion choix joueur 2
 					
+					//var de test
+					jControl.jeu.setDonjonNum(5);
 					
 					affiche("---------- Votre partie de Beat The Donjon va commencer... ----------");
 					affiche("*** Attention, durant vos phases d'attaques, si vous choisissez une ***\n"
 							+ "*** proposition n'existant plus, vous perdrez votre tour d'attaque. ***\n");
 					
-					while (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() < 5 ) { // boucle des donjons
+					while (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() <= 5 ) { // boucle des donjons
 						jControl.creationDonjons(); // affiche("---------- Création des donjons ... ----------");
 													// affiche("---------- Création des vagues d'ennemi ... ----------");
 						
-						Donjon d = jControl.jeu.getDonj();
-						//Hero h = new Hero("Elfe");
+						Donjon d = jControl.jeu.getDonj();						
+						/*int vagueNum = 1;
+						boolean boss = false;*/
+						int vagueNum = 3;
+						boolean boss = true;
 						
-						int vagueNum = 1;
-						boolean boss = false;
 						if (d.getBoss() != null) {
 							boss = true;
 						}
-						while(vagueNum < 3) { // boucle des vagues 1-2 + gere xp
+						while(vagueNum < 3) { // boucle des vagues 1-2 + TODO gere xp
 							vague(vagueNum, playerTurn);
 							vagueNum++;
 						}
-						if (!boss) { //vague 3 + gerer xp
+						if (!boss) { //vague 3 + TODO gerer xp
 							vague(vagueNum, playerTurn);
 							vagueNum++;
+							jControl.jeu.incDonjonNum();
 						}
 						else { //boss
-							
+							int choixMenuBoss = 1;
+							boolean finVague = false;
+							while (!finVague && jControl.jeu.getEnVie() != 0 && jControl.jeu.getDonj().getBoss().getEtat().compareTo("vivant") == 0) {
+								if (jControl.jeu.getJoueur().get(playerTurn-1).getEtat().compareTo("vivant") == 0 ) {
+									afficheTourJoueur(playerTurn);
+									jControl.afficheChoixBoss();
+									choixMenuBoss = scan.nextInt(); 
+									while (!correctEntree(choixMenuBoss, 0)) { 
+										choixMenuBoss = scan.nextInt();
+									}
+									finVague = TourJoueur(0, choixMenuBoss, playerTurn);
+								}
+								if (playerTurn == 2) { // si tour jour 2 passe => alors tour boss
+										tourBoss();
+								}
+								playerTurn = upTour(playerTurn);
+							}
+							jControl.jeu.incDonjonNum();
 						}
 						
 						//gerer loot 
@@ -90,6 +115,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						if (jControl.jeu.getEnVie() <= 0) {
 							affiche("Vous avez succomber aux forces du Donjon. Vous avez perdu !");
 						}
+						
 					}
 					
 					
@@ -105,19 +131,63 @@ public class JeuVueConsole extends JeuVue implements Observer {
 					fin();
 				}
 				catch(InputMismatchException e){
-					//affiche("Format d'input incorrect");
+					affiche("Format d'input incorrect");
 					//printHelp();
 					//System.exit(0);
 				}
 			}
 		}
 	}
-	private boolean correctEntree(int i) {
-		if (i < 0 || i > 9) {
-			affiche("Choix non disponnible.");
-			return false;
+	
+	/**
+	 * verifie que le choix existe.
+	 * @param i choix du joueur
+	 * @param vagueNum determine le nombre de choix
+	 * @return true si le choix est valide, false sinon
+	 */
+	private boolean correctEntree(int i, int vagueNum) {
+		if (vagueNum == 0) {  // vagueNum = 0  == menu0 et boss
+			if (i < 0 || i > 1) {
+				affiche("Choix non disponnible.");
+				return false;
+			}
+			return true;
 		}
-		return true;
+		if (vagueNum == 1) {
+			if (i < 0 || i > 2) {
+				affiche("Choix non disponnible.");
+				return false;
+			}
+			return true;
+		}
+		if (vagueNum == 2) {
+			if (i < 0 || i > 3) {
+				affiche("Choix non disponnible.");
+				return false;
+			}
+			return true;
+		}
+		if (vagueNum == 3) {
+			if (i < 0 || i > 5) {
+				affiche("Choix non disponnible.");
+				return false;
+			}
+			return true;
+		}
+		if (vagueNum == 4) {  // vagueNum = 4 == choix des personnages
+			if (i < 0 || i > 4) {
+				affiche("Choix non disponnible.");
+				return false;
+			}
+			return true;
+		}
+		else {
+			if (i < 0 || i > 9) {
+				affiche("Choix non disponnible.");
+				return false;
+			}
+			return true;
+		}
 	}
 	private void gestion0() {
 		
@@ -138,7 +208,9 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		
 	}
 	private void gestionMenu0(int i) {
-		correctEntree(i);
+		while (!correctEntree(i, 0)) {
+			i = scan.nextInt();
+		}
 		if (i == 0) {
 			gestion0();
 		}
@@ -148,7 +220,9 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 	}
 	private void gestionMenu1(int i) {
-		correctEntree(i);
+		while (!correctEntree(i, 4)) {
+			i = scan.nextInt();
+		}
 		if (i == 0) {
 			gestion0();
 		}
@@ -159,7 +233,9 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		i++;
 	}
 	private void gestionMenu2(int i) {
-		correctEntree(i);
+		while (!correctEntree(i, 4)) {
+			i = scan.nextInt();
+		}
 		if (i == 0) {
 			gestion0();
 		}
@@ -177,7 +253,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 				afficheTourJoueur(playerTurn);
 				jControl.afficheVague(vagueNum);
 				choixMob = scan.nextInt(); 
-				while (!correctEntree(choixMob)) { // gerer chiffre 0-9 non compris dans la liste
+				while (!correctEntree(choixMob, vagueNum)) {
 					choixMob = scan.nextInt();
 				}
 				finVague = TourJoueur(vagueNum, choixMob, playerTurn);
@@ -200,11 +276,21 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			gestion0();
 		}
 		jControl.combat(vagueNum, choixMob,  joueurNum);
-		if (jControl.allDead(vagueNum)) {
-			return true;
+		if (vagueNum != 0) {
+			if (jControl.allDead(vagueNum)) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 		else {
-			return false;
+			if (jControl.jeu.getDonj().getBoss().getEtat().compareTo("mort") == 0) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 	}
 	private int upTour(int t) {
@@ -217,6 +303,9 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	}
 	private void tourMob(int vague) {
 		jControl.tourMob(vague);
+	}
+	private void tourBoss() {
+		jControl.tourBoss();
 	}
 	
 

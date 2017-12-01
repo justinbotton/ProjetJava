@@ -54,27 +54,22 @@ public class JeuController {
 			case 1 :
 				jeu.choixPerso(1);
 				jVue.affiche("Personnage choisi : Elfe !\n");
-				System.out.println(jeu.getJoueur().get(0).getClasse());
 				break;
 			case 2 : 
 				jeu.choixPerso(2);
 				jVue.affiche("Personnage choisi : Nain !\n");
-				System.out.println(jeu.getJoueur().get(0).getClasse());
 				break;
 			case 3 : 
 				jeu.choixPerso(3);
 				jVue.affiche("Personnage choisi : Orque !\n");
-				System.out.println(jeu.getJoueur().get(0).getClasse());
 				break;
 			case 4 : 
 				jeu.choixPerso(4);
 				jVue.affiche("Personnage choisi : Humain !\n");
-				System.out.println(jeu.getJoueur().get(0).getClasse());
 				break;
 			default :
 				jeu.choixPerso(4);
 				jVue.affiche("Personnage par defaut choisi : Humain !\n");
-				System.out.println(jeu.getJoueur().get(0).getClasse());
 		}
 	}
 
@@ -88,7 +83,7 @@ public class JeuController {
 		}
 		if (num == 5) {
 			jVue.affiche("---------- Création du donjon 5 ... ----------");
-			jVue.affiche("---------- Création des 2 vagues d'ennemi ... ----------");
+			jVue.affiche("---------- Création des 2 vagues d'ennemis ... ----------");
 			jVue.affiche("---------- Création du boss ... ----------\n");
 		}
 	}
@@ -105,7 +100,7 @@ public class JeuController {
 			Hero h = jeu.getJoueur().get(joueurNum-1);
 			int degatPrimaire =  h.getForce() + h.getNiveau();
 			int degat = (h.getArmeDroite().getDegat() + degatPrimaire) * h.getVitesseAttaque();
-			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" !\n");
+			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" points de degats !\n");
 		}
 	}
 	public boolean allDead(int vagueNum) {
@@ -136,6 +131,10 @@ public class JeuController {
 		jVue.affiche("Quel ennemi allez vous attaquer ?");
 		jeu.afficheVague(vagueNum);
 	}
+	public void afficheChoixBoss() {
+		jVue.affiche("Attaquez ce boss !");
+		jeu.afficheChoixBoss();
+	}
 	public void histoire(int num) {
 		if (num == 1) {
 			jVue.affiche("Vous arrivez face à votre premier donjon. Serez-vous assez fort que pour vaincre ceux qui l'habite ?");
@@ -145,9 +144,9 @@ public class JeuController {
 			jVue.affiche("Vous avez vaincu votre premier donjon. Mais ne vous reposez pas, le suivant vous attend !");
 			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
 		}
-		if (num == 3) {jVue.affiche("toto1");}
-		if (num == 4) {jVue.affiche("toto2");}
-		if (num == 5) {jVue.affiche("toto3");}
+		if (num == 3) {jVue.affiche("toto1");}	// TODO 
+		if (num == 4) {jVue.affiche("toto2");}	// TODO 
+		if (num == 5) {jVue.affiche("toto3");}	// TODO 
 	}
 	
 	public void tourMob(int vague) {
@@ -182,6 +181,15 @@ public class JeuController {
 			}
 		}
 		return false;
+	}
+	public void tourBoss() {
+		if (jeu.getDonj().getBoss().getEtat().compareTo("vivant") == 0) {
+			String etatJoueur = jeu.combatBoss();
+			if (etatJoueur.compareTo("mort") == 0) {
+				jVue.affiche("Vous n'avez pas été assez résistant, joueur " + jeu.getJoueurMort() + " ! Vous etes mort dans d'attroces souffrances... \n");
+				jeu.mortDUnJoueur();
+			}
+		}
 	}
 
 	public void addView(JeuVue jVue) {

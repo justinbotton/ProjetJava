@@ -50,7 +50,7 @@ public class Donjon {
 				s = "grand mage";
 				break;
 			case 2 : 
-				s = "samurai";
+				s = "samourai";
 				break;
 			default : 
 				s = "grand mage";

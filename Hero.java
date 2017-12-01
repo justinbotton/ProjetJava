@@ -50,8 +50,7 @@ public class Hero extends Personnage {
 	 * caracteristiques de la classe humain.
 	 */
 	public static final int forceHumain = 5;
-	//public static final int enduranceHumain = 30;
-	public static final int enduranceHumain = 1;
+	public static final int enduranceHumain = 30;
 	public static final int vitesseAttaqueHumain = 1;
 	//public static final int tailleInventaireArmeBase = 2;
 	

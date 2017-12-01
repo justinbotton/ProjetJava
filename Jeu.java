@@ -89,6 +89,11 @@ public class Jeu extends Observable {
 		setChanged();
         notifyObservers();
 	}
+	public void incDonjonNum() {
+		this.donjonNum = this.donjonNum + 1;
+		setChanged();
+        notifyObservers();
+	}
 
 	public void choixPerso(int i) {
 		switch(i){
@@ -172,6 +177,12 @@ public class Jeu extends Observable {
 	 * @param joueurNum est le numero du joueur 1 || 2
 	 */
 	public String combat(int vagueNum,int choixMob, int joueurNum) {
+		if (vagueNum ==0) {
+			this.joueur.get(joueurNum-1).attaque(donj.getBoss());
+			setChanged();
+	        notifyObservers();
+	        return donj.getBoss().getEtat();
+		}
 		if (vagueNum == 1) {
 			//Hero he = this.joueur.get(joueurNum-1);
 			//Ennemi e = donj.getVague1()[choixMob - 1];
@@ -249,6 +260,13 @@ public class Jeu extends Observable {
 			}
 		}
 	}
+	public void afficheChoixBoss() {
+		Ennemi boss = this.getDonj().getBoss();
+		if (boss.getEtat().compareTo("vivant") == 0) {System.out.println("1 : " + boss.getClasse());}
+		else {
+			System.out.println("Vous Avez vaincu le boss de ces Donjons ! La gloire est Vôtre !");
+		}
+	}
 	
 	public int nbrAlea(int x) {
 		double rand = (Math.random() * x) + 1;
@@ -260,7 +278,7 @@ public class Jeu extends Observable {
 	 */
 	public String combatMob(int vague) {
 		int joueurAttaque = nbrAlea(2);
-		// change le joueur cible si joueur random deja mort
+		// change le joueur cible si joueur random deja mort  TODO
 		/*if (joueur.get(joueurAttaque-1).getEtat().compareTo("mort") == 0) {
 			if (joueurAttaque == 1) {
 				joueurAttaque = 2;
@@ -352,6 +370,29 @@ public class Jeu extends Observable {
 	public Hero getAutre(int h) {
 		if (h == 0) {return joueur.get(1);}
 		else {return joueur.get(0);}
+	}
+	public String combatBoss() {
+		int joueurAttaque = nbrAlea(2);
+		// change le joueur cible si joueur random deja mort  TODO
+		/*if (joueur.get(joueurAttaque-1).getEtat().compareTo("mort") == 0) {
+			if (joueurAttaque == 1) {
+				joueurAttaque = 2;
+			}
+			else {
+				joueurAttaque = 1;
+			}
+		}*/
+			Ennemi boss = donj.getBoss();
+			if (boss.getEtat().compareTo("vivant") == 0) {
+				String s =  mobAttaque(boss, joueurAttaque);
+				checkMort(s,  joueurAttaque);
+				return s;
+			}
+			else {
+				System.out.println("Vous avez vaincu le maitre des lieux !");
+				String s =  "mort";
+				return s;
+			}
 	}
 	
 	
