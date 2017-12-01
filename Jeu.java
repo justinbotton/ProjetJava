@@ -373,7 +373,7 @@ public class Jeu extends Observable {
 	}
 	public String combatBoss() {
 		int joueurAttaque = nbrAlea(2);
-		// change le joueur cible si joueur random deja mort  TODO
+		// change le joueur cible si joueur random deja mort 
 		if (joueur.get(joueurAttaque-1).getEtat().compareTo("mort") == 0) {
 			if (joueurAttaque == 1) {
 				joueurAttaque = 2;
@@ -395,6 +395,18 @@ public class Jeu extends Observable {
 			}
 	}
 	
+	public int xpRecu(int vagueNum,int choixMob) {
+		int xpGagne = 0;
+		Donjon d = this.getDonj();
+		if (vagueNum == 0) {xpGagne = d.getBoss().getXpMob();}
+		if (vagueNum == 1) {xpGagne = d.getVague1()[choixMob - 1].getXpMob();}
+		if (vagueNum == 2) {xpGagne = d.getVague2()[choixMob - 1].getXpMob();}
+		if (vagueNum == 3) {xpGagne = d.getVague3()[choixMob - 1].getXpMob();}
+		for (Hero h : this.joueur) {
+			h.ajoutXp(xpGagne);
+		}
+		return xpGagne;
+	}
 	
 	/**
 	 * @param args
