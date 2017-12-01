@@ -279,14 +279,14 @@ public class Jeu extends Observable {
 	public String combatMob(int vague) {
 		int joueurAttaque = nbrAlea(2);
 		// change le joueur cible si joueur random deja mort  TODO
-		/*if (joueur.get(joueurAttaque-1).getEtat().compareTo("mort") == 0) {
+		if (joueur.get(joueurAttaque-1).getEtat().compareTo("mort") == 0) {
 			if (joueurAttaque == 1) {
 				joueurAttaque = 2;
 			}
 			else {
 				joueurAttaque = 1;
 			}
-		}*/
+		}
 		if (vague == 1) {
 			int attaquant = nbrAlea(2);
 			Ennemi e = donj.getVague1()[attaquant - 1];
@@ -374,14 +374,14 @@ public class Jeu extends Observable {
 	public String combatBoss() {
 		int joueurAttaque = nbrAlea(2);
 		// change le joueur cible si joueur random deja mort  TODO
-		/*if (joueur.get(joueurAttaque-1).getEtat().compareTo("mort") == 0) {
+		if (joueur.get(joueurAttaque-1).getEtat().compareTo("mort") == 0) {
 			if (joueurAttaque == 1) {
 				joueurAttaque = 2;
 			}
 			else {
 				joueurAttaque = 1;
 			}
-		}*/
+		}
 			Ennemi boss = donj.getBoss();
 			if (boss.getEtat().compareTo("vivant") == 0) {
 				String s =  mobAttaque(boss, joueurAttaque);

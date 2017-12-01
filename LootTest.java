@@ -3,10 +3,14 @@
  */
 package info;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+
+import org.junit.Before;
+//import org.junit.jupiter.api.Test;
 
 /**
  * @author Louis & Justin & Philemon
@@ -18,25 +22,28 @@ public class LootTest {
 	 * variables du constructeur sans argument
 	 */
 	Loot a1 = new Loot();
+	Loot b1 = new Loot();
+	Loot b2 = new Loot();
+	Loot b3 = new Loot();
 	
 	/**
 	 * variables du constructeur avec arguments
 	 */
-	Loot b1 = new Loot("epee cassee", 25);
-	Loot b2 = new Loot("fourchette pliee", 5);
-	Loot b3 = new Loot("katana use", 100);
+	//Loot b1 = new Loot("epee cassee", 25);
+	//Loot b2 = new Loot("fourchette pliee", 5);
+	//Loot b3 = new Loot("katana use", 100);
 	
 	/**
 	 * assignation des variables
 	 * @throws java.lang.Exception
 	 */
-	/*@Before
+	@Before
 	public void setUp() throws Exception {
 		a1 = new Loot();
 		b1 = new Loot("epee cassee", 25);			//WTF ?!!?!
 		b2 = new Loot("fourchette pliee", 5);
 		b3 = new Loot("katana use", 100);
-	}*/
+	}
 
 	/**
 	 * test des getter
