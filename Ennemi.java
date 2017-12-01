@@ -26,6 +26,7 @@ public class Ennemi extends Personnage {
 	public static final int forceSamourai = 8;
 	public static final int enduranceSamourai = 40;
 	
+	private int xpMob;
 
 	/**
 	 * constructeur vide de ennemi.
@@ -41,6 +42,7 @@ public class Ennemi extends Personnage {
 		this.vitesseAttaque = vitesseAttaqueGobelin;
 		this.niveau = 1;
 		this.etat = "vivant";
+		this.xpMob = 20;
 	}
 	/**
 	 * constructeur.
@@ -74,6 +76,12 @@ public class Ennemi extends Personnage {
 		}
 	}
 	
+	public int getXpMob() {
+		return xpMob;
+	}
+	public void setXpMob(int xpMob) {
+		this.xpMob = xpMob;
+	}
 	/**
 	 * @param choix est le random qui choisi l ennemi qui fera 
 	 * 		partie de la vague
@@ -96,21 +104,25 @@ public class Ennemi extends Personnage {
 			//System.out.println("Vous affrontez un goblein !!");
 			Arme armeGob = new Arme("hachette", 3);
 			this.setUpPersonnage("gobelin", enduranceGobelin + ajustement, 2 * enduranceGobelin, forceGobelin + ajustement, armeGob, vitesseAttaqueGobelin + ajustVitesse);
+			this.xpMob = 20 * this.niveau;
 			break;
 		case 2 : 
 			//System.out.println("Vous affrontez un troll !!");
 			Arme armeTroll = new Arme("masse", 3);
 			this.setUpPersonnage("troll", enduranceTroll + ajustement, 2 * enduranceTroll, forceTroll + ajustement, armeTroll, vitesseAttaqueTroll + ajustVitesse);
+			this.xpMob = 40 * this.niveau;
 			break;
 		case 3 : 
 			//System.out.println("Vous affrontez un groupe de gobelin !!");
 			Arme armeGGob = new Arme("hachette", 3);
 			this.setUpPersonnage("groupe gobelin", enduranceGroupeGobelin + ajustement, 2 * enduranceGroupeGobelin, forceGroupeGobelin + ajustement, armeGGob, vitesseAttaqueGroupeGobelin + ajustVitesse);
+			this.xpMob = 60 * this.niveau;
 			break;
 		case 4 : 
 			//System.out.println("Vous affrontez un magicien noir !!");
 			Arme armeMag = new Arme("baton", 3);
 			this.setUpPersonnage("magicien noir", enduranceMagicienNoir + ajustement, 2 * enduranceMagicienNoir, forceMagicienNoir + ajustement, armeMag, vitesseAttaqueMagicienNoir + ajustVitesse);
+			this.xpMob = 50 * this.niveau;
 			break;
 		case 991 :
 			// boss 1
@@ -119,6 +131,7 @@ public class Ennemi extends Personnage {
 			this.niveau = ajustement + 1;
 			Arme armeGMag = new Arme("baton", 4);
 			this.setUpPersonnage("grand mage", enduranceGrandMage + ajustement, 2 * enduranceGrandMage, forceGrandMage + ajustement, armeGMag, 1 + ajustVitesse);
+			this.xpMob = 500 * this.niveau;
 			break;
 		case 992 :
 			// boss 2
@@ -127,11 +140,13 @@ public class Ennemi extends Personnage {
 			this.niveau = ajustement + 1;
 			Arme armeSam = new Arme("katana", 5);
 			this.setUpPersonnage("samourai", enduranceSamourai + ajustement, 2 * enduranceSamourai, forceSamourai + ajustement, armeSam, 1+ ajustVitesse);
+			this.xpMob = 500 * this.niveau;
 			break;
 		default : 
 			//System.out.println("Vous affrontez un gobelin !!");
 			Arme armeDefaut = new Arme("hachette", 3);
 			this.setUpPersonnage("gobelin", enduranceGobelin + ajustement, 2 * enduranceGobelin, forceGobelin + ajustement, armeDefaut, vitesseAttaqueGobelin + ajustVitesse);
+			this.xpMob = 20 * this.niveau;
 			break;
 		}
 	}

@@ -7,6 +7,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	protected Scanner scan;
 	private volatile boolean end = false;
 	private int i = 1;
+	int playerTurn = 1;
 	
 	public JeuVueConsole(Jeu j, JeuController jControl) {
 		super(j, jControl);
@@ -25,20 +26,20 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	private void printHelp(){
 		this.affiche("Choisissez un chiffre entre 0 et 9");
 	}
-	private void printTuto() {
+	private void afficheTuto() {
 		this.affiche("Vous serez face a des choix pour vous battre ou récolter \n"+"des ressources. "
 				+ "Tapez un chiffre entre 0 et 9 pour effectuer votre choix \n"
 				+ "Vous jouez a tour de rôle jusqu'a ce que mort s'en suive ou \n"
 				+ "jusqu'a ce que vous ayez vaincu le Boss maitre du Donjon. \n");
 	}
-	private void ended() {
+	private void fin() {
 		this.end = true;
 	}
 	
 	
 	private class ReadInput implements Runnable{
 		//int i = 1;
-		int playerTurn = 1;
+		//int playerTurn = 1;
 		public void run() {
 			while(!end){
 				try {
@@ -62,44 +63,19 @@ public class JeuVueConsole extends JeuVue implements Observer {
 													// affiche("---------- Création des vagues d'ennemi ... ----------");
 						
 						Donjon d = jControl.jeu.getDonj();
+						//Hero h = new Hero("Elfe");
+						
 						int vagueNum = 1;
 						boolean boss = false;
 						if (d.getBoss() != null) {
 							boss = true;
 						}
 						while(vagueNum < 3) { // boucle des vagues 1-2 + gere xp
-							int choixMob = 1;
-							boolean endVague = false;
-							while (!endVague) {
-								displayTurn(playerTurn);
-								jControl.afficheVague(vagueNum);
-								choixMob = scan.nextInt(); 
-								while (!correctInput(choixMob)) { // gerer chiffre 0-9 non compris dans la liste
-									choixMob = scan.nextInt();
-								}
-								
-								endVague = resolveFight(vagueNum, choixMob, playerTurn);
-								if (playerTurn == 2) { // si tour jour 2 passe => alors tour mob
-									mobFight();
-								}
-								playerTurn = upTurn(playerTurn);
-							}
+							vague(vagueNum, playerTurn);
 							vagueNum++;
 						}
 						if (!boss) { //vague 3 + gerer xp
-							int choixMob = 1;
-							boolean endVague = false;
-							while (!endVague) {
-								displayTurn(playerTurn);
-								jControl.afficheVague(vagueNum);
-								choixMob = scan.nextInt();
-								while (!correctInput(choixMob)) {
-									choixMob = scan.nextInt();
-								}
-								
-								endVague = resolveFight(vagueNum, choixMob, playerTurn); 
-								playerTurn = upTurn(playerTurn);
-							}
+							vague(vagueNum, playerTurn);
 							vagueNum++;
 						}
 						else { //boss
@@ -126,7 +102,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 					}*/
 					
 					affiche("---------- La partie est finie ! ----------");
-					ended();
+					fin();
 				}
 				catch(InputMismatchException e){
 					//affiche("Format d'input incorrect");
@@ -136,7 +112,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			}
 		}
 	}
-	private boolean correctInput(int i) {
+	private boolean correctEntree(int i) {
 		if (i < 0 || i > 9) {
 			affiche("Choix non disponnible.");
 			return false;
@@ -152,7 +128,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			}
 			switch(c) {
 			case "y" :
-				ended();
+				fin();
 				System.exit(0);
 				break;
 			case "n" :
@@ -162,7 +138,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		
 	}
 	private void gestionMenu0(int i) {
-		correctInput(i);
+		correctEntree(i);
 		if (i == 0) {
 			gestion0();
 		}
@@ -172,7 +148,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 	}
 	private void gestionMenu1(int i) {
-		correctInput(i);
+		correctEntree(i);
 		if (i == 0) {
 			gestion0();
 		}
@@ -183,7 +159,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		i++;
 	}
 	private void gestionMenu2(int i) {
-		correctInput(i);
+		correctEntree(i);
 		if (i == 0) {
 			gestion0();
 		}
@@ -192,6 +168,26 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 		i++;
 	}
+	
+	public void vague(int vagueNum, int playerTurn) {
+		int choixMob = 1;
+		boolean finVague = false;
+		while (!finVague && jControl.jeu.getEnVie() != 0) {
+			if (jControl.jeu.getJoueur().get(playerTurn-1).getEtat().compareTo("vivant") == 0 ) {
+				afficheTourJoueur(playerTurn);
+				jControl.afficheVague(vagueNum);
+				choixMob = scan.nextInt(); 
+				while (!correctEntree(choixMob)) { // gerer chiffre 0-9 non compris dans la liste
+					choixMob = scan.nextInt();
+				}
+				finVague = TourJoueur(vagueNum, choixMob, playerTurn);
+			}
+			if (playerTurn == 2) { // si tour jour 2 passe => alors tour mob
+				tourMob(vagueNum);
+			}
+			playerTurn = upTour(playerTurn);
+		}
+	}
 	/**
 	 * resoud le combat.
 	 * @param vagueNum > 0 && <= 3
@@ -199,7 +195,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	 * @param joueurNum 1 || 2
 	 * @return
 	 */
-	private boolean resolveFight(int vagueNum, int choixMob, int joueurNum) {
+	private boolean TourJoueur(int vagueNum, int choixMob, int joueurNum) {
 		if (choixMob == 0) {
 			gestion0();
 		}
@@ -211,16 +207,16 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			return false;
 		}
 	}
-	private int upTurn(int t) {
+	private int upTour(int t) {
 		if (t == 2) {return 1;}
 		if (t == 1) {return 2;}
-		else {return -1;}
+		else {return 1;}
 	}
-	private void displayTurn(int pTurn) {
-		affiche("-- JOUEUR " + pTurn + " : A vous d'attaquer --");
+	private void afficheTourJoueur(int jTour) {
+		affiche("-- JOUEUR " + jTour + " : A vous d'attaquer --");
 	}
-	private void mobFight() {
-		affiche("mob fight gestion ==> TO DO");
+	private void tourMob(int vague) {
+		jControl.tourMob(vague);
 	}
 	
 

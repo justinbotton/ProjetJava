@@ -93,31 +93,31 @@ public class Jeu extends Observable {
 	public void choixPerso(int i) {
 		switch(i){
 			case 1 :
-				Hero elfe = new Hero("elfe");
+				Hero elfe = new Hero("Elfe");
 				this.ajoutJoueur(elfe);
 				setChanged();
 		        notifyObservers();
 				break;
 			case 2 : 
-				Hero nain = new Hero("nain");
+				Hero nain = new Hero("Nain");
 				this.ajoutJoueur(nain);
 				setChanged();
 		        notifyObservers();
 				break;
 			case 3 : 
-				Hero orque = new Hero("nain");
+				Hero orque = new Hero("Orque");
 				this.ajoutJoueur(orque);
 				setChanged();
 		        notifyObservers();
 				break;
 			case 4 : 
-				Hero humain = new Hero("nain");
+				Hero humain = new Hero("Humain");
 				this.ajoutJoueur(humain);
 				setChanged();
 		        notifyObservers();
 				break;
 			default :
-				Hero humain2 = new Hero("nain");
+				Hero humain2 = new Hero("Humain");
 				this.ajoutJoueur(humain2);
 				setChanged();
 		        notifyObservers();
@@ -314,11 +314,14 @@ public class Jeu extends Observable {
 	}
 	public String mobAttaque(Ennemi e, int joueurAttaque) {
 		Hero h = joueur.get(joueurAttaque - 1);
+		if (h.getEtat().compareTo("mort") == 0) {
+			h = getAutre(joueurAttaque - 1);
+		}
 		int vieAvant = h.getVie();
 		System.out.println("Le " + e.getClasse() + " attaque joueur "+ joueurAttaque + " !");
 		e.attaque(h);
 		int degatDonne = vieAvant - h.getVie();
-		System.out.println("Il vous a fait perdre : " + degatDonne + " points de vie !\n");
+		System.out.println("Il vous a fait perdre : " + degatDonne + " points de vie ! Il vous reste donc " + h.getVie() +" points de vie.\n");
 		setChanged();
         notifyObservers();
         return joueur.get(joueurAttaque - 1).getEtat();
@@ -345,6 +348,10 @@ public class Jeu extends Observable {
 			setChanged();
 	        notifyObservers();
 		}
+	}
+	public Hero getAutre(int h) {
+		if (h == 0) {return joueur.get(1);}
+		else {return joueur.get(0);}
 	}
 	
 	

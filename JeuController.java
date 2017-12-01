@@ -102,7 +102,10 @@ public class JeuController {
 			}
 		}
 		else {
-			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque.\n");
+			Hero h = jeu.getJoueur().get(joueurNum-1);
+			int degatPrimaire =  h.getForce() + h.getNiveau();
+			int degat = (h.getArmeDroite().getDegat() + degatPrimaire) * h.getVitesseAttaque();
+			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" !\n");
 		}
 	}
 	public boolean allDead(int vagueNum) {
