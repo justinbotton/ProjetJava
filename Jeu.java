@@ -278,7 +278,7 @@ public class Jeu extends Observable {
 	 */
 	public String combatMob(int vague) {
 		int joueurAttaque = nbrAlea(2);
-		// change le joueur cible si joueur random deja mort  TODO
+		// change le joueur cible si joueur random deja mort 
 		if (joueur.get(joueurAttaque-1).getEtat().compareTo("mort") == 0) {
 			if (joueurAttaque == 1) {
 				joueurAttaque = 2;
@@ -389,7 +389,7 @@ public class Jeu extends Observable {
 				return s;
 			}
 			else {
-				System.out.println("Vous avez vaincu le maitre des lieux !");
+				//System.out.println("Vous avez vaincu le maitre des lieux !");
 				String s =  "mort";
 				return s;
 			}
@@ -405,6 +405,8 @@ public class Jeu extends Observable {
 		for (Hero h : this.joueur) {
 			h.ajoutXp(xpGagne);
 		}
+		setChanged();
+        notifyObservers();
 		return xpGagne;
 	}
 	

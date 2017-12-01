@@ -79,11 +79,11 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						if (d.getBoss() != null) {
 							boss = true;
 						}
-						while(vagueNum < 3) { // boucle des vagues 1-2 + TODO gere xp
+						while(vagueNum < 3) { // boucle des vagues 1-2
 							vague(vagueNum, playerTurn);
 							vagueNum++;
 						}
-						if (!boss) { //vague 3 + TODO gerer xp
+						if (!boss) { //vague 3
 							vague(vagueNum, playerTurn);
 							vagueNum++;
 							jControl.jeu.incDonjonNum();
@@ -150,64 +150,69 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	private boolean correctEntree(int i, int vagueNum) {
 		if (vagueNum == 0) {  // vagueNum = 0  == menu0 et boss
 			if (i < 0 || i > 1) {
-				affiche("Choix non disponnible.");
+				affiche("Choix non disponnible. Faites un nouveau choix.");
 				return false;
 			}
 			return true;
 		}
 		if (vagueNum == 1) {
 			if (i < 0 || i > 2) {
-				affiche("Choix non disponnible.");
+				affiche("Choix non disponnible. Faites un nouveau choix.");
 				return false;
 			}
 			return true;
 		}
 		if (vagueNum == 2) {
 			if (i < 0 || i > 3) {
-				affiche("Choix non disponnible.");
+				affiche("Choix non disponnible. Faites un nouveau choix.");
 				return false;
 			}
 			return true;
 		}
 		if (vagueNum == 3) {
 			if (i < 0 || i > 5) {
-				affiche("Choix non disponnible.");
+				affiche("Choix non disponnible. Faites un nouveau choix.");
 				return false;
 			}
 			return true;
 		}
 		if (vagueNum == 4) {  // vagueNum = 4 == choix des personnages
 			if (i < 0 || i > 4) {
-				affiche("Choix non disponnible.");
+				affiche("Choix non disponnible. Faites un nouveau choix.");
 				return false;
 			}
 			return true;
 		}
 		else {
 			if (i < 0 || i > 9) {
-				affiche("Choix non disponnible.");
+				affiche("Choix non disponnible. Faites un nouveau choix.");
 				return false;
 			}
 			return true;
 		}
 	}
 	private void gestion0() {
-		
-			affiche("Voulez-vous vraiment quitter ? y or n");
-			String c = scan.next();
-			if (c.length() != 1) {
-				affiche("Format d'input incorrect");
-			}
-			switch(c) {
-			case "y" :
-				fin();
-				System.exit(0);
-				break;
-			case "n" :
-				i = scan.nextInt();
-			default :
-			}
-		
+		affiche("Voulez-vous vraiment quitter ? y or n");
+		String c = scan.next();
+		if (c.length() != 1) {
+			affiche("Format d'input incorrect");
+		}
+		switch(c) {
+		case "y" :
+			fin();
+			System.exit(0);
+			break;
+		case "n" :
+			i = scan.nextInt();
+		default :
+		}
+	}
+	private void gestion9() {
+		System.out.println("---------- Affichage de feuille de personnage ----------");
+		System.out.println("1 : Feuille personnage joueur 1");
+		System.out.println("2 : Feuille personnage joueur 2");
+		int choix = scan.nextInt();
+		jControl.afficheFeuillePersonnages(choix);
 	}
 	private void gestionMenu0(int i) {
 		while (!correctEntree(i, 0)) {
@@ -254,7 +259,8 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			if (jControl.jeu.getJoueur().get(playerTurn-1).getEtat().compareTo("vivant") == 0 ) {
 				afficheTourJoueur(playerTurn);
 				jControl.afficheVague(vagueNum);
-				choixMob = scan.nextInt(); 
+				choixMob = scan.nextInt();
+				if (choixMob == 9) {gestion9();}  // TODO
 				while (!correctEntree(choixMob, vagueNum)) {
 					choixMob = scan.nextInt();
 				}

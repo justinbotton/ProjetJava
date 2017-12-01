@@ -197,7 +197,21 @@ public class JeuController {
 			}
 		}
 	}
-
+	public void afficheFeuillePersonnages(int choix) {
+		Hero h = jeu.getJoueur().get(choix-1);
+		System.out.println("Feuille de personnage du joueur " + choix + " : ");
+		System.out.println("Classe : " + h.getClasse());
+		System.out.println("Niveau : " + h.getNiveau());
+		System.out.println("Force : " + h.getForce());
+		System.out.println("Vie : " + h.getVie());
+		System.out.println("Endurance : " + h.getEndurance());
+		System.out.println("xp : " + h.getXp());
+		System.out.println("Arme : " + h.getArmeDroite().getNom());
+		System.out.println("---------- Retour au combat ----------\n");
+		
+	}
+	
+	
 	public void addView(JeuVue jVue) {
 		this.jVue = jVue;
 		
