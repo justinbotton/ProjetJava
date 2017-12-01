@@ -28,8 +28,8 @@ public class Hero extends Personnage {
 	/**
 	 * caracteristiques de la classe elfe.
 	 */
-	public static final int forceElfle = 4;
-	public static final int enduranceElfle = 40;
+	public static final int forceElfe = 4;
+	public static final int enduranceElfe = 40;
 	public static final int vitesseAttaqueElfe = 1;
 	
 	/**
@@ -100,7 +100,7 @@ public class Hero extends Personnage {
 			case "Elfe" : 
 				//System.out.println("je suis un Elfle !!");
 				Arme arme = new Arme("arc", 3);
-				this.setUpPersonnage("Elfe", enduranceElfle, 2 * enduranceElfle, forceElfle, arme, vitesseAttaqueElfe);
+				this.setUpPersonnage("Elfe", enduranceElfe, 2 * enduranceElfe, forceElfe, arme, vitesseAttaqueElfe);
 				//setUpHero("Elfe", enduranceElfle, 2 * enduranceElfle, forceElfle, arme, vitesseAttaqueElfe);
 				break;
 			case "Nain" : 
