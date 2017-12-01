@@ -73,6 +73,7 @@ public class EnnemiTest {
 		assertEquals(1, e2.getVitesseAttaque());
 		assertEquals(1, e2.getNiveau());
 		assertEquals("vivant", e2.getEtat());
+		assertEquals(20, e2.getXpMob());
 	}	
 	/**
 	 * teste le constructeur (troll).
@@ -92,6 +93,7 @@ public class EnnemiTest {
 		assertEquals(1, e3.getVitesseAttaque());
 		assertEquals(1, e3.getNiveau());
 		assertEquals("vivant", e3.getEtat());
+		assertEquals(40, e3.getXpMob());
 	}
 	/**
 	 * teste le constructeur (groupe gobelin).
@@ -111,6 +113,7 @@ public class EnnemiTest {
 		assertEquals(1, e4.getVitesseAttaque());
 		assertEquals(1, e4.getNiveau());
 		assertEquals("vivant", e4.getEtat());
+		assertEquals(60, e4.getXpMob());
 	}
 	/**
 	 * teste le constructeur (magicien noir).
@@ -130,6 +133,7 @@ public class EnnemiTest {
 		assertEquals(1, e5.getVitesseAttaque());
 		assertEquals(1, e5.getNiveau());
 		assertEquals("vivant", e5.getEtat());
+		assertEquals(50, e5.getXpMob());
 	}
 	/**
 	 * teste le constructeur (samourai).
@@ -149,6 +153,7 @@ public class EnnemiTest {
 		assertEquals(1, e6.getVitesseAttaque());
 		assertEquals(1, e6.getNiveau());
 		assertEquals("vivant", e6.getEtat());
+		assertEquals(500, e6.getXpMob());
 	}
 	/**
 	 * teste le constructeur (grand mage).
@@ -168,6 +173,7 @@ public class EnnemiTest {
 		assertEquals(1, e7.getVitesseAttaque());
 		assertEquals(1, e7.getNiveau());
 		assertEquals("vivant", e7.getEtat());
+		assertEquals(500, e7.getXpMob());
 	}
 	/**
 	 * teste la mort et les degats.
@@ -201,6 +207,7 @@ public class EnnemiTest {
 		e8.setEtat("mort");
 		e8.setType("mob");
 		e8.setVitesseAttaque(5);
+		e8.setXpMob(152);
 		assertEquals("troll", e8.getClasse());
 		Arme a = e8.getArmeDroite();
 		assertEquals("epee", a.getNom());
@@ -212,6 +219,7 @@ public class EnnemiTest {
 		assertEquals(5, e8.getVitesseAttaque());
 		assertEquals(5, e8.getNiveau());
 		assertEquals("mort", e8.getEtat());
+		assertEquals(152, e8.getXpMob());
 	}
 	
 	/**

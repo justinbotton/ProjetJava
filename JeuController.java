@@ -90,7 +90,13 @@ public class JeuController {
 	public void combat(int vagueNum,int choixMob, int joueurNum) {
 		String s = jeu.combat(vagueNum, choixMob, joueurNum);
 		if (s.compareTo("mort") == 0) {
-			jVue.affiche("Votre coup a tué votre ennemi.\n");
+			int xp = jeu.xpRecu(vagueNum, choixMob);
+			jVue.affiche("Votre coup a tué votre ennemi. Vous gagnez " + xp +" xp.\n");
+			/* pour debug
+			 * Integer no = new Integer(jeu.getJoueur().get(0).getXp());
+			Integer niv = new Integer(jeu.getJoueur().get(0).getNiveau());
+			jVue.affiche("xp : " + no.toString());
+			jVue.affiche("niveau : " + niv.toString());*/
 			if (jeu.checkVagueClean(vagueNum)) {
 				jVue.affiche("Pièce clean. Vous avez annéanti les forces ennemies qui entravaient votre chemin.");
 				jVue.affiche("Vous passez donc dans la pièce suivante !\n");

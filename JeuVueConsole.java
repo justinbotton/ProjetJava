@@ -58,7 +58,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 					gestionMenu2(i); // gestion choix joueur 2
 					
 					//var de test
-					jControl.jeu.setDonjonNum(5);
+					//jControl.jeu.setDonjonNum(5);
 					
 					affiche("---------- Votre partie de Beat The Donjon va commencer... ----------");
 					affiche("*** Attention, durant vos phases d'attaques, si vous choisissez une ***\n"
@@ -69,10 +69,12 @@ public class JeuVueConsole extends JeuVue implements Observer {
 													// affiche("---------- Création des vagues d'ennemi ... ----------");
 						
 						Donjon d = jControl.jeu.getDonj();						
-						/*int vagueNum = 1;
-						boolean boss = false;*/
+						int vagueNum = 1;
+						boolean boss = false;
+						/*
+						 * variable test direct boss
 						int vagueNum = 3;
-						boolean boss = true;
+						boolean boss = true;*/
 						
 						if (d.getBoss() != null) {
 							boss = true;
@@ -113,7 +115,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						
 						//jControl.jeu.setEnVie(0);
 						if (jControl.jeu.getEnVie() <= 0) {
-							affiche("Vous avez succomber aux forces du Donjon. Vous avez perdu !");
+							affiche("Vous avez succomber aux forces du Donjon. Vous avez perdu !\n");
 						}
 						
 					}
