@@ -150,6 +150,7 @@ public class Donjon {
 	 * @param nombrePlayer nombre de joueurs
 	 */
 	public void lootDonjon(int donjonNum, int nombrePlayer) {
+<<<<<<< HEAD
 		Connection connection = null;
 		Statement select = null;
 		ResultSet query = null;
@@ -185,6 +186,19 @@ public class Donjon {
 		Donjon d1 = new Donjon();
 		d1.lootDonjon(1, 5);
 	}pour tester l'aléa	de la db */
+=======
+		for (int i = 0; i < donjonNum * nombrePlayer; i++) {
+			this.loot.add("epee");
+		}
+		this.loot.add("carte");
+	}
+	public Ennemi[] getPopVague(int vagueNum) {
+		if (vagueNum == 1) {return this.vague1;}
+		if (vagueNum == 2) {return this.vague2;}
+		if (vagueNum == 3) {return this.vague3;}
+		else {return this.vague1;}
+	}
+>>>>>>> 0e8968d486b71f003169f25bca68058609dd335f
 	
 	
 	/**
