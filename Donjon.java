@@ -99,6 +99,13 @@ public class Donjon {
 		}
 		this.loot.add("carte");
 	}
+	public Ennemi[] getPopVague(int vagueNum) {
+		if (vagueNum == 1) {return this.vague1;}
+		if (vagueNum == 2) {return this.vague2;}
+		if (vagueNum == 3) {return this.vague3;}
+		else {return this.vague1;}
+	}
+	
 	
 	/**
 	 * @param a > 0

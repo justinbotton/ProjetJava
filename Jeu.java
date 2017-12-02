@@ -177,55 +177,29 @@ public class Jeu extends Observable {
 	 * @param joueurNum est le numero du joueur 1 || 2
 	 */
 	public String combat(int vagueNum,int choixMob, int joueurNum) {
-		if (vagueNum ==0) {
+		if (vagueNum == 0) {
 			this.joueur.get(joueurNum-1).attaque(donj.getBoss());
 			setChanged();
 	        notifyObservers();
 	        return donj.getBoss().getEtat();
 		}
-		if (vagueNum == 1) {
+		if (vagueNum <= 3){
 			//Hero he = this.joueur.get(joueurNum-1);
 			//Ennemi e = donj.getVague1()[choixMob - 1];
-			this.joueur.get(joueurNum-1).attaque(donj.getVague1()[choixMob - 1]);
+			this.joueur.get(joueurNum-1).attaque(donj.getPopVague(vagueNum)[choixMob - 1]);
 			setChanged();
 	        notifyObservers();
-	        return donj.getVague1()[choixMob - 1].getEtat();
-		}
-		if (vagueNum == 2) {
-			this.joueur.get(joueurNum-1).attaque(donj.getVague2()[choixMob - 1]);
-			setChanged();
-	        notifyObservers();
-	        return donj.getVague2()[choixMob - 1].getEtat();
-		}
-		if (vagueNum == 3) {
-			this.joueur.get(joueurNum-1).attaque(donj.getVague3()[choixMob - 1]);
-			setChanged();
-	        notifyObservers();
-	        return donj.getVague3()[choixMob - 1].getEtat();
+	        return donj.getPopVague(vagueNum)[choixMob - 1].getEtat();
 		}
 		return "mauvais numéro de vague";
 	}
 	public boolean checkVagueClean(int vagueNum) {
-		if (vagueNum == 1) {
-			for (Ennemi en : this.getDonj().getVague1()) {
-				if (en.getEtat().compareTo("vivant") == 0) {return false;}
-			}
-			return true;
+		for (Ennemi en : this.getDonj().getPopVague(vagueNum)) {
+			if (en.getEtat().compareTo("vivant") == 0) {return false;}
 		}
-		if (vagueNum == 2) {
-			for (Ennemi en : this.getDonj().getVague2()) {
-				if (en.getEtat().compareTo("vivant") == 0) {return false;}
-			}
-			return true;
-		}
-		if (vagueNum == 3) {
-			for (Ennemi en : this.getDonj().getVague3()) {
-				if (en.getEtat().compareTo("vivant") == 0) {return false;}
-			}
-			return true;
-		}
-		return false;
+		return true;
 	}
+	
 	public void afficheVague(int vagueNum) {
 		if (vagueNum == 1) {
 			Ennemi[] vag = this.getDonj().getVague1();
@@ -244,7 +218,6 @@ public class Jeu extends Observable {
 					&& (vag[2].getEtat().compareTo("mort") == 0)) {
 				System.out.println("vague terminee !");
 			}
-			
 		}
 		if (vagueNum == 3) {
 			Ennemi[] vag = this.getDonj().getVague3();
@@ -346,19 +319,8 @@ public class Jeu extends Observable {
 	}
 	
 	public boolean attaquantEnVie(int attaquant, int vague) {
-		if (vague == 1) {
-			Ennemi att = this.donj.getVague1()[attaquant - 1];
-			return (att.getEtat().compareTo("vivant") == 0);
-		}
-		if (vague == 2) {
-			Ennemi att = this.donj.getVague2()[attaquant - 1];
-			return (att.getEtat().compareTo("vivant") == 0);
-		}
-		if (vague == 3) {
-			Ennemi att = this.donj.getVague3()[attaquant - 1];
-			return (att.getEtat().compareTo("vivant") == 0);
-		}
-		return false;
+		Ennemi att = this.donj.getPopVague(vague)[attaquant - 1];
+		return (att.getEtat().compareTo("vivant") == 0);
 	}
 	public void checkMort(String s, int joueur) {
 		if (s.compareTo("mort") == 0) {
@@ -399,9 +361,7 @@ public class Jeu extends Observable {
 		int xpGagne = 0;
 		Donjon d = this.getDonj();
 		if (vagueNum == 0) {xpGagne = d.getBoss().getXpMob();}
-		if (vagueNum == 1) {xpGagne = d.getVague1()[choixMob - 1].getXpMob();}
-		if (vagueNum == 2) {xpGagne = d.getVague2()[choixMob - 1].getXpMob();}
-		if (vagueNum == 3) {xpGagne = d.getVague3()[choixMob - 1].getXpMob();}
+		else {xpGagne = d.getPopVague(vagueNum)[choixMob - 1].getXpMob();}
 		for (Hero h : this.joueur) {
 			h.ajoutXp(xpGagne);
 		}

@@ -285,7 +285,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 		jControl.combat(vagueNum, choixMob,  joueurNum);
 		if (vagueNum != 0) {
-			if (jControl.allDead(vagueNum)) {
+			if (jControl.jeu.checkVagueClean(vagueNum)) {
 				return true;
 			}
 			else {
