@@ -95,11 +95,6 @@ public class DonjonTest {
 		d1.lootDonjon(2,2);
 		assertEquals(5, d1.getloot().size());
 		assertNotNull(d1.getloot());
-		assertEquals("epee", d1.getloot().get(0));
-		assertEquals("epee", d1.getloot().get(1));
-		assertEquals("epee", d1.getloot().get(2));
-		assertEquals("epee", d1.getloot().get(3));
-		assertEquals("carte", d1.getloot().get(4));
 	}
 
 	@Test
