@@ -156,21 +156,21 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			return true;
 		}
 		if (vagueNum == 1) {
-			if (i < 0 || i > 2) {
+			if ((i < 0 || i > 2) || (jControl.jeu.dejaMort(vagueNum, i))) {
 				affiche("Choix non disponnible. Faites un nouveau choix.");
 				return false;
 			}
 			return true;
 		}
 		if (vagueNum == 2) {
-			if (i < 0 || i > 3) {
+			if (i < 0 || i > 3 || (jControl.jeu.dejaMort(vagueNum, i))) {
 				affiche("Choix non disponnible. Faites un nouveau choix.");
 				return false;
 			}
 			return true;
 		}
 		if (vagueNum == 3) {
-			if (i < 0 || i > 5) {
+			if (i < 0 || i > 5 || (jControl.jeu.dejaMort(vagueNum, i))) {
 				affiche("Choix non disponnible. Faites un nouveau choix.");
 				return false;
 			}
@@ -202,8 +202,10 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			fin();
 			System.exit(0);
 			break;
-		case "n" :
+		/*case "n" :
+			System.out.println("Faites un nouveau choix :");
 			i = scan.nextInt();
+			break;*/
 		default :
 		}
 	}
@@ -221,10 +223,12 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		if (i == 0) {
 			gestion0();
 		}
-		if (i == 1) {
+		jControl.menu(i,1);
+		i++;
+		/*if (i == 1) {
 			jControl.menu(i,1);
 			i++;
-		}
+		}*/
 	}
 	private void gestionMenu1(int i) {
 		while (!correctEntree(i, 4)) {
@@ -233,9 +237,11 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		if (i == 0) {
 			gestion0();
 		}
-		else {
+		//jControl.printTextMenu(2,1);	
+		jControl.choixPersonnage(i);
+		/*else {
 			jControl.choixPersonnage(i);
-		}
+		}*/
 		jControl.printTextMenu(2,2);
 		i++;
 	}
@@ -246,9 +252,10 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		if (i == 0) {
 			gestion0();
 		}
-		else {
+		/*else {
 			jControl.choixPersonnage(i);
-		}
+		}*/
+		jControl.choixPersonnage(i);
 		i++;
 	}
 	
@@ -260,7 +267,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 				afficheTourJoueur(playerTurn);
 				jControl.afficheVague(vagueNum);
 				choixMob = scan.nextInt();
-				if (choixMob == 9) {gestion9();}  // TODO
+				if (choixMob == 9) {gestion9();}
 				while (!correctEntree(choixMob, vagueNum)) {
 					choixMob = scan.nextInt();
 				}
@@ -285,7 +292,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 		jControl.combat(vagueNum, choixMob,  joueurNum);
 		if (vagueNum != 0) {
-			if (jControl.allDead(vagueNum)) {
+			if (jControl.jeu.checkVagueClean(vagueNum)) {
 				return true;
 			}
 			else {

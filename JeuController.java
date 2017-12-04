@@ -23,8 +23,9 @@ public class JeuController {
 	public void menu(int num, int joueur) {
 		switch(num){
 		case 0 :
-			jVue.affiche("Voulez-vous vraiment quitter ? y or n");
-			System.exit(0);
+			//jVue.affiche("Voulez-vous vraiment quitter ? y or n");
+			jeu.printMenuText(2, joueur);
+			//System.exit(0);
 			break;
 		case 1 :
 			jeu.printMenuText(2, joueur);
@@ -109,30 +110,6 @@ public class JeuController {
 			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" points de degats !\n");
 		}
 	}
-	public boolean allDead(int vagueNum) {
-		if (vagueNum == 1) {
-			for (Ennemi e : jeu.getDonj().getVague1()) {
-				if (e.getEtat().compareTo("vivant") == 0) {
-					return false;
-				}
-			}
-		}
-		else if (vagueNum == 2) {
-			for (Ennemi e : jeu.getDonj().getVague2()) {
-				if (e.getEtat().compareTo("vivant") == 0) {
-					return false;
-				}
-			}
-		}
-		else if (vagueNum == 3) {
-			for (Ennemi e : jeu.getDonj().getVague3()) {
-				if (e.getEtat().compareTo("vivant") == 0) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
 	public void afficheVague(int vagueNum) {
 		jVue.affiche("Quel ennemi allez vous attaquer ?");
 		jeu.afficheVague(vagueNum);
@@ -156,7 +133,7 @@ public class JeuController {
 	}
 	
 	public void tourMob(int vague) {
-		if (encoreMob(vague)) {
+		if (!jeu.checkVagueClean(vague)) {
 			String etatJoueur = jeu.combatMob(vague);
 			if (etatJoueur.compareTo("mort") == 0) {
 				jVue.affiche("Vous n'avez pas été assez résistant, joueur " + jeu.getJoueurMort() + " ! Vous etes mort dans d'attroces souffrances... \n");
@@ -164,30 +141,16 @@ public class JeuController {
 			}
 		}
 	}
-	public boolean encoreMob(int vague) {
-		if (vague == 1) {
-			for (Ennemi e : jeu.getDonj().getVague1()) {
-				if (e.getEtat().compareTo("vivant") == 0) {
-					return true;
-				}
-			}
-		}
-		if (vague == 2) {
-			for (Ennemi e : jeu.getDonj().getVague2()) {
-				if (e.getEtat().compareTo("vivant") == 0) {
-					return true;
-				}
-			}
-		}
-		if (vague == 3) {
-			for (Ennemi e : jeu.getDonj().getVague3()) {
-				if (e.getEtat().compareTo("vivant") == 0) {
-					return true;
-				}
+	/* plus necessaire, meme code que checkvagueclean()
+	 * public boolean encoreMob(int vague) {
+		for (Ennemi e : jeu.getDonj().getPopVague(vague)) {
+			if (e.getEtat().compareTo("vivant") == 0) {
+				return true;
 			}
 		}
 		return false;
-	}
+	}*/
+	
 	public void tourBoss() {
 		if (jeu.getDonj().getBoss().getEtat().compareTo("vivant") == 0) {
 			String etatJoueur = jeu.combatBoss();
@@ -207,6 +170,7 @@ public class JeuController {
 		System.out.println("Endurance : " + h.getEndurance());
 		System.out.println("xp : " + h.getXp());
 		System.out.println("Arme : " + h.getArmeDroite().getNom());
+		System.out.println("Etat : " + h.getEtat());
 		System.out.println("---------- Retour au combat ----------\n");
 		
 	}
