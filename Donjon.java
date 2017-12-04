@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-//import java.util.Iterator;
+import java.util.Iterator;
 
 /**
  * @author louis & justin & philemon
@@ -149,8 +149,7 @@ public class Donjon {
 	 * @param donjonNum numero du donjon.
 	 * @param nombrePlayer nombre de joueurs
 	 */
-	public void lootDonjon(int donjonNum, int nombrePlayer) {
-<<<<<<< HEAD
+	public void lootDonjon(int donjonNum) {
 		Connection connection = null;
 		Statement select = null;
 		ResultSet query = null;
@@ -158,7 +157,7 @@ public class Donjon {
 			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ProjetJava", "postgres", "sql");
 			select = connection.createStatement();
-			for (int i = 0; i < donjonNum * nombrePlayer; i++) {
+			for (int i = 0; i < donjonNum * 2; i++) {
 				String loot = null;
 				int rand = (int)((Math.random() * (25-1)) + 1);
 				query = select.executeQuery("SELECT lootName FROM tbLoot WHERE lootId="+rand);
@@ -170,10 +169,10 @@ public class Donjon {
 		    query.close();
 		    select.close();
 		    connection.close();
-		    /*Iterator<String> iter = loot.iterator();
+		    Iterator<String> iter = loot.iterator();
 		    while(iter.hasNext()) {
 		    	System.out.println(iter.next());
-		    }*/
+		    }
 		 } catch (Exception e) {
 		    e.printStackTrace();
 		    System.err.println(e.getClass().getName()+" : "+e.getMessage());
@@ -182,23 +181,10 @@ public class Donjon {
 	}	
 	
 	
-	/*public static void main (String[]args) {
+	public static void main (String[]args) {
 		Donjon d1 = new Donjon();
-		d1.lootDonjon(1, 5);
-	}pour tester l'aléa	de la db */
-=======
-		for (int i = 0; i < donjonNum * nombrePlayer; i++) {
-			this.loot.add("epee");
-		}
-		this.loot.add("carte");
+		d1.lootDonjon(3);
 	}
-	public Ennemi[] getPopVague(int vagueNum) {
-		if (vagueNum == 1) {return this.vague1;}
-		if (vagueNum == 2) {return this.vague2;}
-		if (vagueNum == 3) {return this.vague3;}
-		else {return this.vague1;}
-	}
->>>>>>> 0e8968d486b71f003169f25bca68058609dd335f
 	
 	
 	/**
