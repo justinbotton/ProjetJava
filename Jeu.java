@@ -440,6 +440,10 @@ public class Jeu extends Observable {
 			System.out.println("Choisissez votre loot : Joueur "+nbrAlea(2));
 			scan = new Scanner(System.in);
 			int entree = scan.nextInt();
+			while(!(entree<=drop.size())) {
+				System.out.println("Mauvais numero de loot : choisissez a nouveau");
+				entree = scan.nextInt();
+			}
 			h.ramasser(drop, entree);
 		}
 	}

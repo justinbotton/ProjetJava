@@ -103,7 +103,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 							vague(vagueNum, playerTurn);
 							gestionLoot();
 							vagueNum++;
-							jControl.jeu.incDonjonNum();
+							//jControl.jeu.incDonjonNum();
 						}
 						else { //boss
 							int choixMenuBoss = 1;
