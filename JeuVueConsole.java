@@ -96,10 +96,12 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						}
 						while(vagueNum < 3) { // boucle des vagues 1-2
 							vague(vagueNum, playerTurn);
+							gestionLoot();
 							vagueNum++;
 						}
 						if (!boss) { //vague 3
 							vague(vagueNum, playerTurn);
+							gestionLoot();
 							vagueNum++;
 							jControl.jeu.incDonjonNum();
 						}
@@ -134,6 +136,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						}
 						else {
 							jControl.jeu.incDonjonNum(); // sortie de boucle des donjons
+							gestionLoot();
 							affiche("Vous avez suplante les forces du Donjon. Vous avez gagner !\n");
 						}
 					}
@@ -388,6 +391,9 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		jControl.tourBoss();
 	}
 	
+	public void gestionLoot() {
+		jControl.gestionLoot();
+	}
 
 	@Override
 	public void affiche(String string) {

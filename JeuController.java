@@ -95,7 +95,7 @@ public class JeuController {
 		int num = jeu.getDonjonNum();
 		if (num < 5) {
 			jVue.affiche("---------- Création du donjon " + jeu.getDonjonNum() + " ... ----------");
-			jVue.affiche("---------- Création des 3 vagues d'ennemi ... ----------\n");
+			jVue.affiche("---------- Création des 3 vagues d'ennemis ... ----------\n");
 			histoire(num);
 		}
 		if (num == 5) {
@@ -127,9 +127,10 @@ public class JeuController {
 		}
 		else {
 			Hero h = jeu.getJoueur().get(joueurNum-1);
+			Ennemi e = jeu.getDonj().getPopVague(vagueNum)[choixMob-1];
 			int degatPrimaire =  h.getForce() + h.getNiveau();
 			int degat = (h.getArmeDroite().getDegat() + degatPrimaire) * h.getVitesseAttaque();
-			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" points de degats !\n");
+			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" points de degats !\n Il lui reste : "+e.getVie()+" PV");
 		}
 	}
 	/**
@@ -217,6 +218,11 @@ public class JeuController {
 		System.out.println("---------- Retour au combat ----------\n");
 	}
 	
+	public void gestionLoot() {
+		jVue.affiche("Gestion des Loot : ");
+		jeu.gestionLoot();
+		jVue.affiche("Gestion des Loot terminee");
+	}
 	
 	public void addView(JeuVue jVue) {
 		this.jVue = jVue;

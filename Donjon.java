@@ -4,6 +4,11 @@
 package info;
 
 import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Iterator;
 
 /**
  * @author louis & justin & philemon
@@ -18,7 +23,7 @@ public class Donjon {
 	private Ennemi[] vague2;
 	private Ennemi[] vague3;
 	private Ennemi boss = null;
-	private ArrayList<String> loot = new ArrayList<String>();
+	private ArrayList<Loot> loot = new ArrayList<Loot>();
 
 	/**
 	 * 
@@ -82,10 +87,10 @@ public class Donjon {
 	public void setBoss(Ennemi boss) {
 		this.boss = boss;
 	}
-	public ArrayList<String> getloot() {
+	public ArrayList<Loot> getloot() {
 		return loot;
 	}
-	public void setloot(ArrayList<String> loot) {
+	public void setloot(ArrayList<Loot> loot) {
 		this.loot = loot;
 	}
 	/**
@@ -93,12 +98,37 @@ public class Donjon {
 	 * @param donjonNum numero du donjon.
 	 * @param nombrePlayer nombre de joueurs
 	 */
-	public void lootDonjon(int donjonNum, int nombrePlayer) {
-		for (int i = 0; i < donjonNum * nombrePlayer; i++) {
-			this.loot.add("epee");
-		}
-		this.loot.add("carte");
+	public ArrayList<Loot> lootDonjon(int donjonNum) {
+		Connection connection = null;
+  		Statement select = null;
+  		ResultSet query = null;
+  		try {
+  			Class.forName("org.postgresql.Driver");
+  			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ProjetJava", "postgres", "sql");
+  			select = connection.createStatement();
+  			for (int i = 0; i < donjonNum * 2; i++) {
+  				Loot sLoot = null;
+  				String nomLoot = null;
+  				int xpLoot = 0;
+  				int rand = (int)((Math.random() * (25-1)) + 1);
+  				query = select.executeQuery("SELECT lootName, lootXpValue FROM tbLoot WHERE lootId="+rand);
+  				while(query.next()) {
+					nomLoot = query.getString("lootName");
+					xpLoot = query.getInt("lootXpValue");
+				}
+  				sLoot = new Loot(nomLoot, xpLoot);
+				this.loot.add(sLoot);
+  			}
+  			query.close();
+		    select.close();
+		    connection.close();
+   		} catch (Exception e) {
+		    e.printStackTrace();
+		    System.err.println(e.getClass().getName()+" : "+e.getMessage());
+   		}	
+	    return loot;
 	}
+	
 	public Ennemi[] getPopVague(int vagueNum) {
 		if (vagueNum == 1) {return this.vague1;}
 		if (vagueNum == 2) {return this.vague2;}
@@ -172,7 +202,6 @@ public class Donjon {
 		}
 		return v;
 	}
-	
 	
 	/*public static void afficheMob(String boss, int sommeNiveau) {
 		boolean isBoss = false;

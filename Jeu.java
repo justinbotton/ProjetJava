@@ -6,6 +6,7 @@ package info;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Scanner;
 
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
  *
  */
 public class Jeu extends Observable {
+	private Scanner scan;
 	private int enVie;
 	private int nombreJoueur;
 	private ArrayList<Hero> joueur;
@@ -349,7 +351,7 @@ public class Jeu extends Observable {
 			h = getAutre(joueurAttaque - 1);
 		}
 		int vieAvant = h.getVie();
-		System.out.println("Le " + e.getClasse() + " attaque joueur "+ joueurAttaque + " !");
+		System.out.println("-- ENNEMI : " + e.getClasse() + " attaque joueur "+ joueurAttaque + " ! --");
 		e.attaque(h);
 		int degatDonne = vieAvant - h.getVie();
 		System.out.println("Il vous a fait perdre : " + degatDonne + " points de vie ! Il vous reste donc " + h.getVie() +" points de vie.\n");
@@ -427,6 +429,20 @@ public class Jeu extends Observable {
 		return xpGagne;
 	}
 
+	public void gestionLoot() {
+		ArrayList<Loot> drop = donj.lootDonjon(donjonNum);
+		for(Hero h : joueur) {
+			int k = 1;
+			for(Loot l : drop) {
+				System.out.println(k+" : "+l.getNom());
+				k++;
+			}
+			System.out.println("Choisissez votre loot : Joueur "+nbrAlea(2));
+			scan = new Scanner(System.in);
+			int entree = scan.nextInt();
+			h.ramasser(drop, entree);
+		}
+	}
 	
 	/**
 	 * @param args
