@@ -3,12 +3,7 @@
  */
 package info;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * @author louis & justin & philemon
@@ -26,7 +21,7 @@ public class Donjon {
 	private ArrayList<String> loot = new ArrayList<String>();
 
 	/**
-	 * constructeur sans arguments
+	 * 
 	 */
 	public Donjon() {
 		this.vague1 = genererVague(1, 2);
@@ -34,7 +29,7 @@ public class Donjon {
 		this.vague3 = genererVague(3, 2);
 	}
 	/**
-	 * constructeur avec la somme de niveau en argument
+	 * 
 	 */
 	public Donjon(int sommeNiveau) {
 		this.vague1 = genererVague(1, sommeNiveau);
@@ -42,7 +37,7 @@ public class Donjon {
 		this.vague3 = genererVague(3, sommeNiveau);
 	}
 	/**
-	 * constructeur de boss
+	 * 
 	 */
 	public Donjon(String boss, int sommeNiveau) {
 		this.vague1 = genererVague(1, sommeNiveau);
@@ -63,137 +58,62 @@ public class Donjon {
 		}
 		this.boss = new Ennemi(s, sommeNiveau);
 	}
-	
-	/**
-	 * @Getter vague1.
-	 * @return vague1 : la vague1 d ennemis
-	 */
 	public Ennemi[] getVague1() {
 		return vague1;
 	}
-	
-	/**
-	 * @Setter vague1.
-	 * @param vague1 : remplace la vague1 de l instance par celle en argument
-	 */
 	public void setVague1(Ennemi[] vague1) {
 		this.vague1 = vague1;
 	}
-	
-	/**
-	 * @Getter vague2.
-	 * @return vague2 : la vague2 d ennemis
-	 */
 	public Ennemi[] getVague2() {
 		return vague2;
 	}
-	
-	/**
-	 * @Setter vague2.
-	 * @param vague2 : remplace la vague2 de l instance par celle en argument
-	 */
 	public void setVague2(Ennemi[] vague2) {
 		this.vague2 = vague2;
 	}
-	
-	/**
-	 * @Getter vague3.
-	 * @return vague3 : la vague3 d ennemis
-	 */
 	public Ennemi[] getVague3() {
 		return vague3;
 	}
-	
-	/**
-	 * @Setter vague3.
-	 * @param vague3 : remplace la vague3 de l instance par celle en argument
-	 */
 	public void setVague3(Ennemi[] vague3) {
 		this.vague3 = vague3;
 	}
-	
-	/**
-	 * @Getter boss.
-	 * @return boss : le boss de la vague
-	 */
 	public Ennemi getBoss() {
 		return boss;
 	}
-	
-	/**
-	 * @Setter vague3.
-	 * @param vague3 : remplace la vague3 de l instance par celle en argument
-	 */
 	public void setBoss(Ennemi boss) {
 		this.boss = boss;
 	}
-	
-	/**
-	 * @Getter loot.
-	 * @return loot : loot genere lors de la mort d un ennemi
-	 */
 	public ArrayList<String> getloot() {
 		return loot;
 	}
-	
-	/**
-	 * @Setter loot.
-	 * @param loot : remplace le loot de l instance par celle en argument
-	 */
 	public void setloot(ArrayList<String> loot) {
 		this.loot = loot;
 	}
-	
 	/**
 	 * 
 	 * @param donjonNum numero du donjon.
 	 * @param nombrePlayer nombre de joueurs
 	 */
-	public void lootDonjon(int donjonNum) {
-		Connection connection = null;
-		Statement select = null;
-		ResultSet query = null;
-		try {
-			Class.forName("org.postgresql.Driver");
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ProjetJava", "postgres", "sql");
-			select = connection.createStatement();
-			for (int i = 0; i < donjonNum * 2; i++) {
-				String loot = null;
-				int rand = (int)((Math.random() * (25-1)) + 1);
-				query = select.executeQuery("SELECT lootName FROM tbLoot WHERE lootId="+rand);
-				while(query.next()) {
-					loot = query.getString("lootName");
-				}
-				this.loot.add(loot);
-			}
-		    query.close();
-		    select.close();
-		    connection.close();
-		    Iterator<String> iter = loot.iterator();
-		    while(iter.hasNext()) {
-		    	System.out.println(iter.next());
-		    }
-		 } catch (Exception e) {
-		    e.printStackTrace();
-		    System.err.println(e.getClass().getName()+" : "+e.getMessage());
-		    System.exit(0);
-		 }
-	}	
-	
-	
-	public static void main (String[]args) {
-		Donjon d1 = new Donjon();
-		d1.lootDonjon(3);
+	public void lootDonjon(int donjonNum, int nombrePlayer) {
+		for (int i = 0; i < donjonNum * nombrePlayer; i++) {
+			this.loot.add("epee");
+		}
+		this.loot.add("carte");
+	}
+	public Ennemi[] getPopVague(int vagueNum) {
+		if (vagueNum == 1) {return this.vague1;}
+		if (vagueNum == 2) {return this.vague2;}
+		if (vagueNum == 3) {return this.vague3;}
+		else {return this.vague1;}
 	}
 	
 	
 	/**
-	 * cree une vague avec plus ou moins de mob selon la vague.
-	 * les ennemis de la vague sont plus ou moins fort selon 
-	 * la somme des niveaux des joueurs
 	 * @param a > 0
 	 * @param sommeNiveau est la somme des niveau des joueurs
 	 * @return une vague d ennemi
+	 * cree une vague avec plus ou moins de mob selon la vague.
+	 * les ennemis de la vague sont plus ou moins fort selon 
+	 * la somme des niveaux des joueurs
 	 */
 	private Ennemi[] genererVague(int a, int sommeNiveau) {
 		Ennemi[] v;
@@ -253,12 +173,8 @@ public class Donjon {
 		return v;
 	}
 	
-	/**
-	 * permet d afficher les ennemis du donjon
-	 * @param boss
-	 * @param sommeNiveau
-	 */
-	public static void afficheMob(String boss, int sommeNiveau) {
+	
+	/*public static void afficheMob(String boss, int sommeNiveau) {
 		boolean isBoss = false;
 		Donjon d;
 		if (boss.compareTo("BOSS") != 0) {
@@ -289,8 +205,6 @@ public class Donjon {
 			//System.out.print("BOSS : ");
 			//System.out.print("BOSS : " + d.getBoss().getClasse());
 		}
-	}
-	
-	
+	}*/
 
 }

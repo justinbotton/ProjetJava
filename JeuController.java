@@ -14,12 +14,17 @@ public class JeuController {
 	Jeu jeu;
 	JeuVue jVue;
 	/**
-	 * 
+	 * constructeur.
 	 */
 	public JeuController(Jeu jeu) {
 		this.jeu = jeu;
 	}
 
+	/**
+	 * appel la methode adequate de jeu pour afficher les differents menus.
+	 * @param num numero de l etape qui determine le menu
+	 * @param joueur joueur qui doit jouer
+	 */
 	public void menu(int num, int joueur) {
 		switch(num){
 		case 0 :
@@ -37,10 +42,14 @@ public class JeuController {
 		default : 
 			jVue.affiche("Operation incorrecte");
 			//printHelp();
+		}
 	}
 	
-	}
-	
+	/**
+	 * appel de l affichage du choix des personnage.
+	 * @param i etape du jeu.
+	 * @param joueur = joueur qui doit jouer
+	 */
 	public void printTextMenu(int i, int joueur){
 		if (i == 1) {
 			jeu.printMenuText(1, joueur);
@@ -50,6 +59,10 @@ public class JeuController {
 			jeu.printMenuText(2, joueur);
 		}
 	}
+	/**
+	 * lance le choix du personnage de jeu.
+	 * @param i choix du joueur
+	 */
 	public void choixPersonnage(int i) {
 		switch(i){
 			case 1 :
@@ -74,6 +87,9 @@ public class JeuController {
 		}
 	}
 
+	/**
+	 * cree les differents donjons.
+	 */
 	public void creationDonjons() {
 		jeu.creationDonjons();
 		int num = jeu.getDonjonNum();
@@ -88,6 +104,12 @@ public class JeuController {
 			jVue.affiche("---------- Création du boss ... ----------\n");
 		}
 	}
+	/**
+	 * gere le combat.
+	 * @param vagueNum numero de vague de l ennemi.
+	 * @param choixMob ennemi cible
+	 * @param joueurNum numero du joueur qui joue.
+	 */
 	public void combat(int vagueNum,int choixMob, int joueurNum) {
 		String s = jeu.combat(vagueNum, choixMob, joueurNum);
 		if (s.compareTo("mort") == 0) {
@@ -98,7 +120,7 @@ public class JeuController {
 			Integer niv = new Integer(jeu.getJoueur().get(0).getNiveau());
 			jVue.affiche("xp : " + no.toString());
 			jVue.affiche("niveau : " + niv.toString());*/
-			if (jeu.checkVagueClean(vagueNum)) {
+			if (jeu.checkVagueClean(vagueNum) && (jeu.getDonj().getBoss() == null)) {
 				jVue.affiche("Pièce clean. Vous avez annéanti les forces ennemies qui entravaient votre chemin.");
 				jVue.affiche("Vous passez donc dans la pièce suivante !\n");
 			}
@@ -110,14 +132,25 @@ public class JeuController {
 			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" points de degats !\n");
 		}
 	}
+	/**
+	 * affiche la vague d ennemi present.
+	 * @param vagueNum numero de la vague actuelle.
+	 */
 	public void afficheVague(int vagueNum) {
 		jVue.affiche("Quel ennemi allez vous attaquer ?");
 		jeu.afficheVague(vagueNum);
 	}
+	/**
+	 * affiche le boss du dernier donjon.
+	 */
 	public void afficheChoixBoss() {
 		jVue.affiche("Attaquez ce boss !");
 		jeu.afficheChoixBoss();
 	}
+	/**
+	 * affiche un petit texte d intro pour chaque donjon.
+	 * @param num numero du donjon.
+	 */
 	public void histoire(int num) {
 		if (num == 1) {
 			jVue.affiche("Vous arrivez face à votre premier donjon. Serez-vous assez fort que pour vaincre ceux qui l'habite ?");
@@ -132,6 +165,10 @@ public class JeuController {
 		if (num == 5) {jVue.affiche("toto3");}	// TODO 
 	}
 	
+	/**
+	 * gere le tour d un ennemi.
+	 * @param vague numero de la vague de l ennemi qui joue.
+	 */
 	public void tourMob(int vague) {
 		if (!jeu.checkVagueClean(vague)) {
 			String etatJoueur = jeu.combatMob(vague);
@@ -150,7 +187,9 @@ public class JeuController {
 		}
 		return false;
 	}*/
-	
+	/**
+	 * gere le tour du boss.
+	 */
 	public void tourBoss() {
 		if (jeu.getDonj().getBoss().getEtat().compareTo("vivant") == 0) {
 			String etatJoueur = jeu.combatBoss();
@@ -160,6 +199,10 @@ public class JeuController {
 			}
 		}
 	}
+	/**
+	 * affiche la feuille de personnage du joueur choix.
+	 * @param choix joueur demande
+	 */
 	public void afficheFeuillePersonnages(int choix) {
 		Hero h = jeu.getJoueur().get(choix-1);
 		System.out.println("Feuille de personnage du joueur " + choix + " : ");
@@ -172,7 +215,6 @@ public class JeuController {
 		System.out.println("Arme : " + h.getArmeDroite().getNom());
 		System.out.println("Etat : " + h.getEtat());
 		System.out.println("---------- Retour au combat ----------\n");
-		
 	}
 	
 	

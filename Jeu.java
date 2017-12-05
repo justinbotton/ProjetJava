@@ -25,7 +25,7 @@ public class Jeu extends Observable {
 	int donjonNum = 0;
 
 	/**
-	 * 
+	 *  constructeur de jeu
 	 */
 	public Jeu() {
 		/*Hero h = new Hero();
@@ -84,17 +84,27 @@ public class Jeu extends Observable {
 		this.joueurMort = joueurMort;
 	}
 	
+	/**
+	 * decremente la variable enVie lorsque qu un joueur meurt.
+	 */
 	public void mortDUnJoueur() {
 		this.enVie = this.enVie - 1;
 		setChanged();
         notifyObservers();
 	}
+	/**
+	 * incremente le numero de donjon.
+	 */
 	public void incDonjonNum() {
 		this.donjonNum = this.donjonNum + 1;
 		setChanged();
         notifyObservers();
 	}
 
+	/**
+	 * ajout le choix de personnage du joueur a la liste des joueurs.
+	 * @param i appartient [1,2,3,4]
+	 */
 	public void choixPerso(int i) {
 		switch(i){
 			case 1 :
@@ -126,9 +136,16 @@ public class Jeu extends Observable {
 				this.ajoutJoueur(humain2);
 				setChanged();
 		        notifyObservers();
+		        break;
 		}
 	}
 
+	/**
+	 * affiche a l ecran console le menu de lancement et change la variable inGame a true si i = 1.
+	 * affiche a l ecran le choix de personnage pour les joueurs, sinon.
+	 * @param i variable de séquence du jeu
+	 * @param joueur  = numero du joueur 
+	 */
 	public void printMenuText(int i, int joueur){
 		if (i == 1 && !inGame) {
 			System.out.println("1 : Jouer");
@@ -193,6 +210,12 @@ public class Jeu extends Observable {
 		}
 		return "mauvais numéro de vague";
 	}
+	
+	/**
+	 *  check si il reste des ennemis en vie.
+	 * @param vagueNum numero de la vague d ennemi courante.
+	 * @return true si il n y a plus d ennemi en vie dans la vague, false sinon.
+	 */
 	public boolean checkVagueClean(int vagueNum) {
 		for (Ennemi en : this.getDonj().getPopVague(vagueNum)) {
 			if (en.getEtat().compareTo("vivant") == 0) {return false;}
@@ -200,6 +223,10 @@ public class Jeu extends Observable {
 		return true;
 	}
 	
+	/**
+	 *  affiche les ennemis presents selon le numero de vague.
+	 * @param vagueNum = le numero de vague courant.
+	 */
 	public void afficheVague(int vagueNum) {
 		if (vagueNum == 1) {
 			Ennemi[] vag = this.getDonj().getVague1();
@@ -233,6 +260,9 @@ public class Jeu extends Observable {
 			}
 		}
 	}
+	/**
+	 * affiche le boss du dernier donjon.
+	 */
 	public void afficheChoixBoss() {
 		Ennemi boss = this.getDonj().getBoss();
 		if (boss.getEtat().compareTo("vivant") == 0) {System.out.println("1 : " + boss.getClasse());}
@@ -241,6 +271,10 @@ public class Jeu extends Observable {
 		}
 	}
 	
+	/**
+	 * @param x = nombre entier.
+	 * @return un nombre aleatoire entre 0 et x
+	 */
 	public int nbrAlea(int x) {
 		double rand = (Math.random() * x) + 1;
 		return (int) rand;
@@ -303,6 +337,12 @@ public class Jeu extends Observable {
 		}
 		return "fail combat";
 	}
+	/**
+	 *  tour d attaque des ennemis.
+	 * @param e ennemi qui joue
+	 * @param joueurAttaque joueur cible par l ennemi
+	 * @return l etat du joueur : "mort" || "vivant"
+	 */
 	public String mobAttaque(Ennemi e, int joueurAttaque) {
 		Hero h = joueur.get(joueurAttaque - 1);
 		if (h.getEtat().compareTo("mort") == 0) {
@@ -318,6 +358,12 @@ public class Jeu extends Observable {
         return joueur.get(joueurAttaque - 1).getEtat();
 	}
 	
+	/**
+	 * check si l ennemi choisi peut attaquer.
+	 * @param attaquant numero de l ennemi qui va jouer
+	 * @param vague vague a laquelle l ennemi appartient
+	 * @return true si l ennemi concerner est en vie, false sinon.
+	 */
 	public boolean attaquantEnVie(int attaquant, int vague) {
 		Ennemi att = this.donj.getPopVague(vague)[attaquant - 1];
 		return (att.getEtat().compareTo("vivant") == 0);
@@ -357,6 +403,12 @@ public class Jeu extends Observable {
 			}
 	}
 	
+	/**
+	 * ajoute l xp d un mob vaincu aux joueurs
+	 * @param vagueNum numero de la vague de l ennemi vaincu
+	 * @param choixMob numero de l ennemi dans la vague
+	 * @return le nombre de points d experiences gagne
+	 */
 	public int xpRecu(int vagueNum,int choixMob) {
 		int xpGagne = 0;
 		Donjon d = this.getDonj();
@@ -369,12 +421,8 @@ public class Jeu extends Observable {
         notifyObservers();
 		return xpGagne;
 	}
-	public boolean dejaMort(int vagueNum, int choixMob) {
-		if (choixMob != 0) {
-			return (this.donj.getPopVague(vagueNum)[choixMob-1].getEtat().compareTo("mort") == 0);
-		}
-		else {return false;}
-	}
+
+	
 	/**
 	 * @param args
 	 */

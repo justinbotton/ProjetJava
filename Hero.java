@@ -28,29 +28,29 @@ public class Hero extends Personnage {
 	/**
 	 * caracteristiques de la classe elfe.
 	 */
-	public static final int forceElfe = 4;
-	public static final int enduranceElfe = 40;
+	public static final int forceElfe = 8;
+	public static final int enduranceElfe = 400;
 	public static final int vitesseAttaqueElfe = 1;
 	
 	/**
 	 * caracteristiques de la classe nain.
 	 */
-	public static final int forceNain = 3;
-	public static final int enduranceNain = 60;
+	public static final int forceNain = 6;
+	public static final int enduranceNain = 600;
 	public static final int vitesseAttaqueNain = 1;
 	
 	/**
 	 * caracteristiques de la classe orque.
 	 */
-	public static final int forceOrque = 1;
-	public static final int enduranceOrque = 80;
+	public static final int forceOrque = 2;
+	public static final int enduranceOrque = 800;
 	public static final int vitesseAttaqueOrque = 1;
 	
 	/**
 	 * caracteristiques de la classe humain.
 	 */
-	public static final int forceHumain = 5;
-	public static final int enduranceHumain = 30;
+	public static final int forceHumain = 10;
+	public static final int enduranceHumain = 300;
 	public static final int vitesseAttaqueHumain = 1;
 	//public static final int tailleInventaireArmeBase = 2;
 	
@@ -125,14 +125,14 @@ public class Hero extends Personnage {
 				break;
 		}
 	}
-	public void setUpHero(String classe, int endurance, int vie, int force, Arme armeDroite, int vitesseAttaque){
+	/*public void setUpHero(String classe, int endurance, int vie, int force, Arme armeDroite, int vitesseAttaque){
 		this.classe = classe;
 		this.endurance = endurance;
 		this.vie = vie;
 		this.force = force;
 		this.armeDroite = armeDroite;
 		this.vitesseAttaque = vitesseAttaque;
-	}
+	}*/
 	
 	/*
 	private static Icon getIcon() {
