@@ -42,8 +42,10 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	 */
 	private void afficheTuto() {
 		this.affiche("Vous serez face a des choix pour vous battre ou récolter \n"+"des ressources. "
-				+ "Tapez un chiffre entre 0 et x et/ou 9 (pour afficher votre feuille de personnage) pour effectuer votre choix. \n"
-				+ "Vous jouez a tour de rôle jusqu'a ce que mort s'en suive ou jusqu'a ce que vous ayez vaincu le Boss maitre du Donjon. \n");
+				+ "Tapez un chiffre entre 1 et x pour effectuer votre choix.et/ou 9 (pour afficher "
+				+ "votre feuille de personnage) et 0 (pour quitter a tout moment) \n"
+				+ "Vous jouez a tour de rôle jusqu'a ce que mort s'en suive ou jusqu'a ce que vous"
+				+ " ayez vaincu le Boss maitre du Donjon. \n");
 	}
 	/**
 	 * set la variable end a true pour terminer la partie.
@@ -119,7 +121,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 								}
 								playerTurn = upTour(playerTurn);
 							}
-							jControl.jeu.incDonjonNum();
+							//jControl.jeu.incDonjonNum();
 						}
 						
 						//gerer loot 
@@ -233,6 +235,10 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		System.out.println("1 : Feuille personnage joueur 1");
 		System.out.println("2 : Feuille personnage joueur 2");
 		int choix = scan.nextInt();
+		while (choix != 1 && choix != 2) {
+			System.out.println("Choix indisponible, resaisissez votre choix :");
+			choix = scan.nextInt();
+		}
 		jControl.afficheFeuillePersonnages(choix);
 	}
 	/**
@@ -263,6 +269,8 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 		if (i == 0) {
 			gestion0();
+			jControl.printTextMenu(2,1);
+			i = scan.nextInt();
 		}
 		//jControl.printTextMenu(2,1);	
 		jControl.choixPersonnage(i);
@@ -282,6 +290,8 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 		if (i == 0) {
 			gestion0();
+			jControl.printTextMenu(2,2);
+			i = scan.nextInt();
 		}
 		/*else {
 			jControl.choixPersonnage(i);
@@ -304,6 +314,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 				jControl.afficheVague(vagueNum);
 				choixMob = scan.nextInt();
 				if (choixMob == 9) {gestion9();}
+				if (choixMob == 0) {gestion0();}
 				while (!correctEntree(choixMob, vagueNum)) {
 					choixMob = scan.nextInt();
 				}

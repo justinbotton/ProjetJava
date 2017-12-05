@@ -29,28 +29,28 @@ public class Hero extends Personnage {
 	 * caracteristiques de la classe elfe.
 	 */
 	public static final int forceElfe = 8;
-	public static final int enduranceElfe = 400;
+	public static final int enduranceElfe = 200;
 	public static final int vitesseAttaqueElfe = 1;
 	
 	/**
 	 * caracteristiques de la classe nain.
 	 */
 	public static final int forceNain = 6;
-	public static final int enduranceNain = 600;
+	public static final int enduranceNain = 300;
 	public static final int vitesseAttaqueNain = 1;
 	
 	/**
 	 * caracteristiques de la classe orque.
 	 */
 	public static final int forceOrque = 2;
-	public static final int enduranceOrque = 800;
+	public static final int enduranceOrque = 400;
 	public static final int vitesseAttaqueOrque = 1;
 	
 	/**
 	 * caracteristiques de la classe humain.
 	 */
 	public static final int forceHumain = 10;
-	public static final int enduranceHumain = 300;
+	public static final int enduranceHumain = 150;
 	public static final int vitesseAttaqueHumain = 1;
 	//public static final int tailleInventaireArmeBase = 2;
 	
@@ -181,6 +181,7 @@ public class Hero extends Personnage {
 		if (this.xp >= this.capLevel()) {
 			this.xp -= this.capLevel();	
 			this.niveau++;
+			//this.vie = vieMax();
 		}
 	}
 	

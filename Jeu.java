@@ -365,8 +365,13 @@ public class Jeu extends Observable {
 	 * @return true si l ennemi concerner est en vie, false sinon.
 	 */
 	public boolean attaquantEnVie(int attaquant, int vague) {
-		Ennemi att = this.donj.getPopVague(vague)[attaquant - 1];
-		return (att.getEtat().compareTo("vivant") == 0);
+		if (attaquant > 0) {
+			Ennemi att = this.donj.getPopVague(vague)[attaquant - 1];
+			return (att.getEtat().compareTo("vivant") == 0);
+		}
+		else {
+			return false;
+		}
 	}
 	public void checkMort(String s, int joueur) {
 		if (s.compareTo("mort") == 0) {
