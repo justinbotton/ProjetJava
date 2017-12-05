@@ -42,8 +42,8 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	 */
 	private void afficheTuto() {
 		this.affiche("Vous serez face a des choix pour vous battre ou récolter \n"+"des ressources. "
-				+ "Tapez un chiffre entre 1 et x pour effectuer votre choix.et/ou 9 (pour afficher "
-				+ "votre feuille de personnage) et 0 (pour quitter a tout moment) \n"
+				+ "Tapez un chiffre entre 0 et 9 pour effectuer votre choix où 9 (est pour afficher "
+				+ "votre feuille de personnage) et 0 (pour quitter a tout moment). \n"
 				+ "Vous jouez a tour de rôle jusqu'a ce que mort s'en suive ou jusqu'a ce que vous"
 				+ " ayez vaincu le Boss maitre du Donjon. \n");
 	}
@@ -132,7 +132,10 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						if (jControl.jeu.getEnVie() <= 0) {
 							affiche("Vous avez succomber aux forces du Donjon. Vous avez perdu !\n");
 						}
-						
+						else {
+							jControl.jeu.incDonjonNum(); // sortie de boucle des donjons
+							affiche("Vous avez suplante les forces du Donjon. Vous avez gagner !\n");
+						}
 					}
 					
 					
@@ -334,9 +337,8 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	 * @return
 	 */
 	private boolean TourJoueur(int vagueNum, int choixMob, int joueurNum) {
-		if (choixMob == 0) {
-			gestion0();
-		}
+		if (choixMob == 9) {gestion9();}
+		if (choixMob == 0) {gestion0();}
 		jControl.combat(vagueNum, choixMob,  joueurNum);
 		if (vagueNum != 0) {
 			if (jControl.jeu.checkVagueClean(vagueNum)) {

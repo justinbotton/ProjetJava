@@ -42,7 +42,7 @@ public class Hero extends Personnage {
 	/**
 	 * caracteristiques de la classe orque.
 	 */
-	public static final int forceOrque = 2;
+	public static final int forceOrque = 4;
 	public static final int enduranceOrque = 400;
 	public static final int vitesseAttaqueOrque = 1;
 	
@@ -65,9 +65,13 @@ public class Hero extends Personnage {
 	private int tailleInventaireArme;*/
 	
 	/**
-	 * experience d un hero.
+	 * experience d un heros.
 	 */
 	private int xp;
+	/**
+	 * vie max du heros.
+	 */
+	private int vieMax;
 	
 
 	/**
@@ -79,6 +83,7 @@ public class Hero extends Personnage {
 		this.setUpPersonnage("euh... je n ai pas choisi de classe moi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme, vitesseAttaqueHumain);
 		this.niveau = 1;
 		this.xp = 0;
+		this.vieMax = 2 * enduranceHumain;
 		/*
 		 * pour une future maj
 		this.inventaireArme.add(armeDroite);
@@ -101,27 +106,31 @@ public class Hero extends Personnage {
 				//System.out.println("je suis un Elfle !!");
 				Arme arme = new Arme("arc", 3);
 				this.setUpPersonnage("Elfe", enduranceElfe, 2 * enduranceElfe, forceElfe, arme, vitesseAttaqueElfe);
-				//setUpHero("Elfe", enduranceElfle, 2 * enduranceElfle, forceElfle, arme, vitesseAttaqueElfe);
+				this.vieMax = 2 * enduranceElfe;
 				break;
 			case "Nain" : 
 				//System.out.println("je suis un Nain !!");
 				Arme arme2 = new Arme("hachette", 3);
 				this.setUpPersonnage("Nain", enduranceNain, 2 * enduranceNain, forceNain, arme2, vitesseAttaqueNain);
+				this.vieMax = 2 * enduranceNain;
 				break;
 			case "Orque" : 
 				//System.out.println("je suis un Orque !!");
 				Arme arme3 = new Arme("masse", 3);
 				this.setUpPersonnage("Orque", enduranceOrque, 2 * enduranceOrque, forceOrque, arme3, vitesseAttaqueOrque);
+				this.vieMax = 2 * enduranceOrque;
 				break;
 			case "Humain" : 
 				//System.out.println("je suis un Humain !!");
 				Arme arme4 = new Arme("epee", 3);
 				this.setUpPersonnage("Humain", enduranceHumain, 2 * enduranceHumain, forceHumain, arme4, vitesseAttaqueHumain);
+				this.vieMax = 2 * enduranceHumain;
 				break;
 			default : 
 				//System.out.println("je suis un ... heu... j'ai pas choisi !!");
 				Arme arme5 = new Arme("fourchette", 1);
 				this.setUpPersonnage("je suis un...heu...je n ai pas choisi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme5, vitesseAttaqueHumain);
+				this.vieMax = 2 * enduranceHumain;
 				break;
 		}
 	}
@@ -171,7 +180,7 @@ public class Hero extends Personnage {
 	public void setXp(int xp) {
 		this.xp = xp;
 	}
-	
+
 	/**
 	 * ajoute l xp en parametre a celle du hero.
 	 * @param xp : xp a ajouter
@@ -181,7 +190,7 @@ public class Hero extends Personnage {
 		if (this.xp >= this.capLevel()) {
 			this.xp -= this.capLevel();	
 			this.niveau++;
-			//this.vie = vieMax();
+			this.vie = this.vieMax;
 		}
 	}
 	
