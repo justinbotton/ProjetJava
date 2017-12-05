@@ -24,7 +24,7 @@ public class Jeu extends Observable {
 	//private ArrayList<Donjon> donjons14;
 	private Donjon donj;
 	private int joueurMort;
-	int donjonNum = 0;
+	int donjonNum = 1;
 
 	/**
 	 *  constructeur de jeu
@@ -179,7 +179,7 @@ public class Jeu extends Observable {
 			/*Donjon d = new Donjon(sumNiv);
 			donjons14.add(d);*/
 			donj = new Donjon(sumNiv);
-			donjonNum++;
+			//donjonNum++;
 			setChanged();
 	        notifyObservers();
 		}
@@ -431,21 +431,31 @@ public class Jeu extends Observable {
 
 	public void gestionLoot() {
 		ArrayList<Loot> drop = donj.lootDonjon(donjonNum);
+		int i = 0;
 		for(Hero h : joueur) {
 			int k = 1;
 			for(Loot l : drop) {
 				System.out.println(k+" : "+l.getNom());
 				k++;
 			}
-			System.out.println("Choisissez votre loot : Joueur "+nbrAlea(2));
+			int z = nbrAlea(2);
+			if(z==i) {
+				if(z==1) {
+					z=2;
+				}else {
+					z=1;
+				}
+			}
+			System.out.println("Choisissez votre loot : Joueur "+z);
 			scan = new Scanner(System.in);
 			int entree = scan.nextInt();
-			while(!(entree<=drop.size())) {
+			while(entree>drop.size() || entree<=0) {
 				System.out.println("Mauvais numero de loot : choisissez a nouveau");
 				entree = scan.nextInt();
 			}
 			h.ramasser(drop, entree);
 		}
+		drop.removeAll(drop);
 	}
 	
 	/**

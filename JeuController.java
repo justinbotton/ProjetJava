@@ -221,7 +221,7 @@ public class JeuController {
 	public void gestionLoot() {
 		jVue.affiche("Gestion des Loot : ");
 		jeu.gestionLoot();
-		jVue.affiche("Gestion des Loot terminee");
+		jVue.affiche("Gestion des Loot terminee \n");
 	}
 	
 	public void addView(JeuVue jVue) {

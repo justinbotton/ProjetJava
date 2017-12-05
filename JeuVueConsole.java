@@ -135,9 +135,11 @@ public class JeuVueConsole extends JeuVue implements Observer {
 							affiche("Vous avez succomber aux forces du Donjon. Vous avez perdu !\n");
 						}
 						else {
+							if(jControl.jeu.getDonjonNum() == 5) {
+								gestionLoot();
+								affiche("Vous avez suplante les forces du Donjon. Vous avez gagner !\n");
+							}
 							jControl.jeu.incDonjonNum(); // sortie de boucle des donjons
-							gestionLoot();
-							affiche("Vous avez suplante les forces du Donjon. Vous avez gagner !\n");
 						}
 					}
 					
