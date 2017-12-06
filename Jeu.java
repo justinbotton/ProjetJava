@@ -6,6 +6,7 @@ package info;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Scanner;
 
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
  *
  */
 public class Jeu extends Observable {
+	private Scanner scan;
 	private int enVie;
 	private int nombreJoueur;
 	private ArrayList<Hero> joueur;
@@ -22,10 +24,10 @@ public class Jeu extends Observable {
 	//private ArrayList<Donjon> donjons14;
 	private Donjon donj;
 	private int joueurMort;
-	int donjonNum = 0;
+	int donjonNum = 1;
 
 	/**
-	 * 
+	 *  constructeur de jeu
 	 */
 	public Jeu() {
 		/*Hero h = new Hero();
@@ -84,17 +86,27 @@ public class Jeu extends Observable {
 		this.joueurMort = joueurMort;
 	}
 	
+	/**
+	 * decremente la variable enVie lorsque qu un joueur meurt.
+	 */
 	public void mortDUnJoueur() {
 		this.enVie = this.enVie - 1;
 		setChanged();
         notifyObservers();
 	}
+	/**
+	 * incremente le numero de donjon.
+	 */
 	public void incDonjonNum() {
 		this.donjonNum = this.donjonNum + 1;
 		setChanged();
         notifyObservers();
 	}
 
+	/**
+	 * ajout le choix de personnage du joueur a la liste des joueurs.
+	 * @param i appartient [1,2,3,4]
+	 */
 	public void choixPerso(int i) {
 		switch(i){
 			case 1 :
@@ -126,9 +138,16 @@ public class Jeu extends Observable {
 				this.ajoutJoueur(humain2);
 				setChanged();
 		        notifyObservers();
+		        break;
 		}
 	}
 
+	/**
+	 * affiche a l ecran console le menu de lancement et change la variable inGame a true si i = 1.
+	 * affiche a l ecran le choix de personnage pour les joueurs, sinon.
+	 * @param i variable de séquence du jeu
+	 * @param joueur  = numero du joueur 
+	 */
 	public void printMenuText(int i, int joueur){
 		if (i == 1 && !inGame) {
 			System.out.println("1 : Jouer");
@@ -160,7 +179,7 @@ public class Jeu extends Observable {
 			/*Donjon d = new Donjon(sumNiv);
 			donjons14.add(d);*/
 			donj = new Donjon(sumNiv);
-			donjonNum++;
+			//donjonNum++;
 			setChanged();
 	        notifyObservers();
 		}
@@ -177,55 +196,39 @@ public class Jeu extends Observable {
 	 * @param joueurNum est le numero du joueur 1 || 2
 	 */
 	public String combat(int vagueNum,int choixMob, int joueurNum) {
-		if (vagueNum ==0) {
+		if (vagueNum == 0) {
 			this.joueur.get(joueurNum-1).attaque(donj.getBoss());
 			setChanged();
 	        notifyObservers();
 	        return donj.getBoss().getEtat();
 		}
-		if (vagueNum == 1) {
+		if (vagueNum <= 3){
 			//Hero he = this.joueur.get(joueurNum-1);
 			//Ennemi e = donj.getVague1()[choixMob - 1];
-			this.joueur.get(joueurNum-1).attaque(donj.getVague1()[choixMob - 1]);
+			this.joueur.get(joueurNum-1).attaque(donj.getPopVague(vagueNum)[choixMob - 1]);
 			setChanged();
 	        notifyObservers();
-	        return donj.getVague1()[choixMob - 1].getEtat();
-		}
-		if (vagueNum == 2) {
-			this.joueur.get(joueurNum-1).attaque(donj.getVague2()[choixMob - 1]);
-			setChanged();
-	        notifyObservers();
-	        return donj.getVague2()[choixMob - 1].getEtat();
-		}
-		if (vagueNum == 3) {
-			this.joueur.get(joueurNum-1).attaque(donj.getVague3()[choixMob - 1]);
-			setChanged();
-	        notifyObservers();
-	        return donj.getVague3()[choixMob - 1].getEtat();
+	        return donj.getPopVague(vagueNum)[choixMob - 1].getEtat();
 		}
 		return "mauvais numéro de vague";
 	}
+	
+	/**
+	 *  check si il reste des ennemis en vie.
+	 * @param vagueNum numero de la vague d ennemi courante.
+	 * @return true si il n y a plus d ennemi en vie dans la vague, false sinon.
+	 */
 	public boolean checkVagueClean(int vagueNum) {
-		if (vagueNum == 1) {
-			for (Ennemi en : this.getDonj().getVague1()) {
-				if (en.getEtat().compareTo("vivant") == 0) {return false;}
-			}
-			return true;
+		for (Ennemi en : this.getDonj().getPopVague(vagueNum)) {
+			if (en.getEtat().compareTo("vivant") == 0) {return false;}
 		}
-		if (vagueNum == 2) {
-			for (Ennemi en : this.getDonj().getVague2()) {
-				if (en.getEtat().compareTo("vivant") == 0) {return false;}
-			}
-			return true;
-		}
-		if (vagueNum == 3) {
-			for (Ennemi en : this.getDonj().getVague3()) {
-				if (en.getEtat().compareTo("vivant") == 0) {return false;}
-			}
-			return true;
-		}
-		return false;
+		return true;
 	}
+	
+	/**
+	 *  affiche les ennemis presents selon le numero de vague.
+	 * @param vagueNum = le numero de vague courant.
+	 */
 	public void afficheVague(int vagueNum) {
 		if (vagueNum == 1) {
 			Ennemi[] vag = this.getDonj().getVague1();
@@ -244,7 +247,6 @@ public class Jeu extends Observable {
 					&& (vag[2].getEtat().compareTo("mort") == 0)) {
 				System.out.println("vague terminee !");
 			}
-			
 		}
 		if (vagueNum == 3) {
 			Ennemi[] vag = this.getDonj().getVague3();
@@ -260,6 +262,9 @@ public class Jeu extends Observable {
 			}
 		}
 	}
+	/**
+	 * affiche le boss du dernier donjon.
+	 */
 	public void afficheChoixBoss() {
 		Ennemi boss = this.getDonj().getBoss();
 		if (boss.getEtat().compareTo("vivant") == 0) {System.out.println("1 : " + boss.getClasse());}
@@ -268,6 +273,10 @@ public class Jeu extends Observable {
 		}
 	}
 	
+	/**
+	 * @param x = nombre entier.
+	 * @return un nombre aleatoire entre 0 et x
+	 */
 	public int nbrAlea(int x) {
 		double rand = (Math.random() * x) + 1;
 		return (int) rand;
@@ -330,13 +339,19 @@ public class Jeu extends Observable {
 		}
 		return "fail combat";
 	}
+	/**
+	 *  tour d attaque des ennemis.
+	 * @param e ennemi qui joue
+	 * @param joueurAttaque joueur cible par l ennemi
+	 * @return l etat du joueur : "mort" || "vivant"
+	 */
 	public String mobAttaque(Ennemi e, int joueurAttaque) {
 		Hero h = joueur.get(joueurAttaque - 1);
 		if (h.getEtat().compareTo("mort") == 0) {
 			h = getAutre(joueurAttaque - 1);
 		}
 		int vieAvant = h.getVie();
-		System.out.println("Le " + e.getClasse() + " attaque joueur "+ joueurAttaque + " !");
+		System.out.println("-- ENNEMI : " + e.getClasse() + " attaque joueur "+ joueurAttaque + " ! --");
 		e.attaque(h);
 		int degatDonne = vieAvant - h.getVie();
 		System.out.println("Il vous a fait perdre : " + degatDonne + " points de vie ! Il vous reste donc " + h.getVie() +" points de vie.\n");
@@ -345,20 +360,20 @@ public class Jeu extends Observable {
         return joueur.get(joueurAttaque - 1).getEtat();
 	}
 	
+	/**
+	 * check si l ennemi choisi peut attaquer.
+	 * @param attaquant numero de l ennemi qui va jouer
+	 * @param vague vague a laquelle l ennemi appartient
+	 * @return true si l ennemi concerner est en vie, false sinon.
+	 */
 	public boolean attaquantEnVie(int attaquant, int vague) {
-		if (vague == 1) {
-			Ennemi att = this.donj.getVague1()[attaquant - 1];
+		if (attaquant > 0) {
+			Ennemi att = this.donj.getPopVague(vague)[attaquant - 1];
 			return (att.getEtat().compareTo("vivant") == 0);
 		}
-		if (vague == 2) {
-			Ennemi att = this.donj.getVague2()[attaquant - 1];
-			return (att.getEtat().compareTo("vivant") == 0);
+		else {
+			return false;
 		}
-		if (vague == 3) {
-			Ennemi att = this.donj.getVague3()[attaquant - 1];
-			return (att.getEtat().compareTo("vivant") == 0);
-		}
-		return false;
 	}
 	public void checkMort(String s, int joueur) {
 		if (s.compareTo("mort") == 0) {
@@ -395,19 +410,52 @@ public class Jeu extends Observable {
 			}
 	}
 	
+	/**
+	 * ajoute l xp d un mob vaincu aux joueurs
+	 * @param vagueNum numero de la vague de l ennemi vaincu
+	 * @param choixMob numero de l ennemi dans la vague
+	 * @return le nombre de points d experiences gagne
+	 */
 	public int xpRecu(int vagueNum,int choixMob) {
 		int xpGagne = 0;
 		Donjon d = this.getDonj();
 		if (vagueNum == 0) {xpGagne = d.getBoss().getXpMob();}
-		if (vagueNum == 1) {xpGagne = d.getVague1()[choixMob - 1].getXpMob();}
-		if (vagueNum == 2) {xpGagne = d.getVague2()[choixMob - 1].getXpMob();}
-		if (vagueNum == 3) {xpGagne = d.getVague3()[choixMob - 1].getXpMob();}
+		else {xpGagne = d.getPopVague(vagueNum)[choixMob - 1].getXpMob();}
 		for (Hero h : this.joueur) {
 			h.ajoutXp(xpGagne);
 		}
 		setChanged();
         notifyObservers();
 		return xpGagne;
+	}
+
+	public void gestionLoot() {
+		ArrayList<Loot> drop = donj.lootDonjon(donjonNum);
+		int i = 0;
+		for(Hero h : joueur) {
+			int k = 1;
+			for(Loot l : drop) {
+				System.out.println(k+" : "+l.getNom());
+				k++;
+			}
+			int z = nbrAlea(2);
+			if(z==i) {
+				if(z==1) {
+					z=2;
+				}else {
+					z=1;
+				}
+			}
+			System.out.println("Choisissez votre loot : Joueur "+z);
+			scan = new Scanner(System.in);
+			int entree = scan.nextInt();
+			while(entree>drop.size() || entree<=0) {
+				System.out.println("Mauvais numero de loot : choisissez a nouveau");
+				entree = scan.nextInt();
+			}
+			h.ramasser(drop, entree);
+		}
+		drop.removeAll(drop);
 	}
 	
 	/**

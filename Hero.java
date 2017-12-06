@@ -28,29 +28,29 @@ public class Hero extends Personnage {
 	/**
 	 * caracteristiques de la classe elfe.
 	 */
-	public static final int forceElfe = 4;
-	public static final int enduranceElfe = 40;
+	public static final int forceElfe = 8;
+	public static final int enduranceElfe = 200;
 	public static final int vitesseAttaqueElfe = 1;
 	
 	/**
 	 * caracteristiques de la classe nain.
 	 */
-	public static final int forceNain = 3;
-	public static final int enduranceNain = 60;
+	public static final int forceNain = 6;
+	public static final int enduranceNain = 300;
 	public static final int vitesseAttaqueNain = 1;
 	
 	/**
 	 * caracteristiques de la classe orque.
 	 */
-	public static final int forceOrque = 1;
-	public static final int enduranceOrque = 80;
+	public static final int forceOrque = 4;
+	public static final int enduranceOrque = 400;
 	public static final int vitesseAttaqueOrque = 1;
 	
 	/**
 	 * caracteristiques de la classe humain.
 	 */
-	public static final int forceHumain = 5;
-	public static final int enduranceHumain = 30;
+	public static final int forceHumain = 10;
+	public static final int enduranceHumain = 150;
 	public static final int vitesseAttaqueHumain = 1;
 	//public static final int tailleInventaireArmeBase = 2;
 	
@@ -65,9 +65,13 @@ public class Hero extends Personnage {
 	private int tailleInventaireArme;*/
 	
 	/**
-	 * experience d un hero.
+	 * experience d un heros.
 	 */
 	private int xp;
+	/**
+	 * vie max du heros.
+	 */
+	private int vieMax;
 	
 
 	/**
@@ -79,6 +83,7 @@ public class Hero extends Personnage {
 		this.setUpPersonnage("euh... je n ai pas choisi de classe moi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme, vitesseAttaqueHumain);
 		this.niveau = 1;
 		this.xp = 0;
+		this.vieMax = 2 * enduranceHumain;
 		/*
 		 * pour une future maj
 		this.inventaireArme.add(armeDroite);
@@ -101,38 +106,42 @@ public class Hero extends Personnage {
 				//System.out.println("je suis un Elfle !!");
 				Arme arme = new Arme("arc", 3);
 				this.setUpPersonnage("Elfe", enduranceElfe, 2 * enduranceElfe, forceElfe, arme, vitesseAttaqueElfe);
-				//setUpHero("Elfe", enduranceElfle, 2 * enduranceElfle, forceElfle, arme, vitesseAttaqueElfe);
+				this.vieMax = 2 * enduranceElfe;
 				break;
 			case "Nain" : 
 				//System.out.println("je suis un Nain !!");
 				Arme arme2 = new Arme("hachette", 3);
 				this.setUpPersonnage("Nain", enduranceNain, 2 * enduranceNain, forceNain, arme2, vitesseAttaqueNain);
+				this.vieMax = 2 * enduranceNain;
 				break;
 			case "Orque" : 
 				//System.out.println("je suis un Orque !!");
 				Arme arme3 = new Arme("masse", 3);
 				this.setUpPersonnage("Orque", enduranceOrque, 2 * enduranceOrque, forceOrque, arme3, vitesseAttaqueOrque);
+				this.vieMax = 2 * enduranceOrque;
 				break;
 			case "Humain" : 
 				//System.out.println("je suis un Humain !!");
 				Arme arme4 = new Arme("epee", 3);
 				this.setUpPersonnage("Humain", enduranceHumain, 2 * enduranceHumain, forceHumain, arme4, vitesseAttaqueHumain);
+				this.vieMax = 2 * enduranceHumain;
 				break;
 			default : 
 				//System.out.println("je suis un ... heu... j'ai pas choisi !!");
 				Arme arme5 = new Arme("fourchette", 1);
 				this.setUpPersonnage("je suis un...heu...je n ai pas choisi !!", enduranceHumain, 2 * enduranceHumain, forceHumain, arme5, vitesseAttaqueHumain);
+				this.vieMax = 2 * enduranceHumain;
 				break;
 		}
 	}
-	public void setUpHero(String classe, int endurance, int vie, int force, Arme armeDroite, int vitesseAttaque){
+	/*public void setUpHero(String classe, int endurance, int vie, int force, Arme armeDroite, int vitesseAttaque){
 		this.classe = classe;
 		this.endurance = endurance;
 		this.vie = vie;
 		this.force = force;
 		this.armeDroite = armeDroite;
 		this.vitesseAttaque = vitesseAttaque;
-	}
+	}*/
 	
 	/*
 	private static Icon getIcon() {
@@ -171,7 +180,7 @@ public class Hero extends Personnage {
 	public void setXp(int xp) {
 		this.xp = xp;
 	}
-	
+
 	/**
 	 * ajoute l xp en parametre a celle du hero.
 	 * @param xp : xp a ajouter
@@ -181,6 +190,7 @@ public class Hero extends Personnage {
 		if (this.xp >= this.capLevel()) {
 			this.xp -= this.capLevel();	
 			this.niveau++;
+			this.vie = this.vieMax;
 		}
 	}
 	
@@ -205,8 +215,8 @@ public class Hero extends Personnage {
 	 * Converti un objet Loot en Xp pour le hero, si le Loot est une arme meilleur, remplace l arme du Hero.
 	 * @param drop : ArrayList contenant des objets Loot
 	 */
-	public void ramasser(ArrayList<Loot> drop) {
-		int taille = drop.size();
+	public void ramasser(ArrayList<Loot> drop, int entree) {
+		/*int taille = drop.size();
 		Object[] possibilities = new Object[taille];
 		for (int i = 0; i < taille; i++) {
 			possibilities[i] = drop.get(i).getNom();
@@ -215,8 +225,8 @@ public class Hero extends Personnage {
 		String s = (String) JOptionPane.showInputDialog(frame, "Choose your loot :\n", "Customized Dialog",
 		                    							JOptionPane.PLAIN_MESSAGE, icon, possibilities,	"oui");
 		if ((s != null) && (s.length() > 0)) {
-		    System.out.println("loot choisi : " + s);
-		    
+		    System.out.println("loot choisi : " + s);*/
+			String s = drop.get(entree-1).getNom();
 		    Connection c = null;
 		      Statement select = null;
 		      try {
@@ -233,17 +243,21 @@ public class Hero extends Personnage {
 		         }
 		         if(weapDam>0) {
 		        	 if(this.getArmeDroite().getDegat() < weapDam) {
-		        		 System.out.println(weapDam+" "+s);
+		        		 System.out.println("Vous avez choisi : "+s+" / degat : "+weapDam);
 		        		 Arme a = new Arme(s, weapDam);
 		        		 this.setArmeDroite(a);
+		        	 }else {
+		        		 System.out.println("Vous avez choisi : "+s+" / valeur d XP : "+lootXp);
+			        	 this.ajoutXp(lootXp);
 		        	 }
 		         } else {
-		        	 System.out.println(lootXp);
+		        	 System.out.println("Vous avez choisi : "+s+" / valeur d XP : "+lootXp);
 		        	 this.ajoutXp(lootXp);
 		         }
 		         query.close();
 		         select.close();
 		         c.close();
+		         drop.remove(entree-1);
 		      } catch (Exception e) {
 		         e.printStackTrace();
 		         System.err.println(e.getClass().getName()+": "+e.getMessage());
@@ -252,7 +266,7 @@ public class Hero extends Personnage {
 		      System.out.println("Opération effectuée");
 		    
 		}
-	}
+//}
 	
 	
 	

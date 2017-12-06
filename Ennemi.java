@@ -20,11 +20,11 @@ public class Ennemi extends Personnage {
 	public static final int forceMagicienNoir = 3;
 	public static final int enduranceMagicienNoir = 15;
 	public static final int vitesseAttaqueMagicienNoir = 1;
-	public static final int forceGrandMage = 5;
-	public static final int enduranceGrandMage = 50;
+	public static final int forceGrandMage = 8;
+	public static final int enduranceGrandMage = 400;
 	//public static final int vitesseAttaqueGrandMage = 1; pas utile
-	public static final int forceSamourai = 8;
-	public static final int enduranceSamourai = 40;
+	public static final int forceSamourai = 10;
+	public static final int enduranceSamourai = 300;
 	
 	private int xpMob;
 

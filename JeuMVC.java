@@ -15,6 +15,9 @@ public class JeuMVC {
 	JeuVueConsole jConsole;
 	JeuVueGUI jGUI;
 	
+	/**
+	 * lance l application
+	 */
 	public JeuMVC() {
 		//Creation du modele
 		
