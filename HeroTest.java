@@ -191,21 +191,21 @@ public class HeroTest {
 		array.add(l3);
 		
 		//Avec l1 ajout de 20 Xp
-		elfe.ramasser(array);
+		elfe.ramasser(array, 0);
 		assertEquals(20, elfe.getXp());
 		elfe.setXp(0);
 		elfe.setNiveau(1);
 		array.remove(l1);
 		
 		//Avec l2 ajout de 100Xp
-		orque.ramasser(array);
+		orque.ramasser(array, 1);
 		assertEquals(100, orque.getXp());
 		orque.setXp(0);
 		orque.setNiveau(1);
 		array.remove(l2);
 		
 		//Avec l3 changement d'arme
-		nain.ramasser(array);
+		nain.ramasser(array, 2);
 		assertEquals("katana", nain.getArmeDroite().getNom());
 		assertEquals(5, nain.getArmeDroite().getDegat());
 		nain.setXp(0);

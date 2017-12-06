@@ -269,7 +269,7 @@ public class Jeu extends Observable {
 		Ennemi boss = this.getDonj().getBoss();
 		if (boss.getEtat().compareTo("vivant") == 0) {System.out.println("1 : " + boss.getClasse());}
 		else {
-			System.out.println("Vous Avez vaincu le boss de ces Donjons ! La gloire est Vôtre !");
+			System.out.println("Vous avez vaincu le boss de ces Donjons ! La gloire est votre !");
 		}
 	}
 	
@@ -446,6 +446,7 @@ public class Jeu extends Observable {
 					z=1;
 				}
 			}
+			i=z;
 			System.out.println("Choisissez votre loot : Joueur "+z);
 			scan = new Scanner(System.in);
 			int entree = scan.nextInt();

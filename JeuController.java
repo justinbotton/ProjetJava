@@ -127,7 +127,12 @@ public class JeuController {
 		}
 		else {
 			Hero h = jeu.getJoueur().get(joueurNum-1);
-			Ennemi e = jeu.getDonj().getPopVague(vagueNum)[choixMob-1];
+			Ennemi e;
+			if(jeu.getDonj().getBoss() == null || vagueNum != 3) {
+				e = jeu.getDonj().getPopVague(vagueNum)[choixMob-1];
+			}else {
+				e = jeu.getDonj().getBoss();
+			}
 			int degatPrimaire =  h.getForce() + h.getNiveau();
 			int degat = (h.getArmeDroite().getDegat() + degatPrimaire) * h.getVitesseAttaque();
 			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" points de degats !\n Il lui reste : "+e.getVie()+" PV \n");

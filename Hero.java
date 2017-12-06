@@ -214,6 +214,7 @@ public class Hero extends Personnage {
 	/**
 	 * Converti un objet Loot en Xp pour le hero, si le Loot est une arme meilleur, remplace l arme du Hero.
 	 * @param drop : ArrayList contenant des objets Loot
+	 * @param entree : int indice ArrayList
 	 */
 	public void ramasser(ArrayList<Loot> drop, int entree) {
 		/*int taille = drop.size();
