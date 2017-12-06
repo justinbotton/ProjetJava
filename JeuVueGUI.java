@@ -1,131 +1,52 @@
-/**
- * 
- */
 package info;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Observable;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 
-/**
- * @author louis
- *
- */
-public class JeuVueGUI extends JeuVue implements ActionListener{
-
-
-	private JFrame biblioJFrame;
-	private JTextField numeroLivre = new JTextField(3);
-	private JButton emprunteJButton = new JButton("Emprunter");
-	private JButton rendreJButton = new JButton("Rendre");
-	private JLabel message = new JLabel(" ");
-	private JTable table;
-	JPanel textContent = new JPanel();
-	
-
-	public JeuVueGUI(zBibliotheque model,
-			zBibliothequeController controller, int posX, int posY) {
-		
-		super(model, controller);
-		
-		//Construction de la fenêtre
-		biblioJFrame = new JFrame("Bibliotheque MVC");	
-		textContent.setLayout(new BoxLayout(textContent, BoxLayout.Y_AXIS));
-		updateTable();
-		textContent.add(table.getTableHeader());
-		textContent.add(table);
-		textContent.add(message);
-		
-		
-		biblioJFrame.add(textContent, BorderLayout.NORTH);
-		
-		JPanel fieldZone = new JPanel();
-		fieldZone.setLayout(new BoxLayout(fieldZone, BoxLayout.X_AXIS));
-		JLabel fieldLabel = new JLabel("Numero du livre a� emprunter/rendre : ");
-		fieldZone.add(fieldLabel);
-		fieldZone.add(numeroLivre);
-		biblioJFrame.add(fieldZone, BorderLayout.CENTER);
-		JPanel panelbuttons = new JPanel();
-		panelbuttons.add(emprunteJButton);
-		panelbuttons.add(rendreJButton);
-		
-		biblioJFrame.add(panelbuttons, BorderLayout.SOUTH);
-		biblioJFrame.pack();
-		biblioJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		biblioJFrame.setSize(500, 400);
-		biblioJFrame.setLocation(300, 400);
-		biblioJFrame.setVisible(true);
-		
-		//Définition des actions sur les éléments de la GUI
-		emprunteJButton.addActionListener(this);
-		rendreJButton.addActionListener(this);
-		biblioJFrame.pack();
-		
-
-		
-		
-	}
-
-	public void affiche(String msg){
-		message.setText(msg);
-	}
-	public void updateTable(){
-		zLivre [] livres =  model.getLivres();
-		Object [][] data = new Object[livres.length][3];
-
-		for(int i=0; i<livres.length; i++){
-			data[i][0] = i;
-			data[i][1] = livres[i].getName();
-			data[i][2] = livres[i].estEmprunte()?"Emprunte":"Disponible";
-		}
-		String[] head = {"N°", "Titre", "Disponibilite"};
-		table = new JTable(data, head);
+public class JeuVueGUI {
+	public static class Fenetre extends JFrame{
+		public Fenetre() {
+			this.setTitle("Beat the dungeon");
+			this.setSize(1600, 800);
+			this.setLocationRelativeTo(null);
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.setContentPane(new Panneau());
 			
+			this.setVisible(true);
+		}
 	}
-	@Override
-	public void update(Observable o, Object arg) {
-		updateTable();
-		textContent.remove(1);
-		textContent.add(table, 1);	
-		biblioJFrame.pack();
-	}
+	public static class Panneau extends JPanel{
+		private static final ImageObserver Observer = null;
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		 Object  source=e.getSource();
-		 int numLivre = getNumeroLivre();   
-		 if(numLivre < 0 || numLivre > 9){
-			 affiche("Erreur, ceci n'est pas un numero de livre valide ");
-			 return;
-		 }
-	     if  (source==emprunteJButton){
-	    	 controller.emprunteLivre(numLivre);
-	     }
-	         
-	     else if (source==rendreJButton)
-	         controller.rendreLivre(numLivre);
-		
+		public void paintComponent(Graphics g){
+			g.fillRect(0, 0, 400, this.getHeight());
+			
+			Font font = new Font("Courier", Font.BOLD, 20);
+		    g.setFont(font);
+		    g.setColor(Color.WHITE);          
+		    g.drawString("Bienvenue dans Beat The Dungeon", 10, 20);    
+		    
+		    try {
+		        Image img = ImageIO.read(new File("C:/Users/Philemon/Pictures/Donjon/map3.png"));
+		        g.drawImage(img, 400, 0, this.getWidth() - 400, this.getHeight(), this);
+		    } 
+		    catch (IOException e) {
+		    	e.printStackTrace();
+		    }
+		  }             
 	}
 	
-	public int getNumeroLivre() {
-		int result = 0;
-		try {
-			result = Integer.valueOf(numeroLivre.getText()).intValue();
-		}
-		catch (NumberFormatException e){
-			result = -1;
-		}
-		return result;
-	}
-
+	public static void main(String[] args){
+		Fenetre fen = new Fenetre();
+	}       
 
 }
