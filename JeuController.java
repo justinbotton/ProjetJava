@@ -166,9 +166,18 @@ public class JeuController {
 			jVue.affiche("Vous avez vaincu votre premier donjon. Mais ne vous reposez pas, le suivant vous attend !");
 			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
 		}
-		if (num == 3) {jVue.affiche("toto1");}	// TODO 
-		if (num == 4) {jVue.affiche("toto2");}	// TODO 
-		if (num == 5) {jVue.affiche("toto3");}	// TODO 
+		if (num == 3) {
+			jVue.affiche("Vous avez vaincu votre deuxieme donjon. Mais ne vous reposez pas, le suivant vous attend !");
+			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
+		}
+		if (num == 4) {
+			jVue.affiche("Vous avez vaincu votre troisieme donjon. Mais ne vous reposez pas, le suivant vous attend !");
+			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
+		} 
+		if (num == 5) {
+			jVue.affiche("Vous avez vaincu votre quatrieme donjon. Serez-vous assez fort que pour vaincre le boss ultime de ce donjon ?");
+			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
+		} 
 	}
 	
 	/**
