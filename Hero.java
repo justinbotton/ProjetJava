@@ -166,6 +166,21 @@ public class Hero extends Personnage {
 	}*/
 	
 	/**
+	 * 
+	 */
+	public int getVieMax() {
+		return vieMax;
+	}
+	
+	/**
+	 * 
+	 */
+	public void setVieMax(int vieMax) {
+		this.vieMax = vieMax;
+	}
+	
+	
+	/**
 	 * @Getter XP.
 	 * @return : recupere l xp du hero
 	 */

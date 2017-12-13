@@ -25,6 +25,48 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		new Thread (new ReadInput()).start();	
 	}
 	
+	/**
+	 * 
+	 */
+	public boolean getEnd() {
+		return end;
+	}
+	
+	/**
+	 * 
+	 */
+	public void setEnd(boolean bool) {
+		this.end = bool;
+	}
+	
+	/**
+	 * 
+	 */
+	public int getI() {
+		return i;
+	}
+	
+	/**
+	 * 
+	 */
+	public void setI(int i) {
+		this.i = i;
+	}
+	
+	/**
+	 * 
+	 */
+	public int getPlayerTurn() {
+		return playerTurn;
+	}
+	
+	/**
+	 * 
+	 */
+	public void setPlayerTurn(int playerTurn) {
+		this.playerTurn = playerTurn;
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		//System.out.println(j);
