@@ -635,22 +635,13 @@ public class Jeu extends Observable {
 
 	public void gestionLoot() {
 		ArrayList<Loot> drop = donj.lootDonjon(donjonNum);
-		int i = 0;
-		for(Hero h : joueur) {
+		int z = nbrAlea(2);
+		for(int i = 0 ; i < joueur.size(); i++) {
 			int k = 1;
 			for(Loot l : drop) {
 				System.out.println(k+" : "+l.getNom());
 				k++;
 			}
-			int z = nbrAlea(2);
-			if(z==i) {
-				if(z==1) {
-					z=2;
-				}else {
-					z=1;
-				}
-			}
-			i=z;
 			System.out.println("Choisissez votre loot : Joueur "+z);
 			scan = new Scanner(System.in);
 			int entree = scan.nextInt();
@@ -658,7 +649,12 @@ public class Jeu extends Observable {
 				System.out.println("Mauvais numero de loot : choisissez a nouveau");
 				entree = scan.nextInt();
 			}
-			h.ramasser(drop, entree);
+			joueur.get(z-1).ramasser(drop, entree);
+			if(z==1) {
+				z=2;
+			}else {
+				z=1;
+			}
 		}
 		drop.removeAll(drop);
 	}

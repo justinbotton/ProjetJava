@@ -232,16 +232,6 @@ public class Hero extends Personnage {
 	 * @param entree : int indice ArrayList
 	 */
 	public void ramasser(ArrayList<Loot> drop, int entree) {
-		/*int taille = drop.size();
-		Object[] possibilities = new Object[taille];
-		for (int i = 0; i < taille; i++) {
-			possibilities[i] = drop.get(i).getNom();
-		}
-		Component frame = null;
-		String s = (String) JOptionPane.showInputDialog(frame, "Choose your loot :\n", "Customized Dialog",
-		                    							JOptionPane.PLAIN_MESSAGE, icon, possibilities,	"oui");
-		if ((s != null) && (s.length() > 0)) {
-		    System.out.println("loot choisi : " + s);*/
 			String s = drop.get(entree-1).getNom();
 		    Connection c = null;
 		      Statement select = null;
