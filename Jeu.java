@@ -6,14 +6,19 @@ package info;
 import java.awt.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Scanner;
 
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
+
+import org.postgresql.util.PSQLException;
 
 /**
  * @author louis & justin & philemon
@@ -29,7 +34,8 @@ public class Jeu extends Observable {
 	private Donjon donj;
 	private int joueurMort;
 	int donjonNum = 1;
-	boolean sauvegarde = true;
+	boolean sauvegarde = false;
+	boolean charger = false;
 
 	/**
 	 *  constructeur de jeu
@@ -39,16 +45,15 @@ public class Jeu extends Observable {
 		String[] args = null;
 		h.main(args);*/
 		joueur = new ArrayList<Hero>();
-		if(sauvegarde) {
+		/*if(sauvegarde) {
 			chargerTbJeuModele();
 			chargerTbJoueur();
-			//chargerTbConsole();
-		} else {
+		} else {*/
 			this.enVie = 2;
 			this.nombreJoueur = 2;
 			
 			//donjons14 = new ArrayList<Donjon>();
-		}
+		//}
 		
 	}
 
@@ -122,14 +127,14 @@ public class Jeu extends Observable {
 				jeuJoueurMort = query.getInt("jeuJoueurMort");
 				jeuDonjonNum = query.getInt("jeuDonjonNum");
 			}
-  			query.close();
-		    select.close();
-		    connection.close();
 		    this.setEnVie(jeuEnVie);
 		    this.setNombreJoueur(jeuNombreJoueur);
 		    this.setInGame(jeuInGame);
 		    this.setJoueurMort(jeuJoueurMort);
 		    this.setDonjonNum(jeuDonjonNum);
+		    query.close();
+		    select.close();
+		    connection.close();
    		} catch (Exception e) {
 		    e.printStackTrace();
 		    System.err.println(e.getClass().getName()+" : "+e.getMessage());
@@ -148,7 +153,7 @@ public class Jeu extends Observable {
   			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ProjetJava", "postgres", "sql");
   			select = connection.createStatement();
   			for(int i = 1 ; i < 3 ; i++) {
-				query = select.executeQuery("SELECT * FROM tbJoueur"+i);
+				query = select.executeQuery("SELECT * FROM tbJoueur WHERE joueurNum = "+i);
 				int joueurNum = 0;
 				String joueurClasse = null;
 				int joueurVie = 0;
@@ -195,33 +200,90 @@ public class Jeu extends Observable {
 	}
 	
 	/**
-	 * charger tbConsole
-	 */ /*
-	public void chargerTbConsole() {
+	 * sauvegarde de l etat des joueurs
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
+	 */
+	public void sauvegarderJoueurs(){
+		sauvegarde = true;
 		Connection connection = null;
-  		Statement select = null;
-  		ResultSet query = null;
+  		PreparedStatement update = null;
   		try {
   			Class.forName("org.postgresql.Driver");
   			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ProjetJava", "postgres", "sql");
-  			select = connection.createStatement();
-  			query = select.executeQuery("SELECT * from tbConsole");
-  			boolean end = 0;
-  			int i = 0;
-  			int playerTurn = 0;
-  			while(query.next()) {
-  				end = query.getBoolean("consEnd");
-  				i = query.getInt("consI");
-  				playerTurn = query.getInt("consPlayerTurn");
+  			Iterator<Hero> iter = joueur.iterator();
+  			int i = 1;
+  			while(iter.hasNext()) {
+  				Hero hero = joueur.get(i-1);
+  				int joueurNum = i;
+  				String joueurClasse = hero.getClasse();
+  				int joueurVie = hero.getVie();
+  				int joueurForce = hero.getForce();
+  				int joueurEndurance = hero.getEndurance();
+  				int joueurNiveau = hero.getNiveau();
+  				Arme arme = hero.getArmeDroite();
+  				int joueurVitesseAttaque = hero.getVitesseAttaque();
+  				String joueurEtat = hero.getEtat();
+  				int joueurXp = hero.getXp();
+  				int joueurVieMax = hero.getVieMax();
+  				String query = "UPDATE tbJoueur SET joueurNum = ?, joueurClasse = ?, joueurVie = ?, joueurForce = ?, "
+  						+ "joueurEndurance = ?, joueurNiveau = ?, joueurArmeDroiteNom = ?, joueurArmeDroiteDegat = ?, joueurVitesseAttaque = ?, "
+  						+ "joueurEtat = ?, joueurXp = ?, joueurVieMax = ? WHERE joueurNum = "+i;
+  				update = connection.prepareStatement(query);
+  				update.setInt(1, joueurNum);
+  				update.setString(2, joueurClasse);
+  				update.setInt(3, joueurVie);
+  				update.setInt(4, joueurForce);
+  				update.setInt(5, joueurEndurance);
+  				update.setInt(6, joueurNiveau);
+  				update.setString(7, arme.getNom());
+  				update.setInt(8, arme.getDegat());
+  				update.setInt(9, joueurVitesseAttaque);
+  				update.setString(10, joueurEtat);
+  				update.setInt(11, joueurXp);
+  				update.setInt(12, joueurVieMax);
+  				update.executeUpdate();
+  				i++;
+  				iter.next();
   			}
-  			JeuVueConsole.setEnd(end);
-  			setI(i);
-  			setPlayerTurn(playerTurn);
+			i = 1;
+			update.close();
+		    connection.close();
   		}catch (Exception e) {
 		    e.printStackTrace();
 		    System.err.println(e.getClass().getName()+" : "+e.getMessage());
    		}
-	}*/
+	}
+	
+	/**
+	 * sauvegarde du modele
+	 */
+	public void sauvegarderJeuModele() {
+		Connection connection = null;
+  		PreparedStatement update = null;
+  		try {
+  			Class.forName("org.postgresql.Driver");
+  			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ProjetJava", "postgres", "sql");
+			int jeuEnVie = this.getEnVie();
+			int jeuNombreJoueur = this.getNombreJoueur();
+			boolean jeuInGame = this.isInGame();
+			int jeuJoueurMort = this.getJoueurMort();
+			int jeuDonjonNum = this.getDonjonNum();
+			String query  = "UPDATE tbJeuModele SET jeuEnVie = ?, jeuNombreJoueur = ?, jeuInGame = ?, jeuJoueurMort = ?, jeuDonjonNum = ?";
+			update = connection.prepareStatement(query);
+			update.setInt(1, jeuEnVie);
+			update.setInt(2, jeuNombreJoueur);
+			update.setBoolean(3, jeuInGame);
+			update.setInt(4,  jeuJoueurMort);
+			update.setInt(5, jeuDonjonNum);
+  			update.executeUpdate();
+		    update.close();
+		    connection.close();
+   		} catch (Exception e) {
+		    e.printStackTrace();
+		    System.err.println(e.getClass().getName()+" : "+e.getMessage());
+   		}
+	}
 	
 	/**
 	 * decremente la variable enVie lorsque qu un joueur meurt.
@@ -288,6 +350,7 @@ public class Jeu extends Observable {
 	public void printMenuText(int i, int joueur){
 		if (i == 1 && !inGame) {
 			System.out.println("1 : Jouer");
+			System.out.println("2 : Charger partie");
 			System.out.println("0 : Quitter");
 			System.out.println("Pour quitter a tout moment, appuyer sur 0.");
 			inGame = true;
@@ -306,9 +369,10 @@ public class Jeu extends Observable {
 	}
 	/**
 	 * cree les donjon 1 a 4.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void creationDonjons() {
-		//sauvegarde
+	public void creationDonjons(){
 		int sumNiv = 0;
 		for (Hero h : this.getJoueur()) {
 			sumNiv += h.getNiveau();
@@ -326,6 +390,8 @@ public class Jeu extends Observable {
 			setChanged();
 	        notifyObservers();
 		}
+		sauvegarderJoueurs();
+		sauvegarderJeuModele();
 	}
 	
 	/**

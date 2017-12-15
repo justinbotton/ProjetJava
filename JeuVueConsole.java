@@ -20,44 +20,10 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	 */
 	public JeuVueConsole(Jeu j, JeuController jControl) {
 		super(j, jControl);
+		playerTurn = 1;
 		update(null, null);
 		scan = new Scanner(System.in);
 		new Thread (new ReadInput()).start();	
-	}
-	
-	/**
-	 * 
-	 */
-	public boolean getEnd() {
-		return end;
-	}
-	
-	/**
-	 * 
-	 */
-	public void setEnd(boolean bool) {
-		this.end = bool;
-	}
-	
-	/**
-	 * 
-	 */
-	public int getI() {
-		return i;
-	}
-	
-	/**
-	 * 
-	 */
-	public void setI(int i) {
-		this.i = i;
-	}
-	
-	/**
-	 * 
-	 */
-	public int getPlayerTurn() {
-		return playerTurn;
 	}
 	
 	/**
@@ -107,14 +73,18 @@ public class JeuVueConsole extends JeuVue implements Observer {
 				try {
 					jControl.printTextMenu(i, 0); //affiche joueur/quitter
 					i = scan.nextInt();
+					if(i==2) {
+						jControl.jeu.charger = true;
+					}
 					gestionMenu0(i); // gestion joueur/quitter + affiche liste choix joueur 1 
-					
-					i = scan.nextInt(); //joueur 1 fait son choix
-					gestionMenu1(i); // gestion choix joueur 1 + affiche liste choix joueur 2
-					
-					i = scan.nextInt();
-					gestionMenu2(i); // gestion choix joueur 2
-					
+					if(jControl.jeu.charger == false) {
+						
+						i = scan.nextInt(); //joueur 1 fait son choix
+						gestionMenu1(i); // gestion choix joueur 1 + affiche liste choix joueur 2
+						
+						i = scan.nextInt();
+						gestionMenu2(i); // gestion choix joueur 2
+					}
 					//var de test
 					//jControl.jeu.setDonjonNum(5);
 					
@@ -214,7 +184,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	 */
 	private boolean correctEntree(int i, int vagueNum) {
 		if (vagueNum == 0) {  // vagueNum = 0  == menu0 et boss
-			if (i < 0 || i > 1) {
+			if (i < 0 || i > 2) {
 				affiche("Choix non disponnible. Faites un nouveau choix.");
 				return false;
 			}
@@ -267,6 +237,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 		switch(c) {
 		case "y" :
+			jControl.jeu.charger = false;
 			fin();
 			System.exit(0);
 			break;

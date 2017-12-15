@@ -3,6 +3,7 @@
  */
 package info;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -36,8 +37,8 @@ public class JeuController {
 			jeu.printMenuText(2, joueur);
 			break;
 		case 2 : 
-			System.exit(0);
-			//jControl.methode(i);
+			jeu.chargerTbJoueur();
+			jeu.chargerTbJeuModele();
 			break;
 		default : 
 			jVue.affiche("Operation incorrecte");
@@ -89,8 +90,10 @@ public class JeuController {
 
 	/**
 	 * cree les differents donjons.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void creationDonjons() {
+	public void creationDonjons(){
 		jeu.creationDonjons();
 		int num = jeu.getDonjonNum();
 		if (num < 5) {
