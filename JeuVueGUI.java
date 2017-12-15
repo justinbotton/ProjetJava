@@ -12,9 +12,17 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Philemon, Justin & Louis
+ *
+ */
+
 public class JeuVueGUI {
 	public static class Fenetre extends JFrame{
 		public Fenetre() {
+			private JButton bouton = new JButton("Jouer");
+			
 			this.setTitle("Beat the dungeon");
 			this.setSize(1600, 800);
 			this.setLocationRelativeTo(null);
