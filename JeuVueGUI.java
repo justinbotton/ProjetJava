@@ -12,7 +12,7 @@ import javax.swing.*;
 public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 
 	private JFrame jeuJFrame;
-	private JTextField numeroLivre = new JTextField(3);
+	JFrame fiche;
 	JButton jouerB = new JButton("Jouer");
 	JButton chargerB = new JButton("Charger");
 	JButton quitterB = new JButton("Quitter");
@@ -27,13 +27,19 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	JButton ennemi3B = new JButton("E3");
 	JButton ennemi4B = new JButton("E4");
 	JButton ennemi5B = new JButton("E5");
+	JButton perso1B = new JButton("feuille J1");
+	JButton perso2B = new JButton("feuille J2");
 	ArrayList<JButton> ennemiList = new ArrayList<JButton>();
 	JButton bossB = new JButton("BOSS");
+	JPanel panelFiche = new JPanel();
+	JLabel labelFiche = new JLabel("");
 	JLabel label = new JLabel("");
 	JLabel perso = new JLabel("");
 	JLabel joueur = new JLabel("");
 	Font font1 = new Font("Algerian", Font.BOLD, 100);
 	Font font2 = new Font("Algerian", Font.BOLD, 50);
+	Font font3 = new Font("Algerian", Font.BOLD, 25);
+	private JTable table;
 	int tourJoueur = 1;
 	int vagueNum = 1;
 
@@ -65,7 +71,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    perso.setPreferredSize(new Dimension(1600, 100));
 	    perso.setHorizontalAlignment(JLabel.CENTER);
 	    perso.setVerticalAlignment(JLabel.TOP);
-	    perso.setFont(font2);
+	    perso.setFont(font3);
 	    
 	    jeuJFrame.add(label);
 
@@ -73,9 +79,20 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		panelbuttons.add(jouerB);
 		panelbuttons.add(chargerB);
 		panelbuttons.add(quitterB);
-		
 		jeuJFrame.add(panelbuttons, BorderLayout.SOUTH);
-	    
+		
+		panelFiche.add(perso1B);
+		panelFiche.add(perso2B);
+		fiche = new JFrame(" ");
+    	fiche.setSize(400,200);
+    	fiche.setPreferredSize(new Dimension(400,200));
+    	fiche.setTitle("Fiche de personnage");
+    	fiche.setLocationRelativeTo(null);
+    	//fiche.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); close l'app entiere
+		fiche.add(panelFiche, BorderLayout.WEST);
+		fiche.add(labelFiche);
+		labelFiche.setAlignmentX(0);
+		labelFiche.setAlignmentY(0);
 		jeuJFrame.setVisible(true);
 		
 		jouerB.addActionListener(this);
@@ -90,6 +107,9 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		ennemi3B.addActionListener(this);
 		ennemi4B.addActionListener(this);
 		ennemi5B.addActionListener(this);
+		bossB.addActionListener(this);
+		perso1B.addActionListener(this);
+		perso2B.addActionListener(this);
 		//jeuJFrame.setContentPane(new Panneau());
 		/*textContent.setLayout(new BoxLayout(textContent, BoxLayout.Y_AXIS));
 		
@@ -163,9 +183,45 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	     else if (source == ennemi5B) {
 	    	 onClickEnnemi(ennemi5B, 5);
 	     }
+	     else if (source == bossB) {
+	    	 
+	     }
+	     else if (source == perso1B) {
+	    	 afficheStat(1);
+	     }
+	     else if (source == perso2B) {
+	    	 afficheStat(2);
+	     }
 	     /*else if (ennemiList.contains(source)) {
 	    	 onClickEnnemi(source, 1);
 	     }*/
+	}
+	
+	public void afficheStat(int numJoueur) {
+		 jControl.afficheFeuillePersonnages(numJoueur);
+    	 labelFiche.setVisible(true);
+    	 labelFiche.setText(" ");	
+    	 Hero p  = jControl.jeu.getJoueur().get(numJoueur-1);
+    	 Object [][] data = new Object[8][2];
+    	 data[0][0] = "Classe";
+    	 data[0][1] = p.getClasse();
+    	 data[1][0] = "Niveau";
+    	 data[1][1] = p.getNiveau();
+    	 data[2][0] = "Force";
+    	 data[2][1] = p.getForce();
+    	 data[3][0] = "vie";
+    	 data[3][1] = p.getVie();
+    	 data[4][0] = "Endurance";
+    	 data[4][1] = p.getEndurance();
+    	 data[5][0] = "XP";
+    	 data[5][1] = p.getXp();
+    	 data[6][0] = "Arme";
+    	 data[6][1] = p.getArmeDroite().getNom();
+    	 data[7][0] = "Etat";
+    	 data[7][1] = p.getEtat();
+ 		 String[] head = {"ELEMENT", "STAT"};
+ 		 table = new JTable(data, head);
+ 		 fiche.add(table);
 	}
 	
 	public void onClickJouer() {
@@ -197,11 +253,14 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		else {
 			perso.setText("La partie va commencer...");
 			jeuBTD(vagueNum);
+			fiche.setVisible(true);
+			perso1B.setVisible(true);
+			perso2B.setVisible(true);
 			//affichePlateau();
 		}
 	}
 	public void afficheChoixPerso(int i) {
-		
+		perso.setFont(font2);
 		perso.setText("- Joueur " + i +" - choisissez votre personnage :");
 	    perso.setVisible(true);
 	    jeuJFrame.add(perso);
@@ -247,8 +306,10 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		jeuJFrame.add(charge);
 	}
 	public void onClickEnnemi(Object source, int numEnnemi) {
-		perso.setText("enemi onclic");
-		perso.setVisible(true);
+		afficheJoueurTour();
+		//debug
+		//perso.setText("enemi onclic");
+		//perso.setVisible(true);
 		int ret = jControl.combat(vagueNum, numEnnemi, tourJoueur);
 		if (ret == 1) {
 			JButton s = (JButton) source;
@@ -275,6 +336,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		else {
 			prepareBoss(d);
 		}
+		afficheJoueurTour();
 		// pas utile a voir
 		/*while (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() <= 5 ) {
 			if (jControl.jeu.getDonjonNum() == 1) {
@@ -323,5 +385,10 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	public void incVague() {
 		if (vagueNum == 1 || vagueNum == 2 || vagueNum == 3) {vagueNum ++;}
 		if (vagueNum == 4) {vagueNum = 1;}
+	}
+	public void afficheJoueurTour() {
+		perso.setFont(font3);
+		perso.setText("Joueur " + tourJoueur + " : a vous de jouer : ");
+		perso.setVisible(true);
 	}
 }
