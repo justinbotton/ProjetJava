@@ -35,6 +35,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	Font font1 = new Font("Algerian", Font.BOLD, 100);
 	Font font2 = new Font("Algerian", Font.BOLD, 50);
 	int tourJoueur = 1;
+	int vagueNum = 1;
 
 	public JeuVueGUI(Jeu model, JeuController jControl) {
 		
@@ -84,6 +85,11 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		nainB.addActionListener(this);
 		orqueB.addActionListener(this);
 		humainB.addActionListener(this);
+		ennemi1B.addActionListener(this);
+		ennemi2B.addActionListener(this);
+		ennemi3B.addActionListener(this);
+		ennemi4B.addActionListener(this);
+		ennemi5B.addActionListener(this);
 		//jeuJFrame.setContentPane(new Panneau());
 		/*textContent.setLayout(new BoxLayout(textContent, BoxLayout.Y_AXIS));
 		
@@ -142,21 +148,24 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	     else if (source == humainB) {
 	    	 onClickPersonnage(4);
 	     }
-	     /*else if (source == ennemi1B) {
-	    	 onClickEnnemi(ennemi1B);
+	     else if (source == ennemi1B) {
+	    	 onClickEnnemi(ennemi1B, 1);
 	     }
 	     else if (source == ennemi2B) {
-	    	 onClickEnnemi(ennemi2B);
+	    	 onClickEnnemi(ennemi2B, 2);
 	     }
 	     else if (source == ennemi3B) {
-	    	 onClickEnnemi(ennemi3B);
+	    	 onClickEnnemi(ennemi3B, 3);
 	     }
 	     else if (source == ennemi4B) {
-	    	 onClickEnnemi(ennemi4B);
-	     }*/
-	     else if (ennemiList.contains(source)) {
-	    	 onClickEnnemi(source);
+	    	 onClickEnnemi(ennemi4B, 4);
 	     }
+	     else if (source == ennemi5B) {
+	    	 onClickEnnemi(ennemi5B, 5);
+	     }
+	     /*else if (ennemiList.contains(source)) {
+	    	 onClickEnnemi(source, 1);
+	     }*/
 	}
 	
 	public void onClickJouer() {
@@ -187,7 +196,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		}
 		else {
 			perso.setText("La partie va commencer...");
-			jeuBTD();
+			jeuBTD(vagueNum);
 			//affichePlateau();
 		}
 	}
@@ -216,7 +225,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		image.setSize(new Dimension(1400, 700));
 	    jeuJFrame.add(image);
 	    jeuJFrame.setVisible(true);
-	    joueur1B.setBounds(10, 10, 10, 10); // (x,y,width, height)
+	    /*joueur1B.setBounds(10, 10, 10, 10); // (x,y,width, height)
 	    joueur2B.setBounds(30, 10, 10, 10); 
 	    joueur1B.setVisible(true);
 	    joueur2B.setVisible(true);
@@ -225,7 +234,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    panelJoueur.setAlignmentY(30);
 	    panelJoueur.add(joueur1B);
 	    panelJoueur.add(joueur2B);
-	    jeuJFrame.add(panelJoueur);
+	    jeuJFrame.add(panelJoueur);*/
 	}
 	public void chargement() {
 		JLabel charge = new JLabel("");
@@ -237,39 +246,82 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		charge.setVisible(true);
 		jeuJFrame.add(charge);
 	}
-	public void onClickEnnemi(Object source) {
-		
+	public void onClickEnnemi(Object source, int numEnnemi) {
+		perso.setText("enemi onclic");
+		perso.setVisible(true);
+		int ret = jControl.combat(vagueNum, numEnnemi, tourJoueur);
+		if (ret == 1) {
+			JButton s = (JButton) source;
+			s.setVisible(false);
+		}
+		if (jControl.jeu.checkVagueClean(vagueNum) && (jControl.jeu.getDonj().getBoss() == null)) {
+			perso.setText("Vous avez vaincu cette vague ! Passez à la pièce suivante.");
+			perso.setVisible(true);
+			incVague(); //vagueNum ++;
+			jeuBTD(vagueNum);
+		}
 	}
 	
 	// fait tourner la partie une fois les perso choisi
-	public void jeuBTD() {
-		affichePlateau(jControl.jeu.getDonjonNum());
-		jControl.creationDonjons();
+	public void jeuBTD(int vague) {
+		if (vague == 1) {
+			affichePlateau(jControl.jeu.getDonjonNum());
+			jControl.creationDonjons();
+		}
 		Donjon d = jControl.jeu.getDonj();
-		while (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() <= 5 ) {
+		if (d.getBoss() == null) {
+			prepareVague(d);
+		}
+		else {
+			prepareBoss(d);
+		}
+		// pas utile a voir
+		/*while (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() <= 5 ) {
 			if (jControl.jeu.getDonjonNum() == 1) {
-				ennemi1B.setText(d.getVague1()[0].getClasse());
-				ennemi2B.setText(d.getVague1()[1].getClasse());
-				ennemi3B.setText(d.getVague1()[2].getClasse());
-				ennemi1B.setVisible(true);
-				ennemi2B.setVisible(true);
-				ennemi3B.setVisible(true);
-				JPanel panelEnnemi = new JPanel();
-				panelEnnemi.add(ennemi1B);
-				panelEnnemi.add(ennemi2B);
-				panelEnnemi.add(ennemi3B);
-				jeuJFrame.add(panelEnnemi);
+				
+				perso.setText("if");
+				perso.setVisible(true);
 			}
 			jControl.jeu.setEnVie(0);
 			jeuBTD();
-		}
+		}*/
 		if (jControl.jeu.getEnVie() == 0){
 			perso.setText("Vous avez perdu !");
 			perso.setVisible(true);
 		}
-		else {
+		else if (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() > 5 ){
 			perso.setText("Vous avez gagné !");
 			perso.setVisible(true);
 		}
+	}
+	public void prepareVague(Donjon d) {
+		ennemi1B.setText(d.getPopVague(vagueNum)[0].getClasse());
+		ennemi2B.setText(d.getPopVague(vagueNum)[1].getClasse());
+		ennemi1B.setVisible(true);
+		ennemi2B.setVisible(true);
+		JPanel panelEnnemi = new JPanel();
+		panelEnnemi.add(ennemi1B);
+		panelEnnemi.add(ennemi2B);
+		if (vagueNum >= 2) {
+			ennemi3B.setText(d.getPopVague(vagueNum)[2].getClasse());
+			ennemi3B.setVisible(true);
+			panelEnnemi.add(ennemi3B);
+		}
+		if (vagueNum == 3) {
+			ennemi4B.setText(d.getPopVague(vagueNum)[3].getClasse());
+			ennemi5B.setText(d.getPopVague(vagueNum)[4].getClasse());
+			ennemi4B.setVisible(true);
+			ennemi5B.setVisible(true);
+			panelEnnemi.add(ennemi4B);
+			panelEnnemi.add(ennemi5B);
+		}
+		jeuJFrame.add(panelEnnemi, BorderLayout.SOUTH);
+	}
+	public void prepareBoss(Donjon d) {
+		
+	}
+	public void incVague() {
+		if (vagueNum == 1 || vagueNum == 2 || vagueNum == 3) {vagueNum ++;}
+		if (vagueNum == 4) {vagueNum = 1;}
 	}
 }

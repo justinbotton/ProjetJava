@@ -112,8 +112,9 @@ public class JeuController {
 	 * @param vagueNum numero de vague de l ennemi.
 	 * @param choixMob ennemi cible
 	 * @param joueurNum numero du joueur qui joue.
+	 * @return 1 si l ennemi est mort, 0 sinon.
 	 */
-	public void combat(int vagueNum,int choixMob, int joueurNum) {
+	public int combat(int vagueNum,int choixMob, int joueurNum) {
 		String s = jeu.combat(vagueNum, choixMob, joueurNum);
 		if (s.compareTo("mort") == 0) {
 			int xp = jeu.xpRecu(vagueNum, choixMob);
@@ -127,6 +128,7 @@ public class JeuController {
 				jVue.affiche("Pièce clean. Vous avez annéanti les forces ennemies qui entravaient votre chemin.");
 				jVue.affiche("Vous passez donc dans la pièce suivante !\n");
 			}
+			return 1;
 		}
 		else {
 			Hero h = jeu.getJoueur().get(joueurNum-1);
@@ -139,6 +141,7 @@ public class JeuController {
 			int degatPrimaire =  h.getForce() + h.getNiveau();
 			int degat = (h.getArmeDroite().getDegat() + degatPrimaire) * h.getVitesseAttaque();
 			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" points de degats !\n Il lui reste : "+e.getVie()+" PV \n");
+			return 0;
 		}
 	}
 	/**

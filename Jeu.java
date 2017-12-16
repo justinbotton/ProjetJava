@@ -18,7 +18,7 @@ import java.util.Scanner;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
-import org.postgresql.util.PSQLException;
+//import org.postgresql.util.PSQLException;
 
 /**
  * @author louis & justin & philemon
@@ -390,8 +390,8 @@ public class Jeu extends Observable {
 			setChanged();
 	        notifyObservers();
 		}
-		sauvegarderJoueurs();
-		sauvegarderJeuModele();
+		//sauvegarderJoueurs();
+		//sauvegarderJeuModele();
 	}
 	
 	/**

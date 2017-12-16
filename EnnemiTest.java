@@ -147,7 +147,7 @@ public class EnnemiTest {
 		assertEquals("katana", a.getNom());
 		assertEquals(5, a.getDegat());
 		assertEquals("boss", e6.getType());
-		assertEquals(8, e6.getForce());
+		assertEquals(10, e6.getForce());
 		assertEquals(40, e6.getEndurance());
 		assertEquals(80, e6.getVie());
 		assertEquals(1, e6.getVitesseAttaque());
