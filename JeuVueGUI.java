@@ -30,15 +30,15 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	JButton ennemi5B = new JButton("E5");
 	JButton perso1B = new JButton("feuille J1");
 	JButton perso2B = new JButton("feuille J2");
-	JButton persoB = new JButton("feuilles J");
+	//JButton persoB = new JButton("feuilles J");
 	ArrayList<JButton> ennemiList = new ArrayList<JButton>();
 	JButton bossB = new JButton("BOSS");
-	JPanel panelFiche = new JPanel();
+	//JPanel panelFiche = new JPanel();
 	JLabel labelFiche = new JLabel("");
 	JPanel menuFiche = new JPanel();
 	JLabel label = new JLabel("");
 	JLabel perso = new JLabel("");
-	JLabel joueur = new JLabel("");
+	//JLabel joueur = new JLabel("");
 	Font font1 = new Font("Algerian", Font.BOLD, 100);
 	Font font2 = new Font("Algerian", Font.BOLD, 50);
 	Font font3 = new Font("Algerian", Font.BOLD, 25);
@@ -46,6 +46,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	private JTable table;
 	int tourJoueur = 1;
 	int vagueNum = 1;
+	Donjon d;
 
 	public JeuVueGUI(Jeu model, JeuController jControl) {
 		
@@ -78,7 +79,8 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    menuDemarrer();
 	    fiche();		
 		
-		menuFiche.add(persoB);
+		menuFiche.add(perso1B);
+		menuFiche.add(perso2B);
 		jeuJFrame.add(menuFiche, BorderLayout.WEST);
 		menuFiche.setVisible(false);
 		jeuJFrame.setVisible(true);
@@ -98,7 +100,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		bossB.addActionListener(this);
 		perso1B.addActionListener(this);
 		perso2B.addActionListener(this);
-		persoB.addActionListener(this);
+		//persoB.addActionListener(this);
 		
 		//jeuJFrame.setContentPane(new Panneau());
 		/*textContent.setLayout(new BoxLayout(textContent, BoxLayout.Y_AXIS));
@@ -189,7 +191,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    	 onClickEnnemi(ennemi5B, 5);
 	     }
 	     else if (source == bossB) {
-	    	 
+	    	 //TODO
 	     }
 	     else if (source == perso1B) {
 	    	 afficheStat(1);
@@ -199,12 +201,12 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    	 afficheStat(2);
 			 perso2B.setVisible(true);
 	     }
-	     else if (source == persoB) {
+	     /*else if (source == persoB) {
 	    	 persoB.setVisible(false);
 	    	 //fiche.setVisible(true);
 			 perso1B.setVisible(true);
 			 perso2B.setVisible(true);
-	     }
+	     }*/
 	}
 	public void fiche() {
 		perso1B.setVisible(false);
@@ -223,6 +225,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	}
 	public void afficheStat(int numJoueur) {
 		 jControl.afficheFeuillePersonnages(numJoueur);
+		 table = null;
     	 labelFiche.setVisible(true);
     	 labelFiche.setText(" ");	
     	 Hero p  = jControl.jeu.getJoueur().get(numJoueur-1);
@@ -245,8 +248,10 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
     	 data[7][1] = p.getEtat();
  		 String[] head = {"ELEMENT", "STAT"};
  		 table = new JTable(data, head);
- 		 //fiche.add(table);
- 		 jeuJFrame.add(table,  BorderLayout.WEST);
+ 		 fiche.add(table);
+ 		 fiche.setVisible(true);
+ 		 //fiche.setResizable(false);
+ 		 //jeuJFrame.add(table,  BorderLayout.WEST);
 	}
 	
 	public void onClickJouer() {
@@ -275,8 +280,10 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		else {
 			race.setVisible(false);
 			perso.setText("La partie va commencer...");
-			jeuBTD(vagueNum);
+			jeuBTD(1);
 			menuFiche.setVisible(true);
+			perso1B.setVisible(true);
+			perso2B.setVisible(true);
 			//affichePlateau();
 		}
 	}
@@ -307,10 +314,10 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	//affiche le plateau a chaque nouveau donjon
 	public void affichePlateau(int num) {
 		perso.setVisible(false);
+		jeuJFrame.remove(race);
 		ImageIcon icone = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/map" + num +".png");
 		JLabel image = new JLabel(icone);
-		image.setSize(new Dimension(1400, 700));
-		jeuJFrame.remove(race);
+		image.setSize(new Dimension(1000, 500));
 	    jeuJFrame.add(image, BorderLayout.CENTER);
 	    jeuJFrame.setVisible(true);
 	}
@@ -343,9 +350,10 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	public void jeuBTD(int vague) {
 		if (vague == 1) {
 			affichePlateau(jControl.jeu.getDonjonNum());
+			perso.setText("donj num : " + jControl.jeu.getDonjonNum());
 			jControl.creationDonjons();
 		}
-		Donjon d = jControl.jeu.getDonj();
+		d = jControl.jeu.getDonj();
 		if (d.getBoss() == null) {
 			prepareVague(d);
 		}
@@ -408,7 +416,12 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	}
 	public void afficheJoueurTour() {
 		perso.setFont(font3);
-		perso.setText("Joueur " + tourJoueur + " : a vous de jouer : ");
+		incrementJoueur();
+		//perso.setText("Joueur " + tourJoueur + ", a vous de jouer : ");
 		perso.setVisible(true);
+	}
+	public void incrementJoueur() {
+		if (tourJoueur == 1 ) {tourJoueur = 2;}
+		if (tourJoueur == 2 ) {tourJoueur = 1;}
 	}
 }
