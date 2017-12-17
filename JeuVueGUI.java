@@ -1,4 +1,4 @@
-package info;
+	package info;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -12,15 +12,31 @@ import javax.swing.border.Border;
 
 public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 
+	ImageIcon jouerBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/jouerB.png");
+	ImageIcon chargerBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/chargerB.png");
+	ImageIcon quitterBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
+	ImageIcon elfeBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/elfeB.png");
+	ImageIcon nainBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/nainB.png");
+	ImageIcon orqueBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/orqueB.png");
+	ImageIcon humainBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/humainB.png");
+	ImageIcon perso1Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/perso1B.png");
+	ImageIcon perso2Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/perso2B.png");
+	/*ImageIcon ennemi1Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
+	ImageIcon ennemi2Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
+	ImageIcon ennemi3Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
+	ImageIcon ennemi4Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
+	ImageIcon ennemi5Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");*/
+	
+	
 	private JFrame jeuJFrame;
 	JFrame fiche;
-	JButton jouerB = new JButton("Jouer");
-	JButton chargerB = new JButton("Charger");
-	JButton quitterB = new JButton("Quitter");
-	JButton elfeB = new JButton("Elfe");
-	JButton nainB = new JButton("Nain");
-	JButton orqueB = new JButton("Orque");
-	JButton humainB = new JButton("Humain");
+	JButton jouerB = new JButton(jouerBimg);
+	JButton chargerB = new JButton(chargerBimg);
+	JButton quitterB = new JButton(quitterBimg);
+	JButton elfeB = new JButton(elfeBimg);
+	JButton nainB = new JButton(nainBimg);
+	JButton orqueB = new JButton(orqueBimg);
+	JButton humainB = new JButton(humainBimg);
 	JButton joueur1B = new JButton("J1");
 	JButton joueur2B = new JButton("J2");
 	JButton ennemi1B = new JButton("E1");
@@ -28,8 +44,8 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	JButton ennemi3B = new JButton("E3");
 	JButton ennemi4B = new JButton("E4");
 	JButton ennemi5B = new JButton("E5");
-	JButton perso1B = new JButton("feuille J1");
-	JButton perso2B = new JButton("feuille J2");
+	JButton perso1B = new JButton(perso1Bimg);
+	JButton perso2B = new JButton(perso2Bimg);
 	//JButton persoB = new JButton("feuilles J");
 	ArrayList<JButton> ennemiList = new ArrayList<JButton>();
 	JButton bossB = new JButton("BOSS");
@@ -123,14 +139,14 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    chargerB.setSize(300,120);
 	    quitterB.setPreferredSize(new Dimension(300,120)); 
 	    quitterB.setSize(300,120);
-	    //On crée des conteneurs avec gestion horizontale
+	    //On crï¿½e des conteneurs avec gestion horizontale
 	    Box b1 = Box.createHorizontalBox();
 	    Box b2 = Box.createHorizontalBox();
 	    Box b3 = Box.createHorizontalBox();
 	    b2.add(chargerB);
 	    b1.add(jouerB);
 	    b3.add(quitterB);
-	    //On crée un conteneur avec gestion verticale
+	    //On crï¿½e un conteneur avec gestion verticale
 	    Box b4 = Box.createVerticalBox();
 	    b4.add(b1);
 	    b4.add(b2);
@@ -339,7 +355,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 			s.setVisible(false);
 		}
 		if (jControl.jeu.checkVagueClean(vagueNum) && (jControl.jeu.getDonj().getBoss() == null)) {
-			perso.setText("Vous avez vaincu cette vague ! Passez à la pièce suivante.");
+			perso.setText("Vous avez vaincu cette vague ! Passez ï¿½ la piï¿½ce suivante.");
 			perso.setVisible(true);
 			incVague(); 
 			jeuBTD(vagueNum);
@@ -376,7 +392,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 			perso.setVisible(true);
 		}
 		else if (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() > 5 ){
-			perso.setText("Vous avez gagné !");
+			perso.setText("Vous avez gagnï¿½ !");
 			perso.setVisible(true);
 		}
 	}
