@@ -12,21 +12,21 @@ import javax.swing.border.Border;
 
 public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 
-	ImageIcon jouerBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/jouerB.png");
-	ImageIcon chargerBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/chargerB.png");
-	ImageIcon quitterBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
-	ImageIcon elfeBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/elfeB.png");
-	ImageIcon nainBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/nainB.png");
-	ImageIcon orqueBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/orqueB.png");
-	ImageIcon humainBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/humainB.png");
-	ImageIcon perso1Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/perso1B.png");
-	ImageIcon perso2Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/perso2B.png");
-	ImageIcon gobelinBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/gobelinLogo.png");
-	ImageIcon groupeBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/groupeLogo.png");
-	ImageIcon magicienBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/magicienLogo.png");
-	ImageIcon trollBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/trollLogo.png");
-	ImageIcon grandmageBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/grandmageLogo.png");
-	ImageIcon samuraiBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/samuraiLogo.png");
+	ImageIcon jouerBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/jouerB.png");
+	ImageIcon chargerBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/chargerB.png");
+	ImageIcon quitterBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/quitterB.png");
+	ImageIcon elfeBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/elfeB.png");
+	ImageIcon nainBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/nainB.png");
+	ImageIcon orqueBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/orqueB.png");
+	ImageIcon humainBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/humainB.png");
+	ImageIcon perso1Bimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/perso1B.png");
+	ImageIcon perso2Bimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/perso2B.png");
+	ImageIcon gobelinBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/gobelinLogo.png");
+	ImageIcon groupeBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/groupeLogo.png");
+	ImageIcon magicienBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/magicienLogo.png");
+	ImageIcon trollBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/trollLogo.png");
+	ImageIcon grandmageBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/grandmageLogo.png");
+	ImageIcon samuraiBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/samuraiLogo.png");
 	
 	private JFrame jeuJFrame;
 	JFrame fiche;
@@ -51,7 +51,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	JButton bossB = new JButton("BOSS");
 	//JPanel panelFiche = new JPanel();
 	JLabel labelFiche = new JLabel("");
-	JPanel menuFiche = new JPanel();
+	//JPanel menuFiche = new JPanel();
 	JLabel label = new JLabel("");
 	JLabel perso = new JLabel("");
 	//JLabel joueur = new JLabel("");
@@ -59,6 +59,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	Font font2 = new Font("Algerian", Font.BOLD, 50);
 	Font font3 = new Font("Algerian", Font.BOLD, 25);
 	Box race;
+	Box menuFiche;
 	private JTable table;
 	int tourJoueur = 1;
 	int vagueNum = 1;
@@ -95,11 +96,15 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    menuDemarrer();
 	    fiche();		
 		
-		menuFiche.add(perso1B);
+		/*menuFiche.add(perso1B);
 		menuFiche.add(perso2B);
 		jeuJFrame.add(menuFiche, BorderLayout.WEST);
-		menuFiche.setVisible(false);
+		menuFiche.setVisible(false);*/
+	    createMenuFiche();
+	    
+		
 		jeuJFrame.setVisible(true);
+		jeuJFrame.setResizable(false);
 		
 		jouerB.addActionListener(this);
 		chargerB.addActionListener(this);
@@ -150,14 +155,14 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    chargerB.setSize(300,120);
 	    quitterB.setPreferredSize(new Dimension(300,120)); 
 	    quitterB.setSize(300,120);
-	    //On cr�e des conteneurs avec gestion horizontale
+	    //On cree des conteneurs avec gestion horizontale
 	    Box b1 = Box.createHorizontalBox();
 	    Box b2 = Box.createHorizontalBox();
 	    Box b3 = Box.createHorizontalBox();
 	    b2.add(chargerB);
 	    b1.add(jouerB);
 	    b3.add(quitterB);
-	    //On cr�e un conteneur avec gestion verticale
+	    //On cree un conteneur avec gestion verticale
 	    Box b4 = Box.createVerticalBox();
 	    b4.add(b1);
 	    b4.add(b2);
@@ -165,6 +170,18 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    jeuJFrame.add(b4, BorderLayout.SOUTH);
 	    jeuJFrame.setVisible(true);
 	    //------------  FIN BOUTONS JOUER/QUITTER ------------
+	}
+	public void createMenuFiche() {
+		//On cree des conteneurs avec gestion horizontale
+	    Box b1 = Box.createHorizontalBox();
+	    Box b2 = Box.createHorizontalBox();
+	    b1.add(perso1B);
+	    b2.add(perso2B);
+	    //On cree un conteneur avec gestion verticale
+	    menuFiche = Box.createVerticalBox();
+	    menuFiche.add(b1);
+	    menuFiche.add(b2);
+	    jeuJFrame.add(menuFiche, BorderLayout.WEST);
 	}
 	
 	public void affiche(String msg){
@@ -238,15 +255,15 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	public void fiche() {
 		perso1B.setVisible(false);
 		perso2B.setVisible(false);
-		menuFiche.add(perso1B);
-		menuFiche.add(perso2B);
+		//menuFiche.add(perso1B);
+		//menuFiche.add(perso2B);
 		fiche = new JFrame(" ");
     	fiche.setSize(400,200);
     	fiche.setPreferredSize(new Dimension(400,200));
     	fiche.setTitle("Fiche de personnage");
     	fiche.setLocationRelativeTo(null);
-		fiche.add(menuFiche, BorderLayout.WEST);
-		fiche.add(menuFiche);
+		//fiche.add(menuFiche, BorderLayout.WEST);
+		//fiche.add(menuFiche);
 		labelFiche.setAlignmentX(0);
 		labelFiche.setAlignmentY(0);
 	}
@@ -292,7 +309,17 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		
 	}
 	public void onClickQuitter() {
-		System.exit(0);
+		JDialog.setDefaultLookAndFeelDecorated(true);
+	    int response = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment quitter ?", "Quit",
+	        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	    if (response == JOptionPane.NO_OPTION) {
+	      System.out.println("Conituer jeu");
+	    } else if (response == JOptionPane.YES_OPTION) {
+	      System.out.println("Quitter jeu");
+	      System.exit(0);
+	    } else if (response == JOptionPane.CLOSED_OPTION) {
+	      System.out.println("Quitter jeu");
+	    }
 	}
 	public void onClickPersonnage(int i) {
 		jControl.choixPersonnage(i);
@@ -307,6 +334,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		else {
 			race.setVisible(false);
 			perso.setText("La partie va commencer...");
+			race.setEnabled(false);
 			jeuBTD(1);
 			menuFiche.setVisible(true);
 			perso1B.setVisible(true);
@@ -366,7 +394,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 			s.setVisible(false);
 		}
 		if (jControl.jeu.checkVagueClean(vagueNum) && (jControl.jeu.getDonj().getBoss() == null)) {
-			perso.setText("Vous avez vaincu cette vague ! Passez � la pi�ce suivante.");
+			perso.setText("Vous avez vaincu cette vague ! Passez a la piece suivante.");
 			perso.setVisible(true);
 			incVague(); 
 			jeuBTD(vagueNum);
@@ -403,18 +431,22 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 			perso.setVisible(true);
 		}
 		else if (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() > 5 ){
-			perso.setText("Vous avez gagn� !");
+			perso.setText("Vous avez gagne !");
 			perso.setVisible(true);
 		}
 	}
 	public void prepareVague(Donjon d) {
 		ennemi1B.setText(d.getPopVague(vagueNum)[0].getClasse());
 		ennemi2B.setText(d.getPopVague(vagueNum)[1].getClasse());
+		ennemi1B.setBounds(800, 400, 100, 100); //(x,y,w,h)
+		ennemi2B.setBounds(800, 600, 100, 100);
+		
 		ennemi1B.setVisible(true);
 		ennemi2B.setVisible(true);
 		JPanel panelEnnemi = new JPanel();
 		panelEnnemi.add(ennemi1B);
 		panelEnnemi.add(ennemi2B);
+		panelEnnemi.setLayout(null);
 		if (vagueNum >= 2) {
 			ennemi3B.setText(d.getPopVague(vagueNum)[2].getClasse());
 			ennemi3B.setVisible(true);
