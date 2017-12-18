@@ -21,22 +21,22 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	ImageIcon humainBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/humainB.png");
 	ImageIcon perso1Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/perso1B.png");
 	ImageIcon perso2Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/perso2B.png");
-	/*ImageIcon ennemi1Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
-	ImageIcon ennemi2Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
-	ImageIcon ennemi3Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
-	ImageIcon ennemi4Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
-	ImageIcon ennemi5Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");*/
-	
+	ImageIcon gobelinBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/gobelinLogo.png");
+	ImageIcon groupeBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/groupeLogo.png");
+	ImageIcon magicienBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/magicienLogo.png");
+	ImageIcon trollBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/trollLogo.png");
+	ImageIcon grandmageBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/grandmageLogo.png");
+	ImageIcon samuraiBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/samuraiLogo.png");
 	
 	private JFrame jeuJFrame;
 	JFrame fiche;
-	JButton jouerB = new JButton(jouerBimg);
-	JButton chargerB = new JButton(chargerBimg);
-	JButton quitterB = new JButton(quitterBimg);
-	JButton elfeB = new JButton(elfeBimg);
-	JButton nainB = new JButton(nainBimg);
-	JButton orqueB = new JButton(orqueBimg);
-	JButton humainB = new JButton(humainBimg);
+	JButton jouerB = new Button(jouerBimg);
+	JButton chargerB = new Button(chargerBimg);
+	JButton quitterB = new Button(quitterBimg);
+	JButton elfeB = new Button(elfeBimg);
+	JButton nainB = new Button(nainBimg);
+	JButton orqueB = new Button(orqueBimg);
+	JButton humainB = new Button(humainBimg);
 	JButton joueur1B = new JButton("J1");
 	JButton joueur2B = new JButton("J2");
 	JButton ennemi1B = new JButton("E1");
@@ -44,8 +44,8 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	JButton ennemi3B = new JButton("E3");
 	JButton ennemi4B = new JButton("E4");
 	JButton ennemi5B = new JButton("E5");
-	JButton perso1B = new JButton(perso1Bimg);
-	JButton perso2B = new JButton(perso2Bimg);
+	JButton perso1B = new Button(perso1Bimg);
+	JButton perso2B = new Button(perso2Bimg);
 	//JButton persoB = new JButton("feuilles J");
 	ArrayList<JButton> ennemiList = new ArrayList<JButton>();
 	JButton bossB = new JButton("BOSS");
@@ -128,6 +128,17 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		jeuJFrame.add(fieldZone, BorderLayout.CENTER);*/
 		
 	}
+	
+	private class Button extends JButton{
+		public Button(ImageIcon icone) {
+			super();
+			this.setContentAreaFilled(false);
+			this.setBorderPainted(false);
+			this.setFocusPainted(false);
+			this.setIcon(icone);
+		}
+	}
+	
 	/**
 	 * affichage du menu jouer/charger/quitter
 	 */
