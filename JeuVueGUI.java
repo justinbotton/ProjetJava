@@ -1,4 +1,4 @@
-	package info;
+package info;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,27 +6,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
-import java.awt.GridLayout;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 
 public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 
-	ImageIcon jouerBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/jouerB.png");
-	ImageIcon chargerBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/chargerB.png");
-	ImageIcon quitterBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/quitterB.png");
-	ImageIcon elfeBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/elfeB.png");
-	ImageIcon nainBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/nainB.png");
-	ImageIcon orqueBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/orqueB.png");
-	ImageIcon humainBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/humainB.png");
-	ImageIcon perso1Bimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/perso1B.png");
-	ImageIcon perso2Bimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/perso2B.png");
-	ImageIcon gobelinBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/gobelinLogo.png");
-	ImageIcon groupeBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/groupeLogo.png");
-	ImageIcon magicienBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/magicienLogo.png");
-	ImageIcon trollBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/trollLogo.png");
-	ImageIcon grandmageBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/grandmageLogo.png");
-	ImageIcon samuraiBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/samuraiLogo.png");
+	ImageIcon jouerBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/jouerB.png");
+	ImageIcon chargerBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/chargerB.png");
+	ImageIcon quitterBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
+	ImageIcon elfeBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/elfeB.png");
+	ImageIcon nainBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/nainB.png");
+	ImageIcon orqueBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/orqueB.png");
+	ImageIcon humainBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/humainB.png");
+	ImageIcon perso1Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/perso1B.png");
+	ImageIcon perso2Bimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/perso2B.png");
+	ImageIcon gobelinBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/gobelinLogo.png");
+	ImageIcon groupeBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/groupeLogo.png");
+	ImageIcon magicienBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/magicienLogo.png");
+	ImageIcon trollBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/trollLogo.png");
+	ImageIcon grandmageBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/grandmageLogo.png");
+	ImageIcon samuraiBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/samuraiLogo.png");
 	
 	private JFrame jeuJFrame;
 	JFrame fiche;
@@ -43,23 +43,20 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	JButton ennemi2B = new JButton("E2");
 	JButton ennemi3B = new JButton("E3");
 	JButton ennemi4B = new JButton("E4");
-	JButton ennemi5B = new JButton("E5");
+	JButton ennemi5B = new Button(perso1Bimg);
 	JButton perso1B = new Button(perso1Bimg);
 	JButton perso2B = new Button(perso2Bimg);
-	//JButton persoB = new JButton("feuilles J");
 	ArrayList<JButton> ennemiList = new ArrayList<JButton>();
 	JButton bossB = new JButton("BOSS");
-	//JPanel panelFiche = new JPanel();
 	JLabel labelFiche = new JLabel("");
-	//JPanel menuFiche = new JPanel();
 	JLabel label = new JLabel("");
 	JLabel perso = new JLabel("");
-	//JLabel joueur = new JLabel("");
 	Font font1 = new Font("Algerian", Font.BOLD, 100);
 	Font font2 = new Font("Algerian", Font.BOLD, 50);
 	Font font3 = new Font("Algerian", Font.BOLD, 25);
 	Box race;
 	Box menuFiche;
+	Box menuEnnemi;
 	private JTable table;
 	int tourJoueur = 1;
 	int vagueNum = 1;
@@ -101,6 +98,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		jeuJFrame.add(menuFiche, BorderLayout.WEST);
 		menuFiche.setVisible(false);*/
 	    createMenuFiche();
+	    createMenuEnnemi();
 	    
 		
 		jeuJFrame.setVisible(true);
@@ -135,6 +133,8 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	}
 	
 	private class Button extends JButton{
+		private static final long serialVersionUID = 1L;
+
 		public Button(ImageIcon icone) {
 			super();
 			this.setContentAreaFilled(false);
@@ -149,12 +149,9 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	 */
 	public void menuDemarrer() {
 		//------------  BOUTON JOUER/QUITTER  ------------
-	    jouerB.setPreferredSize(new Dimension(300,120)); 
-	    jouerB.setSize(300,120);
-	    chargerB.setPreferredSize(new Dimension(300,120)); 
-	    chargerB.setSize(300,120);
-	    quitterB.setPreferredSize(new Dimension(300,120)); 
-	    quitterB.setSize(300,120);
+	    jouerB.setPreferredSize(new Dimension(300,150)); 
+	    chargerB.setPreferredSize(new Dimension(300,150)); 
+	    quitterB.setPreferredSize(new Dimension(300,150)); 
 	    //On cree des conteneurs avec gestion horizontale
 	    Box b1 = Box.createHorizontalBox();
 	    Box b2 = Box.createHorizontalBox();
@@ -182,6 +179,27 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    menuFiche.add(b1);
 	    menuFiche.add(b2);
 	    jeuJFrame.add(menuFiche, BorderLayout.WEST);
+	}
+	public void createMenuEnnemi() {
+		//On cree des conteneurs avec gestion horizontale
+		Box e1 = Box.createHorizontalBox();
+	    Box e2 = Box.createHorizontalBox();
+	    Box e3 = Box.createHorizontalBox();
+	    Box e4 = Box.createHorizontalBox();
+	    Box e5 = Box.createHorizontalBox();
+	    e1.add(ennemi1B);
+	    e2.add(ennemi2B);
+	    e3.add(ennemi3B);
+	    e4.add(ennemi4B);
+	    e5.add(ennemi5B);
+	    //On cree un conteneur avec gestion verticale
+	    menuEnnemi = Box.createVerticalBox();
+	    menuEnnemi.add(e1);
+	    menuEnnemi.add(e2);
+	    menuEnnemi.add(e3);
+	    menuEnnemi.add(e4);
+	    menuEnnemi.add(e5);
+	    jeuJFrame.add(menuEnnemi, BorderLayout.EAST);
 	}
 	
 	public void affiche(String msg){
@@ -239,31 +257,19 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	     }
 	     else if (source == perso1B) {
 	    	 afficheStat(1);
-	    	 perso1B.setVisible(true);
 	     }
 	     else if (source == perso2B) {
 	    	 afficheStat(2);
-			 perso2B.setVisible(true);
 	     }
-	     /*else if (source == persoB) {
-	    	 persoB.setVisible(false);
-	    	 //fiche.setVisible(true);
-			 perso1B.setVisible(true);
-			 perso2B.setVisible(true);
-	     }*/
 	}
 	public void fiche() {
 		perso1B.setVisible(false);
 		perso2B.setVisible(false);
-		//menuFiche.add(perso1B);
-		//menuFiche.add(perso2B);
 		fiche = new JFrame(" ");
     	fiche.setSize(400,200);
     	fiche.setPreferredSize(new Dimension(400,200));
     	fiche.setTitle("Fiche de personnage");
     	fiche.setLocationRelativeTo(null);
-		//fiche.add(menuFiche, BorderLayout.WEST);
-		//fiche.add(menuFiche);
 		labelFiche.setAlignmentX(0);
 		labelFiche.setAlignmentY(0);
 	}
@@ -323,60 +329,60 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	}
 	public void onClickPersonnage(int i) {
 		jControl.choixPersonnage(i);
-		elfeB.setVisible(false);
-		humainB.setVisible(false);
-		nainB.setVisible(false);
-		orqueB.setVisible(false);
 		if(tourJoueur != 2) {
 			afficheChoixPerso(2);
 			tourJoueur++;
 		}
 		else {
 			race.setVisible(false);
-			perso.setText("La partie va commencer...");
-			race.setEnabled(false);
 			jeuBTD(1);
 			menuFiche.setVisible(true);
 			perso1B.setVisible(true);
 			perso2B.setVisible(true);
-			//affichePlateau();
+			menuEnnemi.setVisible(true);
+			ennemi1B.setVisible(true);
+			ennemi2B.setVisible(true);	
 		}
 	}
 	public void afficheChoixPerso(int i) {
-		race = Box.createHorizontalBox();
 		perso.setFont(font2);
 		perso.setText("- Joueur " + i +" - choisissez votre personnage :");
 	    perso.setVisible(true);
 	    jeuJFrame.add(perso, BorderLayout.NORTH);
-	    
-		JPanel panelbuttons = new JPanel();
-		//Box race = Box.createHorizontalBox();
-		race.add(panelbuttons);
-		GridLayout g = new GridLayout(2, 2);
-		g.setHgap(10);
-		g.setVgap(10);
-		panelbuttons.setLayout(g);
-		panelbuttons.add(elfeB);
-		panelbuttons.add(nainB);
-		panelbuttons.add(orqueB);
-		panelbuttons.add(humainB);
-		elfeB.setVisible(true);
-		humainB.setVisible(true);
-		nainB.setVisible(true);
-		orqueB.setVisible(true);
-		jeuJFrame.add(race, BorderLayout.CENTER);
+		//------------  BOUTON RACE  ------------
+		elfeB.setPreferredSize(new Dimension(300,150)); 
+		humainB.setPreferredSize(new Dimension(300,150)); 
+		nainB.setPreferredSize(new Dimension(300,150)); 
+		orqueB.setPreferredSize(new Dimension(300,150));
+	    //On cree des conteneurs avec gestion horizontale
+	    Box b1 = Box.createHorizontalBox();
+	    Box b2 = Box.createHorizontalBox();
+	    Box b3 = Box.createHorizontalBox();
+	    Box b4 = Box.createHorizontalBox();
+	    b2.add(elfeB);
+	    b1.add(nainB);
+	    b3.add(humainB);
+	    b4.add(orqueB);
+	    //On cree un conteneur avec gestion verticale
+	    race = Box.createVerticalBox();
+	    race.add(b1);
+	    race.add(b2);
+	    race.add(b3);
+	    race.add(b4);
+	    jeuJFrame.add(race, BorderLayout.CENTER);
+	    jeuJFrame.setVisible(true);
+	    //------------  FIN BOUTONS RACE ------------
 	}
 	//affiche le plateau a chaque nouveau donjon
 	public void affichePlateau(int num) {
 		perso.setVisible(false);
 		jeuJFrame.remove(race);
-		ImageIcon icone = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/map" + num +".png");
+		ImageIcon icone = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/map" + num +".png");
 		JLabel image = new JLabel(icone);
 		image.setSize(new Dimension(1000, 500));
 	    jeuJFrame.add(image, BorderLayout.CENTER);
-	    jeuJFrame.setVisible(true);
 	}
-	public void chargement() {
+	/*public void chargement() {
 		JLabel charge = new JLabel("");
 		charge.setPreferredSize(new Dimension(1600, 100));
 		charge.setHorizontalAlignment(JLabel.CENTER);
@@ -385,7 +391,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		charge.setText("Initialisation du jeu ..............");
 		charge.setVisible(true);
 		jeuJFrame.add(charge);
-	}
+	}*/
 	public void onClickEnnemi(Object source, int numEnnemi) {
 		afficheJoueurTour();
 		int ret = jControl.combat(vagueNum, numEnnemi, tourJoueur);
@@ -438,33 +444,18 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	public void prepareVague(Donjon d) {
 		ennemi1B.setText(d.getPopVague(vagueNum)[0].getClasse());
 		ennemi2B.setText(d.getPopVague(vagueNum)[1].getClasse());
-		ennemi1B.setBounds(800, 400, 100, 100); //(x,y,w,h)
-		ennemi2B.setBounds(800, 600, 100, 100);
-		
 		ennemi1B.setVisible(true);
 		ennemi2B.setVisible(true);
-		JPanel panelEnnemi = new JPanel();
-		panelEnnemi.add(ennemi1B);
-		panelEnnemi.add(ennemi2B);
-		panelEnnemi.setLayout(null);
 		if (vagueNum >= 2) {
 			ennemi3B.setText(d.getPopVague(vagueNum)[2].getClasse());
 			ennemi3B.setVisible(true);
-			panelEnnemi.add(ennemi3B);
 		}
 		if (vagueNum == 3) {
 			ennemi4B.setText(d.getPopVague(vagueNum)[3].getClasse());
 			ennemi5B.setText(d.getPopVague(vagueNum)[4].getClasse());
 			ennemi4B.setVisible(true);
 			ennemi5B.setVisible(true);
-			panelEnnemi.add(ennemi4B);
-			panelEnnemi.add(ennemi5B);
 		}
-		GridLayout g = new GridLayout(1, 5);
-		g.setHgap(10);
-		g.setVgap(10);
-		panelEnnemi.setLayout(g);
-		jeuJFrame.add(panelEnnemi, BorderLayout.SOUTH);
 	}
 	public void prepareBoss(Donjon d) {
 		
