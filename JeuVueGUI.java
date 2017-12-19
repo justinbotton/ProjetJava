@@ -12,7 +12,7 @@ import javax.swing.border.Border;
 
 public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 
-	ImageIcon jouerBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/jouerB.png");
+	ImageIcon jouerBimg = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/jouerB.png");
 	ImageIcon chargerBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/chargerB.png");
 	ImageIcon quitterBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/quitterB.png");
 	ImageIcon elfeBimg = new ImageIcon("C:/Users/Philemon/Documents/2TI 2017-2018/Beat the Dungeon/img/elfeB.png");
