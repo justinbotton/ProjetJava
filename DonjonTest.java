@@ -11,8 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author philemon
- *
+ * @author louis & justin & philemon
  */
 public class DonjonTest {
 	Donjon d1;
@@ -27,6 +26,9 @@ public class DonjonTest {
 		d2 = new Donjon("samourai", 10);
 	}
 
+	/**
+	 * test du donjon d1
+	 */
 	@Test
 	public void testPremierDonjon() {
 		assertNotNull(d1);
@@ -59,6 +61,9 @@ public class DonjonTest {
 		}
 	}
 	
+	/**
+	 * test du donjon d2
+	 */
 	@Test
 	public void testDeuxiemeDonjon() {
 		assertNotNull(d2);
@@ -90,13 +95,23 @@ public class DonjonTest {
 		}
 		
 	}
+	
+	/**
+	 * test du loot
+	 */
 	@Test
 	public void testLootDonjon() {
-		d1.lootDonjon(2,2);
-		assertEquals(5, d1.getloot().size());
-		assertNotNull(d1.getloot());
+		d1.lootDonjon(2);
+		assertNotNull(d1.getLoot());
+		assertEquals(4, d1.getLoot().size());
+		d2.lootDonjon(5);
+		assertNotNull(d2.getLoot());
+		assertEquals(10, d2.getLoot().size());
 	}
 
+	/**
+	 * test nombre ennemi par vagues
+	 */
 	@Test
 	public void testNombreEnnemi() {
 		int mage=0;
@@ -118,7 +133,6 @@ public class DonjonTest {
 			if (d1.getVague3()[0].getClass().equals("magicien noir")) {
 				mage2 ++;
 			}
-			
 		}
 		if(mage > 2 || troll > 2) {
 			fail();
@@ -130,5 +144,4 @@ public class DonjonTest {
 			assertTrue(true);
 		}
 	}
-
 }

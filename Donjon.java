@@ -19,30 +19,52 @@ import java.util.Iterator;
  *	Vague 3 : 5 mobs
  */
 public class Donjon {
+	
+	/**
+	 * tableau d ennemis de la vague 1
+	 */
 	private Ennemi[] vague1;
+	
+	/**
+	 * tableau d ennemis de la vague 2
+	 */
 	private Ennemi[] vague2;
+	
+	/**
+	 * tableau d ennemis de la vague 3
+	 */
 	private Ennemi[] vague3;
+	
+	/**
+	 * true si on est a la vague du boss false sinon
+	 */
 	private Ennemi boss = null;
+	
+	/**
+	 * contient les loot genere apres chaque vagues
+	 */
 	private ArrayList<Loot> loot = new ArrayList<Loot>();
 
 	/**
-	 * 
+	 * Constructeur sans paramètre
 	 */
 	public Donjon() {
 		this.vague1 = genererVague(1, 2);
 		this.vague2 = genererVague(2, 2);
 		this.vague3 = genererVague(3, 2);
 	}
+	
 	/**
-	 * 
+	 * Constructeur tenant compte de la somme des niveaux
 	 */
 	public Donjon(int sommeNiveau) {
 		this.vague1 = genererVague(1, sommeNiveau);
 		this.vague2 = genererVague(2, sommeNiveau);
 		this.vague3 = genererVague(3, sommeNiveau);
 	}
+	
 	/**
-	 * 
+	 * Constructeur pour la vague contenant le boss
 	 */
 	public Donjon(String boss, int sommeNiveau) {
 		this.vague1 = genererVague(1, sommeNiveau);
@@ -63,40 +85,91 @@ public class Donjon {
 		}
 		this.boss = new Ennemi(s, sommeNiveau);
 	}
+	
+	/**
+	 * @Getter vague1
+	 * @return vague1 : tableau contenant la vague1 d ennemis
+	 */
 	public Ennemi[] getVague1() {
 		return vague1;
 	}
+	
+	/**
+	 * @Setter vague1
+	 * @param vague1 : remplace la valeur de vague1 par celle en parametre
+	 */
 	public void setVague1(Ennemi[] vague1) {
 		this.vague1 = vague1;
 	}
+	
+	/**
+	 * @Getter vague2
+	 * @return vague2 : tableau contenant la vague2 d ennemis
+	 */
 	public Ennemi[] getVague2() {
 		return vague2;
 	}
+	
+	/**
+	 * @Setter vague2
+	 * @param vague2 : remplace la valeur de vague2 par celle en parametre
+	 */
 	public void setVague2(Ennemi[] vague2) {
 		this.vague2 = vague2;
 	}
+	
+	/**
+	 * @Getter vague3
+	 * @return vague3 : tableau contenant la vague3 d ennemis
+	 */
 	public Ennemi[] getVague3() {
 		return vague3;
 	}
+	
+	/**
+	 * @Setter vague3
+	 * @param vague3 : remplace la valeur de vague3 par celle en parametre
+	 */
 	public void setVague3(Ennemi[] vague3) {
 		this.vague3 = vague3;
 	}
+	
+	/**
+	 * @Getter boss
+	 * @return	boss : true si on est a la vague du boss false sinon
+	 */
 	public Ennemi getBoss() {
 		return boss;
 	}
+	
+	/**
+	 * @Setter boss
+	 * @param boss : remplace la valeur de boss par celle en parametre
+	 */
 	public void setBoss(Ennemi boss) {
 		this.boss = boss;
 	}
-	public ArrayList<Loot> getloot() {
+	
+	/**
+	 * @Getter loot
+	 * @return loot : arraylist contenant les loot
+	 */
+	public ArrayList<Loot> getLoot() {
 		return loot;
 	}
-	public void setloot(ArrayList<Loot> loot) {
+	
+	/**
+	 * @Setter loot
+	 * @param loot : remplace l arraylist de Loot par celui en parametre
+	 */
+	public void setLoot(ArrayList<Loot> loot) {
 		this.loot = loot;
 	}
+	
 	/**
-	 * 
+	 * Remplir l arraylist loot avec les Loot dans la database
 	 * @param donjonNum numero du donjon.
-	 * @param nombrePlayer nombre de joueurs
+	 * @return loot : arraylist rempli avec les objets Loot de la database
 	 */
 	public ArrayList<Loot> lootDonjon(int donjonNum) {
 		Connection connection = null;
@@ -129,6 +202,12 @@ public class Donjon {
 	    return loot;
 	}
 	
+	/**
+	 * simplifie la recuperation des vagues
+	 * @Getter vagueX
+	 * @param vagueNum : numero de vague
+	 * @return vagueX : une vague d ennemi dont le numero est en parametre
+	 */
 	public Ennemi[] getPopVague(int vagueNum) {
 		if (vagueNum == 1) {return this.vague1;}
 		if (vagueNum == 2) {return this.vague2;}
@@ -138,12 +217,11 @@ public class Donjon {
 	
 	
 	/**
+	 * cree une vague avec plus ou moins d ennemis selon la vague.
+	 * les ennemis de la vague sont plus ou moins fort selon la somme des niveaux des joueurs
 	 * @param a > 0
 	 * @param sommeNiveau est la somme des niveau des joueurs
 	 * @return une vague d ennemi
-	 * cree une vague avec plus ou moins de mob selon la vague.
-	 * les ennemis de la vague sont plus ou moins fort selon 
-	 * la somme des niveaux des joueurs
 	 */
 	private Ennemi[] genererVague(int a, int sommeNiveau) {
 		Ennemi[] v;
@@ -202,38 +280,4 @@ public class Donjon {
 		}
 		return v;
 	}
-	
-	/*public static void afficheMob(String boss, int sommeNiveau) {
-		boolean isBoss = false;
-		Donjon d;
-		if (boss.compareTo("BOSS") != 0) {
-			d = new Donjon();
-		}
-		else {
-			d = new Donjon("boss", 1);
-			isBoss = true;
-		}
-		for (int i = 0; i < d.vague1.length; i++) {
-			Ennemi e = d.vague1[i];
-			//System.out.println(e.getClasse() + " " + e.getVie() + " " + e.getForce());
-		}
-		//System.out.println("\n");
-		for (int i = 0; i < d.vague2.length; i++) {
-			Ennemi e = d.vague2[i];
-			//System.out.println(e.getClasse() + " " + e.getVie()+ " " + e.getForce());
-		}
-		//System.out.println("\n");
-		if (!isBoss) {
-			for (int i = 0; i < d.vague3.length; i++) {
-				Ennemi e = d.vague3[i];
-				//System.out.println(e.getClasse() + " " + e.getVie()+ " " + e.getForce());
-			}
-			//System.out.println("\n");
-		}
-		else {
-			//System.out.print("BOSS : ");
-			//System.out.print("BOSS : " + d.getBoss().getClasse());
-		}
-	}*/
-
 }
