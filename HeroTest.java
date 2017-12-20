@@ -52,9 +52,9 @@ public class HeroTest {
 		assertEquals("fourchette", h1.getArmeDroite().getNom());
 		assertEquals(1, h1.getArmeDroite().getDegat());
 		assertEquals("euh... je n ai pas choisi de classe moi !!", h1.getClasse());
-		assertEquals(30, h1.getEndurance());
-		assertEquals(60, h1.getVie());
-		assertEquals(5, h1.getForce());
+		assertEquals(150, h1.getEndurance());
+		assertEquals(300, h1.getVie());
+		assertEquals(10, h1.getForce());
 		assertEquals(1, h1.getVitesseAttaque());
 		assertEquals(1, h1.getNiveau());
 		assertEquals(0, h1.getXp());
@@ -109,25 +109,25 @@ public class HeroTest {
 		assertEquals(1, defaut.getArmeDroite().getDegat());
 		
 		//test de l endurance
-		assertEquals(40, elfe.getEndurance());
-		assertEquals(60, nain.getEndurance());
-		assertEquals(80, orque.getEndurance());
-		assertEquals(30, humain.getEndurance());
-		assertEquals(30, defaut.getEndurance());
+		assertEquals(200, elfe.getEndurance());
+		assertEquals(300, nain.getEndurance());
+		assertEquals(400, orque.getEndurance());
+		assertEquals(150, humain.getEndurance());
+		assertEquals(150, defaut.getEndurance());
 		
 		//test de la vie
-		assertEquals(80, elfe.getVie());
-		assertEquals(120, nain.getVie());
-		assertEquals(160, orque.getVie());
-		assertEquals(60, humain.getVie());
-		assertEquals(60, defaut.getVie());
+		assertEquals(400, elfe.getVie());
+		assertEquals(600, nain.getVie());
+		assertEquals(800, orque.getVie());
+		assertEquals(300, humain.getVie());
+		assertEquals(300, defaut.getVie());
 		
 		//test de la force
-		assertEquals(4, elfe.getForce());
-		assertEquals(3, nain.getForce());
-		assertEquals(1, orque.getForce());
-		assertEquals(5, humain.getForce());
-		assertEquals(5, defaut.getForce());
+		assertEquals(8, elfe.getForce());
+		assertEquals(6, nain.getForce());
+		assertEquals(4, orque.getForce());
+		assertEquals(10, humain.getForce());
+		assertEquals(10, defaut.getForce());
 		
 		//test de la vitesse d attaque
 		assertEquals(1, elfe.getVitesseAttaque());
@@ -191,7 +191,7 @@ public class HeroTest {
 		array.add(l3);
 		
 		//Avec l1 ajout de 20 Xp
-		elfe.ramasser(array, 0);
+		elfe.ramasser(array, 1);
 		assertEquals(20, elfe.getXp());
 		elfe.setXp(0);
 		elfe.setNiveau(1);
@@ -205,7 +205,7 @@ public class HeroTest {
 		array.remove(l2);
 		
 		//Avec l3 changement d'arme
-		nain.ramasser(array, 2);
+		nain.ramasser(array, 1);
 		assertEquals("katana", nain.getArmeDroite().getNom());
 		assertEquals(5, nain.getArmeDroite().getDegat());
 		nain.setXp(0);
