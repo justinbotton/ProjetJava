@@ -30,7 +30,6 @@ public class Jeu extends Observable {
 	private int nombreJoueur;
 	private ArrayList<Hero> joueur;
 	private boolean inGame = false;
-	//private ArrayList<Donjon> donjons14;
 	private Donjon donj;
 	private int joueurMort;
 	int donjonNum = 1;
@@ -386,10 +385,7 @@ public class Jeu extends Observable {
 			sumNiv += h.getNiveau();
 		}
 		if (donjonNum < 5 && this.getEnVie() > 0) {
-			/*Donjon d = new Donjon(sumNiv);
-			donjons14.add(d);*/
 			donj = new Donjon(sumNiv);
-			//donjonNum++;
 			setChanged();
 	        notifyObservers();
 		}
@@ -415,8 +411,6 @@ public class Jeu extends Observable {
 	        return donj.getBoss().getEtat();
 		}
 		if (vagueNum <= 3){
-			//Hero he = this.joueur.get(joueurNum-1);
-			//Ennemi e = donj.getVague1()[choixMob - 1];
 			this.joueur.get(joueurNum-1).attaque(donj.getPopVague(vagueNum)[choixMob - 1]);
 			setChanged();
 	        notifyObservers();
@@ -694,11 +688,11 @@ public class Jeu extends Observable {
 				}
 			    String nom = (String)JOptionPane.showInputDialog(null, "Joueur " + z + ", choisissez votre loot :",
 			      "Loot !", JOptionPane.QUESTION_MESSAGE, null, loot, loot[0]);
-			    JOptionPane.showMessageDialog(null, "Le loot choisi est " + nom, "Choix", JOptionPane.INFORMATION_MESSAGE);
 			    if (nom == null) {
 			    	JOptionPane.showMessageDialog(null, "Vous avez perdu votre loot ! ", "Fenetre evenementielle", JOptionPane.INFORMATION_MESSAGE);
 			    }
 			    else {
+			    	JOptionPane.showMessageDialog(null, "Le loot choisi est " + nom, "Choix", JOptionPane.INFORMATION_MESSAGE);
 				    int choix = 1;
 				    for (int m = 0 ; m < drop.size(); m++) {
 						if (loot[m].compareTo(nom) == 0) {
