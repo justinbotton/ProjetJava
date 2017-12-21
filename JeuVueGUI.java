@@ -384,7 +384,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	 * gere le clic de quitter avec un pop up de confirmation.
 	 */
 	public void onClickQuitter() {
-		JDialog.setDefaultLookAndFeelDecorated(true);
+		JDialog.setDefaultLookAndFeelDecorated(false);
 	    int response = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment quitter ?", "Quit",
 	        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	    if (response == JOptionPane.NO_OPTION) {
