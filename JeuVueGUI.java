@@ -93,7 +93,6 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	public JeuVueGUI(Jeu model, JeuController jControl) {
 		
 		super(model, jControl);
-		//update(null, null);
 		
 		//Construction de la fenetre
 		jeuJFrame = new JFrame(" ");
@@ -478,15 +477,10 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	public void affichePlateau(int num) {
 		jeuJFrame.remove(race);
 		ImageIcon icone = new ImageIcon("src/info/img/map" + num +".png");
-		if (vagueNum == 1 && jControl.jeu.getDonjonNum() == 1) {
-			image = new JLabel(icone);
-			image.setSize(new Dimension(1000, 500));
-		    jeuJFrame.add(image, BorderLayout.CENTER);
-		}
-		else {
-			jeuJFrame.remove(image);
-			image.setIcon(icone);
-		}
+		image = new JLabel(icone);
+		image.setSize(new Dimension(1000, 500));
+		jeuJFrame.add(image, BorderLayout.CENTER);
+
 	}
 	/**
 	 * gere le clic sur un ennemi.

@@ -65,8 +65,6 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	 * @author louis & justin & philemon
 	 */
 	private class ReadInput implements Runnable{
-		//int i = 1;
-		//int playerTurn = 1;
 		public void run() {
 			while(!end){
 				try {
@@ -114,7 +112,6 @@ public class JeuVueConsole extends JeuVue implements Observer {
 							vague(vagueNum, playerTurn);
 							gestionLoot(1);
 							vagueNum++;
-							//jControl.jeu.incDonjonNum();
 						}
 						else { //boss
 							int choixMenuBoss = 1;
@@ -134,7 +131,6 @@ public class JeuVueConsole extends JeuVue implements Observer {
 								}
 								playerTurn = upTour(playerTurn);
 							}
-							//jControl.jeu.incDonjonNum();
 						}
 						
 						if (jControl.jeu.getEnVie() <= 0) {

@@ -30,9 +30,7 @@ public class JeuController {
 	public void menu(int num, int joueur) {
 		switch(num){
 		case 0 :
-			//jVue.affiche("Voulez-vous vraiment quitter ? y or n");
 			jeu.printMenuText(2, joueur);
-			//System.exit(0);
 			break;
 		case 1 :
 			jeu.printMenuText(2, joueur);
@@ -43,7 +41,6 @@ public class JeuController {
 			break;
 		default : 
 			jVue.affiche("Operation incorrecte");
-			//printHelp();
 		}
 	}
 	
@@ -98,14 +95,14 @@ public class JeuController {
 		jeu.creationDonjons();
 		int num = jeu.getDonjonNum();
 		if (num < 5) {
-			jVue.affiche("---------- Création du donjon " + jeu.getDonjonNum() + " ... ----------");
-			jVue.affiche("---------- Création des 3 vagues d'ennemis ... ----------\n");
+			jVue.affiche("---------- Creation du donjon " + jeu.getDonjonNum() + " ... ----------");
+			jVue.affiche("---------- Creation des 3 vagues d'ennemis ... ----------\n");
 			histoire(num);
 		}
 		if (num == 5) {
-			jVue.affiche("---------- Création du donjon 5 ... ----------");
-			jVue.affiche("---------- Création des 2 vagues d'ennemis ... ----------");
-			jVue.affiche("---------- Création du boss ... ----------\n");
+			jVue.affiche("---------- Cretion du donjon 5 ... ----------");
+			jVue.affiche("---------- Creation des 2 vagues d'ennemis ... ----------");
+			jVue.affiche("---------- Creation du boss ... ----------\n");
 		}
 	}
 	/**
@@ -120,14 +117,9 @@ public class JeuController {
 		if (s.compareTo("mort") == 0) {
 			int xp = jeu.xpRecu(vagueNum, choixMob);
 			jVue.affiche("Votre coup a tué votre ennemi. Vous gagnez " + xp +" xp.\n");
-			/* pour debug
-			 * Integer no = new Integer(jeu.getJoueur().get(0).getXp());
-			Integer niv = new Integer(jeu.getJoueur().get(0).getNiveau());
-			jVue.affiche("xp : " + no.toString());
-			jVue.affiche("niveau : " + niv.toString());*/
 			if (jeu.checkVagueClean(vagueNum) && (jeu.getDonj().getBoss() == null)) {
-				jVue.affiche("Pièce clean. Vous avez annéanti les forces ennemies qui entravaient votre chemin.");
-				jVue.affiche("Vous passez donc dans la pièce suivante !\n");
+				jVue.affiche("Piece clean. Vous avez annéanti les forces ennemies qui entravaient votre chemin.");
+				jVue.affiche("Vous passez donc dans la piece suivante !\n");
 			}
 			return 1;
 		}
@@ -142,7 +134,7 @@ public class JeuController {
 			}
 			int degatPrimaire =  h.getForce() + h.getNiveau();
 			int degat = (h.getArmeDroite().getDegat() + degatPrimaire) * h.getVitesseAttaque();
-			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" points de degats !\n Il lui reste : "+ e.getVie()+" PV \n");
+			jVue.affiche("Votre ennemi n'a pas succombe à votre attaque mais vous lui avez inflige " + degat +" points de degats !\n Il lui reste : "+ e.getVie()+" PV \n");
 			return 0;
 		}
 	}
@@ -167,25 +159,24 @@ public class JeuController {
 	 */
 	public void histoire(int num) {
 		if (num == 1) {
-			jVue.affiche("Vous arrivez face à votre premier donjon. Serez-vous assez fort que pour vaincre ceux qui l'habite ?");
-			jVue.affiche("Vous poussez la porte d'entrée et arrivez dans une première salle.\n");
+			jVue.affiche("Vous arrivez face a votre premier donjon. Serez-vous assez fort que pour vaincre ceux qui l'habite ?");
+			jVue.affiche("Vous poussez la porte d'entree et arrivez dans une première salle.\n");
 		}
 		if (num == 2) {
 			jVue.affiche("Vous avez vaincu votre premier donjon. Mais ne vous reposez pas, le suivant vous attend !");
-			jVue.affiche("A peine passé la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
+			jVue.affiche("A peine passe la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
 			
 		}
 		if (num == 3) {
 			jVue.affiche("Vous avez vaincu votre deuxieme donjon. Mais ne vous reposez pas, le suivant vous attend !");
-			jVue.affiche("A peine passé la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
+			jVue.affiche("A peine passe la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
 		}
 		if (num == 4) {
 			jVue.affiche("Vous avez vaincu votre troisieme donjon. Mais ne vous reposez pas, le suivant vous attend !");
-			jVue.affiche("A peine passé la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
+			jVue.affiche("A peine passe la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
 		} 
 		if (num == 5) {
 			jVue.affiche("Vous avez vaincu votre quatrieme donjon. Serez-vous assez fort que pour vaincre le boss ultime de ce donjon ?");
-			//jVue.affiche("A peine passé la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
 		} 
 	}
 	
@@ -197,7 +188,7 @@ public class JeuController {
 		if (!jeu.checkVagueClean(vague)) {
 			String etatJoueur = jeu.combatMob(vague);
 			if (etatJoueur.compareTo("mort") == 0) {
-				jVue.affiche("Vous n'avez pas été assez résistant, joueur " + jeu.getJoueurMort() + " ! Vous etes mort dans d'attroces souffrances... \n");
+				jVue.affiche("Vous n'avez pas ete assez resistant, joueur " + jeu.getJoueurMort() + " ! Vous etes mort dans d'attroces souffrances... \n");
 				jeu.mortDUnJoueur();
 			}
 		}
@@ -209,7 +200,7 @@ public class JeuController {
 		if (jeu.getDonj().getBoss().getEtat().compareTo("vivant") == 0) {
 			String etatJoueur = jeu.combatBoss();
 			if (etatJoueur.compareTo("mort") == 0) {
-				jVue.affiche("Vous n'avez pas été assez résistant, joueur " + jeu.getJoueurMort() + " ! Vous etes mort dans d'attroces souffrances... \n");
+				jVue.affiche("Vous n'avez pas été assez resistant, joueur " + jeu.getJoueurMort() + " ! Vous etes mort dans d'attroces souffrances... \n");
 				jeu.mortDUnJoueur();
 			}
 		}
