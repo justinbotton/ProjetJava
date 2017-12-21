@@ -56,6 +56,7 @@ public class Donjon {
 	
 	/**
 	 * Constructeur tenant compte de la somme des niveaux
+	 * @param sommeNiveau : somme des niveaux des Heros
 	 */
 	public Donjon(int sommeNiveau) {
 		this.vague1 = genererVague(1, sommeNiveau);
@@ -65,6 +66,8 @@ public class Donjon {
 	
 	/**
 	 * Constructeur pour la vague contenant le boss
+	 * @param boss : true si on est a la vague du boss false sinon
+	 * @param sommeNiveau : somme des niveaux des Heros
 	 */
 	public Donjon(String boss, int sommeNiveau) {
 		this.vague1 = genererVague(1, sommeNiveau);

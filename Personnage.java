@@ -1,22 +1,9 @@
-/**
- * 
- */
 package info;
-
-//import java.util.ArrayList;
 
 /**
  * @author Louis & Philemon & Justin.
- *
  */
 public class Personnage {
-	/*public static final int degatFourchette = 1;
-	public static final int degatEpee = 3;
-	public static final int degatHachette = 3;
-	public static final int degatArc = 3;
-	public static final int degatMasse = 3;
-	public static final int degatBaton = 4;
-	public static final int degatKatana = 5;*/
 	
 	/**
 	 * classe du Personnage (Nain, Elfe,...).
@@ -67,7 +54,6 @@ public class Personnage {
 	 * constructeur sans arguments
 	 */
 	public Personnage() {
-
 	}
 	
 	/**

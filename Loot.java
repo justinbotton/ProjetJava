@@ -20,7 +20,7 @@ public class Loot {
 	private int xp;
 
 	/**
-	 *  cree un loot.
+	 * constructeur sans arguments
 	 */
 	public Loot() {
 		this.nom = "gourde";
@@ -28,7 +28,9 @@ public class Loot {
 	}
 	
 	/**
-	 *  cree un loot.
+	 *  constructeur avec arguments
+	 *  @param nom : nom du loot
+	 *  @param xp : valeur en xp du loot
 	 */
 	public Loot(String nom, int xp) {
 		this.nom = nom;

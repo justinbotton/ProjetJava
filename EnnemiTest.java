@@ -35,12 +35,12 @@ public class EnnemiTest {
 		e8 = new Ennemi();
 		
 	}
+	
 	/**
 	 * teste le constructeur vide.
 	 */
 	@Test 
 	public void testConstructeurVide() {
-		//fail("Not yet implemented");
 		assertNotNull(e);
 		assertEquals("gobelin", e.getClasse());
 		Arme a = e.getArmeDroite();
@@ -55,6 +55,7 @@ public class EnnemiTest {
 		assertEquals("vivant", e.getEtat());
 		
 	}	
+	
 	/**
 	 * teste le constructeur (gobelin).
 	 */
@@ -75,6 +76,7 @@ public class EnnemiTest {
 		assertEquals("vivant", e2.getEtat());
 		assertEquals(20, e2.getXpMob());
 	}	
+	
 	/**
 	 * teste le constructeur (troll).
 	 */
@@ -95,6 +97,7 @@ public class EnnemiTest {
 		assertEquals("vivant", e3.getEtat());
 		assertEquals(40, e3.getXpMob());
 	}
+	
 	/**
 	 * teste le constructeur (groupe gobelin).
 	 */
@@ -115,6 +118,7 @@ public class EnnemiTest {
 		assertEquals("vivant", e4.getEtat());
 		assertEquals(60, e4.getXpMob());
 	}
+	
 	/**
 	 * teste le constructeur (magicien noir).
 	 */
@@ -135,6 +139,7 @@ public class EnnemiTest {
 		assertEquals("vivant", e5.getEtat());
 		assertEquals(50, e5.getXpMob());
 	}
+	
 	/**
 	 * teste le constructeur (samourai).
 	 */
@@ -148,13 +153,14 @@ public class EnnemiTest {
 		assertEquals(5, a.getDegat());
 		assertEquals("boss", e6.getType());
 		assertEquals(10, e6.getForce());
-		assertEquals(40, e6.getEndurance());
-		assertEquals(80, e6.getVie());
+		assertEquals(300, e6.getEndurance());
+		assertEquals(600, e6.getVie());
 		assertEquals(1, e6.getVitesseAttaque());
 		assertEquals(1, e6.getNiveau());
 		assertEquals("vivant", e6.getEtat());
 		assertEquals(500, e6.getXpMob());
 	}
+	
 	/**
 	 * teste le constructeur (grand mage).
 	 */
@@ -167,14 +173,15 @@ public class EnnemiTest {
 		assertEquals("baton", a.getNom());
 		assertEquals(4, a.getDegat());
 		assertEquals("boss", e7.getType());
-		assertEquals(5, e7.getForce());
-		assertEquals(50, e7.getEndurance());
-		assertEquals(100, e7.getVie());
+		assertEquals(8, e7.getForce());
+		assertEquals(400, e7.getEndurance());
+		assertEquals(800, e7.getVie());
 		assertEquals(1, e7.getVitesseAttaque());
 		assertEquals(1, e7.getNiveau());
 		assertEquals("vivant", e7.getEtat());
 		assertEquals(500, e7.getXpMob());
 	}
+	
 	/**
 	 * teste la mort et les degats.
 	 */
@@ -186,14 +193,23 @@ public class EnnemiTest {
 		assertEquals(0, e2.getVie());
 		assertEquals("mort", e2.getEtat());
 		e7.setDegat(37);
-		assertEquals(63, e7.getVie());
+		assertEquals(763, e7.getVie());
 		e7.setDegat(70);
-		assertEquals(0, e7.getVie());
-		assertEquals("mort", e7.getEtat());
+		assertEquals(693, e7.getVie());
+		assertEquals("vivant", e7.getEtat());
 	}
 
 	/**
-	 * teste les set.
+	 * teste attaque.
+	 */
+	@Test
+	public void testAttaque() {
+		e3.attaque(e4);
+		assertEquals(54, e4.getVie());
+	}
+	
+	/**
+	 * test setter
 	 */
 	@Test
 	public void testSets() {
@@ -221,14 +237,4 @@ public class EnnemiTest {
 		assertEquals("mort", e8.getEtat());
 		assertEquals(152, e8.getXpMob());
 	}
-	
-	/**
-	 * teste attaque.
-	 */
-	@Test
-	public void testAttaque() {
-		e3.attaque(e4);
-		assertEquals(54, e4.getVie());
-	}
-
 }

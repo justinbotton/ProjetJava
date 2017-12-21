@@ -36,6 +36,7 @@ public class Jeu extends Observable {
 	int donjonNum = 1;
 	boolean sauvegarde = false;
 	boolean charger = false;
+	private volatile int tourJ = 1;
 
 	/**
 	 *  constructeur de jeu
@@ -77,6 +78,8 @@ public class Jeu extends Observable {
 	}
 	public void ajoutJoueur(Hero h) {
 		this.joueur.add(h);
+		setChanged();
+        notifyObservers();
 	}
 	public Donjon getDonj() {
 		return donj;
@@ -102,7 +105,19 @@ public class Jeu extends Observable {
 	public void setJoueurMort(int joueurMort) {
 		this.joueurMort = joueurMort;
 	}
-	
+	public int getTourJ() {
+		return tourJ;
+	}
+	public void setTourJ(int tourJ) {
+		this.tourJ = tourJ;
+	}
+	public void incrTourJ() {
+		if (this.tourJ == 1) {this.tourJ = 2;}
+		else if (this.tourJ == 2) {this.tourJ = 1;}
+		setChanged();
+        notifyObservers();
+	}
+
 	/**
 	 * charge elements table tbJeuModele
 	 */
@@ -135,6 +150,8 @@ public class Jeu extends Observable {
 		    query.close();
 		    select.close();
 		    connection.close();
+		    setChanged();
+	        notifyObservers();
    		} catch (Exception e) {
 		    e.printStackTrace();
 		    System.err.println(e.getClass().getName()+" : "+e.getMessage());
@@ -193,6 +210,8 @@ public class Jeu extends Observable {
   			query.close();
 		    select.close();
 		    connection.close();
+		    setChanged();
+	        notifyObservers();
    		} catch (Exception e) {
 		    e.printStackTrace();
 		    System.err.println(e.getClass().getName()+" : "+e.getMessage());
@@ -403,7 +422,7 @@ public class Jeu extends Observable {
 		if (vagueNum == 0) {
 			this.joueur.get(joueurNum-1).attaque(donj.getBoss());
 			setChanged();
-	        notifyObservers();
+	        notifyObservers(); 
 	        return donj.getBoss().getEtat();
 		}
 		if (vagueNum <= 3){
@@ -657,6 +676,20 @@ public class Jeu extends Observable {
 			}
 		}
 		drop.removeAll(drop);
+	}
+	
+	public void afficheFeuillePerso(int choix) {
+		Hero h = this.getJoueur().get(choix-1);
+		System.out.println("Feuille de personnage du joueur " + choix + " : ");
+		System.out.println("Classe : " + h.getClasse());
+		System.out.println("Niveau : " + h.getNiveau());
+		System.out.println("Force : " + h.getForce());
+		System.out.println("Vie : " + h.getVie());
+		System.out.println("Endurance : " + h.getEndurance());
+		System.out.println("xp : " + h.getXp());
+		System.out.println("Arme : " + h.getArmeDroite().getNom());
+		System.out.println("Etat : " + h.getEtat());
+		System.out.println("---------- Retour au combat ----------\n");
 	}
 	
 	/**

@@ -22,7 +22,7 @@ public class JeuMVC {
 		//Creation du modele
 		
 		 j = new Jeu();
-		 j.setNombreJoueur(2);
+		 //j.setNombreJoueur(2);
 
 		//Creation des controleurs : Un pour chaque vue
 		//Chaque controleur doit avoir une reference vers le modele pour pouvoir le commander

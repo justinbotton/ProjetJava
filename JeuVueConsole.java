@@ -36,8 +36,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		//System.out.println(j);
-		//printHelp();
-		
+		//printHelp();		
 	}
 	/**
 	 * affiche l exception en cas de catch.
@@ -151,7 +150,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 								gestionLoot();
 								affiche("Vous avez suplante les forces du Donjon. Vous avez gagner !\n");
 							}
-							jControl.jeu.incDonjonNum(); // sortie de boucle des donjons
+							jControl.incrDonjonNum(); // sortie de boucle des donjons
 						}
 					}
 					
