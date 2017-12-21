@@ -2,6 +2,11 @@ package info;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
@@ -9,7 +14,11 @@ import java.util.Observer;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-
+/**
+ * 
+ * @author louis & justin & philemon
+ *
+ */
 public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 
 	ImageIcon jouerBimg = new ImageIcon("src/info/img/jouerB.png");
@@ -34,6 +43,8 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	ImageIcon perso2B2img = new ImageIcon("src/info/img/perso2B2.png");
 	ImageIcon gobelinBimg = new ImageIcon("src/info/img/gobelinB.png");
 	ImageIcon gobelinB2img = new ImageIcon("src/info/img/gobelinB2.png");
+	ImageIcon lootBimg = new ImageIcon("src/info/img/gobelinB.png");
+	ImageIcon lootB2img = new ImageIcon("src/info/img/gobelinB2.png");
 	
 	private JFrame jeuJFrame;
 	JFrame fiche;
@@ -52,14 +63,17 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	Button ennemi5B = new Button(gobelinBimg, gobelinB2img);
 	Button perso1B = new Button(perso1Bimg, perso1B2img);
 	Button perso2B = new Button(perso2Bimg, perso2B2img);
+	Button lootB = new Button(gobelinBimg, gobelinB2img);
 	ArrayList<JButton> ennemiList = new ArrayList<JButton>();
 	Button bossB = new Button(gobelinBimg, gobelinBimg);
 	JLabel labelFiche = new JLabel("");
 	JLabel label = new JLabel("");
+	JLabel image;
 	JLabel perso = new JLabel("");
 	Font font1 = new Font("Algerian", Font.BOLD, 100);
 	Font font2 = new Font("Algerian", Font.BOLD, 50);
 	Font font3 = new Font("Algerian", Font.BOLD, 25);
+	Font font4 = new Font("Algerian", Font.BOLD, 20);
 	JTextField southBar;
 	Box race;
 	Box menuFiche;
@@ -68,9 +82,14 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	private volatile int tourJoueur = 1;
 	private volatile int vagueNum = 1;
 	private Donjon d;
-	private final static String espace = "                                                                                 ";
+	private final static String espace = "                                                                           ";
 	private boolean first = true;
 
+	/**
+	 * constructeur de la GUI en mode MVC.
+	 * @param model modele du jeu
+	 * @param jControl controlleur du jeu
+	 */
 	public JeuVueGUI(Jeu model, JeuController jControl) {
 		
 		super(model, jControl);
@@ -124,9 +143,14 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		bossB.addActionListener(this);
 		perso1B.addActionListener(this);
 		perso2B.addActionListener(this);
+		lootB.addActionListener(this);
 		
 	}
-	
+	/**
+	 * classe privee pour redefinir un bouton avec image.
+	 * @author louis & philemen & justin
+	 *
+	 */
 	private class Button extends JButton {
 		private static final long serialVersionUID = 1L;
 		
@@ -168,6 +192,9 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    jeuJFrame.setVisible(true);
 	    //------------  FIN BOUTONS JOUER/QUITTER ------------
 	}
+	/**
+	 * cree le menu de gauche contenant les feuilles de personnages et un bouton quitter.
+	 */
 	public void createMenuFiche() {
 		//On cree des conteneurs avec gestion horizontale
 	    Box b1 = Box.createHorizontalBox();
@@ -184,6 +211,9 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    menuFiche.add(b3);
 	    jeuJFrame.add(menuFiche, BorderLayout.WEST);
 	}
+	/**
+	 * cree le menu de droite contenant les ennemis a affonter.
+	 */
 	public void createMenuEnnemi() {
 		//On cree des conteneurs avec gestion horizontale
 		Box e1 = Box.createHorizontalBox();
@@ -192,12 +222,14 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    Box e4 = Box.createHorizontalBox();
 	    Box e5 = Box.createHorizontalBox();
 	    Box e6 = Box.createHorizontalBox();
+	    Box e7 = Box.createHorizontalBox();
 	    e1.add(ennemi1B);
 	    e2.add(ennemi2B);
 	    e3.add(ennemi3B);
 	    e4.add(ennemi4B);
 	    e5.add(ennemi5B);
 	    e6.add(bossB);
+	    e7.add(lootB);	    
 	    //On cree un conteneur avec gestion verticale
 	    menuEnnemi = Box.createVerticalBox();
 	    menuEnnemi.add(e1);
@@ -206,13 +238,16 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    menuEnnemi.add(e4);
 	    menuEnnemi.add(e5);
 	    menuEnnemi.add(e6);
+	    menuEnnemi.add(e7);
 	    menuEnnemi.setVisible(false);
 	    jeuJFrame.add(menuEnnemi, BorderLayout.EAST);
 	}
 	
 	@Override
 	public void affiche(String string) {
-		System.out.println(string);		
+		System.out.println(string);
+		perso.setText(string);
+		perso.setFont(font4);
 	}
 	@Override
 	public void update(Observable o, Object arg) {
@@ -270,7 +305,13 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	     else if (source == perso2B) {
 	    	 afficheStat(2);
 	     }
+	     else if (source == lootB) {
+	    	 lootTime();
+	     }
 	}
+	/**
+	 * rend le menu de gauche visible.
+	 */
 	public void fiche() {
 		perso1B.setVisible(false);
 		perso2B.setVisible(false);
@@ -283,6 +324,10 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		labelFiche.setAlignmentX(0);
 		labelFiche.setAlignmentY(0);
 	}
+	/**
+	 * affiche la feuille du personnage numJoueur.
+	 * @param numJoueur numero du joueur dont la feuille est affichee
+	 */
 	public void afficheStat(int numJoueur) {
 		 jControl.afficheFeuillePersonnages(numJoueur);
 		 table = null;
@@ -313,7 +358,9 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
  		 //fiche.setResizable(false);
  		 //jeuJFrame.add(table,  BorderLayout.WEST);
 	}
-	
+	/**
+	 * gere le clic de jouer.
+	 */
 	public void onClickJouer() {
 		jouerB.setVisible(false);
 		quitterB.setVisible(false);
@@ -322,6 +369,9 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		afficheChoixPerso(1);
 		jControl.menu(1,1);
 	}
+	/**
+	 * gere le clic de charger.
+	 */
 	public void onClickCharger() {
 		jouerB.setVisible(false);
 		quitterB.setVisible(false);
@@ -331,6 +381,9 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		jControl.menu(2, 1);
 		afficheJeu();
 	}
+	/**
+	 * gere le clic de quitter avec un pop up de confirmation.
+	 */
 	public void onClickQuitter() {
 		JDialog.setDefaultLookAndFeelDecorated(true);
 	    int response = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment quitter ?", "Quit",
@@ -344,20 +397,24 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	      System.out.println("Quitter jeu");
 	    }
 	}
+	/*
+	 * gere le clic sur un choix de personnage.
+	 */
 	public void onClickPersonnage(int i) {
 		if(tourJoueur == 1) {
 			tourJoueur++;
-			
-			afficheChoixPerso(tourJoueur);
 			jControl.choixPersonnage(i);
 			jControl.printTextMenu(2,2);
+			afficheChoixPerso(tourJoueur);
 		}
 		else {
-			//jControl.jeu.setDonjonNum(5); //TODO test, donc enlever apres 
 			jControl.choixPersonnage(i);
 			afficheJeu();
 		}
 	}
+	/**
+	 * affiche des textes et boutons necessaire au jeu.
+	 */
 	public void afficheJeu() {
 		race.setVisible(false);
 		jeuBTD(1);
@@ -367,16 +424,24 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		quitter2B.setVisible(true);
 		menuEnnemi.setVisible(true);
 		tourJoueur = 1;
+		updateSouthBar();
+	    perso.setVisible(true);
+	    perso.setText("La partie commence !");
+	    //jControl.afficheTour(jControl.jeu.getTourJ());
+	}
+	public void updateSouthBar() {
 		southBar = new JTextField();
 		southBar.setText("Tour joueur : " + jControl.jeu.getTourJ() + espace +"Vague n° : " + vagueNum 
-	    		+ espace +"Donjon n° :" + jControl.jeu.getDonjonNum());
+	    		+ espace +"Donjon n° : " + jControl.jeu.getDonjonNum());
 	    southBar.setFont(font3);
 	    jeuJFrame.add(southBar, BorderLayout.SOUTH);
 	    southBar.setEditable(false);
 	    southBar.setVisible(true);
-	    perso.setVisible(true);
-	    perso.setText("La partie commence !");
 	}
+	/**
+	 * affiche le choix de personnage.
+	 * @param i joueur concerne.
+	 */
 	public void afficheChoixPerso(int i) {
 		perso.setFont(font2);
 		perso.setText("- Joueur " + i +" - choisissez votre personnage :");
@@ -406,89 +471,131 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    jeuJFrame.setVisible(true);
 	    //------------  FIN BOUTONS RACE ------------
 	}
-	//affiche le plateau a chaque nouveau donjon
+	/**
+	 * affiche le plateau de jeu.
+	 * @param num numero du donjon
+	 */
 	public void affichePlateau(int num) {
-		//perso.setVisible(false);
 		jeuJFrame.remove(race);
-		ImageIcon icone = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/map" + num +".png");
-		JLabel image = new JLabel(icone);
-		image.setSize(new Dimension(1000, 500));
-	    jeuJFrame.add(image, BorderLayout.CENTER);
+		ImageIcon icone = new ImageIcon("src/info/img/map" + num +".png");
+		if (vagueNum == 1 && jControl.jeu.getDonjonNum() == 1) {
+			image = new JLabel(icone);
+			image.setSize(new Dimension(1000, 500));
+		    jeuJFrame.add(image, BorderLayout.CENTER);
+		}
+		else {
+			jeuJFrame.remove(image);
+			image.setIcon(icone);
+		}
 	}
+	/**
+	 * gere le clic sur un ennemi.
+	 * @param source bouton concerne
+	 * @param numEnnemi numero de l ennemi dans la vague
+	 */
 	public void onClickEnnemi(Object source, int numEnnemi) {
-		afficheJoueurTour();
+		Hero h = jControl.jeu.getJoueur().get(jControl.jeu.getTourJ() - 1);
+		Hero h2 = jControl.jeu.getAutre(jControl.jeu.getTourJ() - 1);
 		Ennemi b = jControl.jeu.getDonj().getBoss();
-		//System.out.println("joueur avant clic : " + jControl.jeu.getTourJ());
-		int ret = jControl.combat(vagueNum, numEnnemi, jControl.jeu.getTourJ());
-		
-		if (ret == 1) {
-			JButton s = (JButton) source;
-			s.setVisible(false);
-		}
-		if (jControl.jeu.checkVagueClean(vagueNum) && (b == null)) {
-			perso.setText("Vous avez vaincu cette vague ! Passez a la piece suivante.");
-			perso.setVisible(true);
-			incVague();			
-			jeuBTD(vagueNum);
-		}
-		if (b != null) {
-			//bossB.setVisible(false);
-			if (vagueNum != 3 && jControl.jeu.checkVagueClean(vagueNum)) {
-				perso.setText("Vous avez vaincu cette vague ! Vous arrivez tout doucement vers le boss !");
-				perso.setVisible(true);
-				incVague();			
-				jeuBTD(vagueNum);
-			}
-			else if (vagueNum == 3){
-				perso.setText("Vous voici devant le boss !");
-				perso.setVisible(true);
-				incVague();	
-				bossB.setVisible(true);
-				jeuBTD(vagueNum);
-			}
+		if (h.getEtat().compareTo("vivant") == 0) {
+			int ret = jControl.combat(vagueNum, numEnnemi, jControl.jeu.getTourJ());
 			
+			if (ret == 1) {
+				JButton s = (JButton) source;
+				s.setVisible(false);
+			}
+			if (jControl.jeu.checkVagueClean(vagueNum) && (b == null)) {
+				incVague();		
+				//lootTime();
+				//jeuBTD(vagueNum);
+				lootB.setVisible(true);
+			}
+			if (b != null) {
+				if (vagueNum != 3 && jControl.jeu.checkVagueClean(vagueNum)) {
+					incVague();
+					//lootTime();
+					//jeuBTD(vagueNum);
+					lootB.setVisible(true);
+				}
+				else if (vagueNum == 3){
+					incVague();	
+					bossB.setVisible(true);
+					jeuBTD(vagueNum);
+				}
+				
+			}
+			if (jControl.jeu.getTourJ() == 2 && b == null) {
+				jControl.tourMob(vagueNum);
+			}
+			jControl.jeu.incrTourJ();
+			southBar.setText("Tour joueur : " + jControl.jeu.getTourJ() + espace +"Vague n° : " + vagueNum 
+		    		+ espace +"Donjon n° : " + jControl.jeu.getDonjonNum());
+		    southBar.setFont(font3);
+		    southBar.setEditable(false);
 		}
-		if (jControl.jeu.getTourJ() == 2 && b == null) {
-			jControl.tourMob(vagueNum);
+		else {
+			if (jControl.jeu.getTourJ() == 2 && b == null) {
+				jControl.tourMob(vagueNum);
+			}
+			jControl.jeu.incrTourJ();
 		}
-		
-		jControl.jeu.incrTourJ();
-		southBar.setText("Tour joueur : " + jControl.jeu.getTourJ() + espace +"Vague n° : " + vagueNum 
-	    		+ espace +"Donjon n° :" + jControl.jeu.getDonjonNum());
-	    southBar.setFont(font3);
-	    southBar.setEditable(false);
-		//System.out.println("joueur apres clic : " + jControl.jeu.getTourJ() + "\n");
-	}
-	
-	public void onClicBoss(Object source) {
-		int ret = jControl.combat(0, 1, jControl.jeu.getTourJ());
-		if (ret == 1) {
-			JButton s = (JButton) source;
-			s.setVisible(false);
-		}
-		int etatBoss = jControl.jeu.getDonj().getBoss().getEtat().compareTo("mort");
-		if (etatBoss == 0) {
-			perso.setText("Vous avez vaincu le maitre du donjon ! Felicitations, la partie est finie !");
-			perso.setFont(font3);
-			bossB.setVisible(true);
+		if (h.getEtat().compareTo("mort") == 0 && h2.getEtat().compareTo("mort") == 0) {
 			bossB.setEnabled(false);
+			affiche("Vous n'avez pas survécu au donjon... dommage...");
 		}
-		if (jControl.jeu.getTourJ() == 2 && etatBoss != 0) {
-			jControl.tourBoss();
-		}
-		jControl.jeu.incrTourJ();
-		southBar.setText("Tour joueur : " + jControl.jeu.getTourJ() + espace +"Vague n° : " + vagueNum 
-	    		+ espace +"Donjon n° :" + jControl.jeu.getDonjonNum());
-	    southBar.setFont(font3);
-	    southBar.setEditable(false);
 	}
 	
-	// fait tourner la partie une fois les perso choisi
+	/**
+	 * gere le clic sur le bouton du boss.
+	 * @param source bouton boss
+	 */
+	public void onClicBoss(Object source) {
+		Hero h = jControl.jeu.getJoueur().get(jControl.jeu.getTourJ() - 1);
+		Hero h2 = jControl.jeu.getAutre(jControl.jeu.getTourJ() - 1);
+		int etatBoss = jControl.jeu.getDonj().getBoss().getEtat().compareTo("mort");
+		if (h.getEtat().compareTo("vivant") == 0) {
+			int ret = jControl.combat(0, 1, jControl.jeu.getTourJ());
+			if (ret == 1) {
+				JButton s = (JButton) source;
+				s.setVisible(false);
+			}
+			if (etatBoss == 0) {
+				perso.setText("Vous avez vaincu le maitre du donjon ! Felicitations, la partie est finie !");
+				perso.setFont(font3);
+				bossB.setVisible(true);
+				bossB.setEnabled(false);
+			}
+			if (jControl.jeu.getTourJ() == 2 && etatBoss != 0) {
+				jControl.tourBoss();
+			}
+			jControl.jeu.incrTourJ();
+			southBar.setText("Tour joueur : " + jControl.jeu.getTourJ() + espace +"Vague n° : " + vagueNum 
+		    		+ espace +"Donjon n° :" + jControl.jeu.getDonjonNum());
+		    southBar.setFont(font3);
+		    southBar.setEditable(false);
+		}
+		else {
+			if (jControl.jeu.getTourJ() == 2 && etatBoss != 0) {
+				jControl.tourBoss();
+			}
+			jControl.jeu.incrTourJ();
+		}
+		if (h.getEtat().compareTo("mort") == 0 && h2.getEtat().compareTo("mort") == 0) {
+			bossB.setEnabled(false);
+			affiche("Vous n'avez pas survécu au donjon... dommage...");
+		}
+	}
+	
+	/**
+	 * fait tourner la partie.
+	 * @param vague numero de vague actuel
+	 */
 	public void jeuBTD(int vague) {
 		if (vague == 1) {
 			affichePlateau(jControl.jeu.getDonjonNum());
 			if (first == false) {jControl.incrDonjonNum();}
 			jControl.creationDonjons();
+			jControl.histoire(jControl.jeu.getDonjonNum());
 		}
 		d = jControl.jeu.getDonj();
 		
@@ -505,7 +612,12 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 			System.exit(0);
 		}
 	}
+	/**
+	 * prepare la vague d ennemis.
+	 * @param d donjon actuel.
+	 */
 	public void prepareVague(Donjon d) {
+		lootB.setVisible(false);
 		if (vagueNum !=3 || d.getBoss() == null) {
 			ennemi1B.setImage(d.getPopVague(vagueNum)[0].getIcone1(), d.getPopVague(vagueNum)[0].getIcone2());
 			ennemi2B.setImage(d.getPopVague(vagueNum)[1].getIcone1(), d.getPopVague(vagueNum)[1].getIcone2());
@@ -534,13 +646,21 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 			bossB.setVisible(true);
 		}
 	}
+	
+	/**
+	 * incremente le numero de vague.
+	 */
 	public void incVague() {
 		if (vagueNum == 1 || vagueNum == 2 || vagueNum == 3) {vagueNum ++;}
 		if (vagueNum == 4) {vagueNum = 1;}
 	}
-	public void afficheJoueurTour() {
-		perso.setFont(font3);
-		//perso.setText("Joueur " + tourJoueur + ", a vous de jouer : ");
-		perso.setVisible(true);
+	
+	/**
+	 * gere le loot.
+	 */
+	public void lootTime() {
+		jControl.gestionLoot(2);
+		lootB.setVisible(false);
+		jeuBTD(vagueNum);
 	}
 }

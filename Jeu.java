@@ -42,20 +42,9 @@ public class Jeu extends Observable {
 	 *  constructeur de jeu
 	 */
 	public Jeu() {
-		/*Hero h = new Hero();
-		String[] args = null;
-		h.main(args);*/
 		joueur = new ArrayList<Hero>();
-		/*if(sauvegarde) {
-			chargerTbJeuModele();
-			chargerTbJoueur();
-		} else {*/
-			this.enVie = 2;
-			this.nombreJoueur = 2;
-			
-			//donjons14 = new ArrayList<Donjon>();
-		//}
-		
+		this.enVie = 2;
+		this.nombreJoueur = 2;
 	}
 
 	public int getEnVie() {
@@ -119,7 +108,7 @@ public class Jeu extends Observable {
 	}
 
 	/**
-	 * charge elements table tbJeuModele
+	 * charge elements table tbJeuModele.
 	 */
 	public void chargerTbJeuModele() {
 		Connection connection = null;
@@ -159,7 +148,7 @@ public class Jeu extends Observable {
 	}
 	
 	/**
-	 * charger elements tbJoueur1 et 2
+	 * charger elements tbJoueur1 et 2.
 	 */
 	public void chargerTbJoueur() {
 		Connection connection = null;
@@ -219,7 +208,7 @@ public class Jeu extends Observable {
 	}
 	
 	/**
-	 * sauvegarde de l etat des joueurs
+	 * sauvegarde de l etat des joueurs.
 	 * @throws ClassNotFoundException 
 	 * @throws SQLException 
 	 */
@@ -275,7 +264,7 @@ public class Jeu extends Observable {
 	}
 	
 	/**
-	 * sauvegarde du modele
+	 * sauvegarde du modele.
 	 */
 	public void sauvegarderJeuModele() {
 		Connection connection = null;
@@ -414,7 +403,7 @@ public class Jeu extends Observable {
 	}
 	
 	/**
-	 * @param vagueNum > 0 & <=3.
+	 * @param vagueNum > 0 & <=3 pour les mob et = 0 pour le boss.
 	 * @param choixMob >0 & <= 2 pour vague1, <= 3 pour vague2, <= 5 pour vague3
 	 * @param joueurNum est le numero du joueur 1 || 2
 	 */
@@ -598,6 +587,11 @@ public class Jeu extends Observable {
 			return false;
 		}
 	}
+	/**
+	 * verifie si un joueur est mort et l ajoute a la variable des morts si oui.
+	 * @param s est mort ou vivant et est le resultat de combat()
+	 * @param joueur un personnage
+	 */
 	public void checkMort(String s, int joueur) {
 		if (s.compareTo("mort") == 0) {
 			this.joueurMort = joueur;
@@ -605,10 +599,20 @@ public class Jeu extends Observable {
 	        notifyObservers();
 		}
 	}
+	
+	/**
+	 * retourne l autre joueur que celui passe en argument.
+	 * @param h hero
+	 * @return le deuxieme joueur
+	 */
 	public Hero getAutre(int h) {
 		if (h == 0) {return joueur.get(1);}
 		else {return joueur.get(0);}
 	}
+	/**
+	 * resoud le combat pour le boss.
+	 * @return l etat du joueur attaque
+	 */
 	public String combatBoss() {
 		int joueurAttaque = nbrAlea(2);
 		// change le joueur cible si joueur random deja mort 
@@ -652,32 +656,70 @@ public class Jeu extends Observable {
 		return xpGagne;
 	}
 
-	public void gestionLoot() {
+	/**
+	 * fait la distribution des loots.
+	 */
+	public void gestionLoot(int vueNum) {
 		ArrayList<Loot> drop = donj.lootDonjon(donjonNum);
+		ArrayList<Loot> svg = new ArrayList<Loot> ();
 		int z = nbrAlea(2);
-		for(int i = 0 ; i < joueur.size(); i++) {
-			int k = 1;
-			for(Loot l : drop) {
-				System.out.println(k+" : "+l.getNom());
-				k++;
+		if (vueNum == 1) {  //mode console
+			for(int i = 0 ; i < joueur.size(); i++) {
+				int k = 1;
+				for(Loot l : drop) {
+					System.out.println(k+" : "+l.getNom());
+					k++;
+				}
+				System.out.println("Choisissez votre loot : Joueur "+z);
+				scan = new Scanner(System.in);
+				int entree = scan.nextInt();
+				while(entree>drop.size() || entree<=0) {
+					System.out.println("Mauvais numero de loot : choisissez a nouveau");
+					entree = scan.nextInt();
+				}
+				joueur.get(z-1).ramasser(drop, entree);
+				if(z==1) {
+					z=2;
+				}else {
+					z=1;
+				}
 			}
-			System.out.println("Choisissez votre loot : Joueur "+z);
-			scan = new Scanner(System.in);
-			int entree = scan.nextInt();
-			while(entree>drop.size() || entree<=0) {
-				System.out.println("Mauvais numero de loot : choisissez a nouveau");
-				entree = scan.nextInt();
-			}
-			joueur.get(z-1).ramasser(drop, entree);
-			if(z==1) {
-				z=2;
-			}else {
-				z=1;
+		}
+		if (vueNum == 2) { //mode graphique
+			for(int i = 0 ; i < joueur.size(); i++) {
+				int k = 1;
+				String[] loot = new String[drop.size()];
+				for (int m = 0 ; m < drop.size(); m++) {
+					loot[m] = drop.get(m).getNom();
+				}
+			    String nom = (String)JOptionPane.showInputDialog(null, "Joueur " + z + ", choisissez votre loot :",
+			      "Loot !", JOptionPane.QUESTION_MESSAGE, null, loot, loot[0]);
+			    JOptionPane.showMessageDialog(null, "Le loot choisi est " + nom, "Choix", JOptionPane.INFORMATION_MESSAGE);
+			    if (nom == null) {
+			    	JOptionPane.showMessageDialog(null, "Vous avez perdu votre loot ! ", "Fenetre evenementielle", JOptionPane.INFORMATION_MESSAGE);
+			    }
+			    else {
+				    int choix = 1;
+				    for (int m = 0 ; m < drop.size(); m++) {
+						if (loot[m].compareTo(nom) == 0) {
+							choix = m + 1;
+						}
+					}
+				    joueur.get(z-1).ramasser(drop, choix);
+				    if(z==1) {
+						z=2;
+					}else {
+						z=1;
+					}
+			    }
 			}
 		}
 		drop.removeAll(drop);
 	}
-	
+	/**
+	 * affiche la feuille de personnage de choix
+	 * @param choix numero du joueur concerne
+	 */
 	public void afficheFeuillePerso(int choix) {
 		Hero h = this.getJoueur().get(choix-1);
 		System.out.println("Feuille de personnage du joueur " + choix + " : ");

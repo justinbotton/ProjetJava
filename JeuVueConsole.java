@@ -27,7 +27,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	}
 	
 	/**
-	 * 
+	 * setter du playerTurn.
 	 */
 	public void setPlayerTurn(int playerTurn) {
 		this.playerTurn = playerTurn;
@@ -85,7 +85,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						gestionMenu2(i); // gestion choix joueur 2
 					}
 					//var de test
-					//jControl.jeu.setDonjonNum(5);
+					//jControl.jeu.setDonjonNum(2);
 					
 					affiche("---------- Votre partie de Beat The Donjon va commencer... ----------");
 					afficheTuto();
@@ -107,12 +107,12 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						}
 						while(vagueNum < 3) { // boucle des vagues 1-2
 							vague(vagueNum, playerTurn);
-							gestionLoot();
+							gestionLoot(1);
 							vagueNum++;
 						}
 						if (!boss) { //vague 3
 							vague(vagueNum, playerTurn);
-							gestionLoot();
+							gestionLoot(1);
 							vagueNum++;
 							//jControl.jeu.incDonjonNum();
 						}
@@ -142,7 +142,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						}
 						else {
 							if(jControl.jeu.getDonjonNum() == 5) {
-								gestionLoot();
+								gestionLoot(1);
 								affiche("Vous avez suplante les forces du Donjon. Vous avez gagner !\n");
 							}
 							jControl.incrDonjonNum(); // sortie de boucle des donjons
@@ -361,7 +361,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	 * @param jTour numero du joueur.
 	 */
 	private void afficheTourJoueur(int jTour) {
-		affiche("-- JOUEUR " + jTour + " : A vous d'attaquer --");
+		jControl.afficheTour(jTour);
 	}
 	/**
 	 * lance le tour de l ennemi.
@@ -371,14 +371,17 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		jControl.tourMob(vague);
 	}
 	/**
-	 * lanc le tour du boss.
+	 * lance le tour du boss.
 	 */
 	private void tourBoss() {
 		jControl.tourBoss();
 	}
 	
-	public void gestionLoot() {
-		jControl.gestionLoot();
+	/**
+	 *  lance la gestion des loots.
+	 */
+	public void gestionLoot(int vueNum) {
+		jControl.gestionLoot(vueNum);
 	}
 
 	@Override

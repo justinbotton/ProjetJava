@@ -4,6 +4,7 @@
 package info;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -132,15 +133,16 @@ public class JeuController {
 		}
 		else {
 			Hero h = jeu.getJoueur().get(joueurNum-1);
-			Ennemi e;
+			Ennemi e =  new Ennemi();
 			if(jeu.getDonj().getBoss() == null || vagueNum != 3) {
 				e = jeu.getDonj().getPopVague(vagueNum)[choixMob-1];
-			}else {
+			}
+			if (jeu.getDonj().getBoss() != null && vagueNum == 0){
 				e = jeu.getDonj().getBoss();
 			}
 			int degatPrimaire =  h.getForce() + h.getNiveau();
 			int degat = (h.getArmeDroite().getDegat() + degatPrimaire) * h.getVitesseAttaque();
-			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" points de degats !\n Il lui reste : "+e.getVie()+" PV \n");
+			jVue.affiche("Votre ennemi n'a pas succombé à votre attaque mais vous lui avez infligé " + degat +" points de degats !\n Il lui reste : "+ e.getVie()+" PV \n");
 			return 0;
 		}
 	}
@@ -170,19 +172,20 @@ public class JeuController {
 		}
 		if (num == 2) {
 			jVue.affiche("Vous avez vaincu votre premier donjon. Mais ne vous reposez pas, le suivant vous attend !");
-			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
+			jVue.affiche("A peine passé la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
+			
 		}
 		if (num == 3) {
 			jVue.affiche("Vous avez vaincu votre deuxieme donjon. Mais ne vous reposez pas, le suivant vous attend !");
-			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
+			jVue.affiche("A peine passé la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
 		}
 		if (num == 4) {
 			jVue.affiche("Vous avez vaincu votre troisieme donjon. Mais ne vous reposez pas, le suivant vous attend !");
-			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
+			jVue.affiche("A peine passé la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
 		} 
 		if (num == 5) {
 			jVue.affiche("Vous avez vaincu votre quatrieme donjon. Serez-vous assez fort que pour vaincre le boss ultime de ce donjon ?");
-			jVue.affiche("A peine passé la porte, des ennemis vous repèrent. BASTON !\n");
+			//jVue.affiche("A peine passé la porte du nouveau donjon, des ennemis vous repèrent. BASTON !\n");
 		} 
 	}
 	
@@ -219,16 +222,32 @@ public class JeuController {
 		jeu.afficheFeuillePerso(choix);
 	}
 	
-	public void gestionLoot() {
-		jVue.affiche("Gestion des Loot : ");
-		jeu.gestionLoot();
-		jVue.affiche("Gestion des Loot terminee \n");
+	/**
+	 * affiche le joueur qui doit jouer en console.
+	 * @param i numero du joueur
+	 */
+	public void afficheTour(int i) {
+		jVue.affiche("-- JOUEUR " + i + " : A vous d'attaquer --");
 	}
 	
+	/**
+	 * fait la gestion des loots apres une vague.
+	 */
+	public void gestionLoot(int vueNum) {
+		jVue.affiche("Gestion des Loot : ");
+		jeu.gestionLoot(vueNum);
+		jVue.affiche("Gestion des Loot terminee \n");
+	}
+	/**
+	 * incremente le numero du donjon.
+	 */
 	public void incrDonjonNum() {
 		jeu.incDonjonNum();
 	}
-	
+	/**
+	 * ajoute une vue.
+	 * @param jVue vue
+	 */
 	public void addView(JeuVue jVue) {
 		this.jVue = jVue;
 		
