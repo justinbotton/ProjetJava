@@ -137,11 +137,6 @@ public class JeuVueConsole extends JeuVue implements Observer {
 							//jControl.jeu.incDonjonNum();
 						}
 						
-						//gerer loot 
-						
-						// jControl.gestionLoot un truc dans le genre
-						
-						//jControl.jeu.setEnVie(0);
 						if (jControl.jeu.getEnVie() <= 0) {
 							affiche("Vous avez succomber aux forces du Donjon. Vous avez perdu !\n");
 						}
@@ -153,15 +148,6 @@ public class JeuVueConsole extends JeuVue implements Observer {
 							jControl.incrDonjonNum(); // sortie de boucle des donjons
 						}
 					}
-					
-					
-					/* TEST POUR COMPRENDRE UN TRUC
-					 * Hero h = jControl.jeu.getJoueur().get(0);
-					h.setForce(8000000);
-					//jControl.jeu.getJoueur().add(h);
-					for (Hero u : jControl.jeu.getJoueur()) {
-						System.out.println(u.getForce());
-					}*/
 					
 					affiche("---------- La partie est finie ! ----------");
 					fin();
@@ -240,11 +226,8 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			fin();
 			System.exit(0);
 			break;
-		/*case "n" :
-			System.out.println("Faites un nouveau choix :");
-			i = scan.nextInt();
-			break;*/
 		default :
+			break;
 		}
 	}
 	/**
@@ -274,10 +257,6 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 		jControl.menu(i,1);
 		i++;
-		/*if (i == 1) {
-			jControl.menu(i,1);
-			i++;
-		}*/
 	}
 	/**
 	 * gere l affichage du choix de personnage joueur 1
@@ -292,11 +271,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			jControl.printTextMenu(2,1);
 			i = scan.nextInt();
 		}
-		//jControl.printTextMenu(2,1);	
 		jControl.choixPersonnage(i);
-		/*else {
-			jControl.choixPersonnage(i);
-		}*/
 		jControl.printTextMenu(2,2);
 		i++;
 	}
@@ -313,9 +288,6 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			jControl.printTextMenu(2,2);
 			i = scan.nextInt();
 		}
-		/*else {
-			jControl.choixPersonnage(i);
-		}*/
 		jControl.choixPersonnage(i);
 		i++;
 	}

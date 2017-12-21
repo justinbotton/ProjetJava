@@ -199,15 +199,6 @@ public class JeuController {
 			}
 		}
 	}
-	/* plus necessaire, meme code que checkvagueclean()
-	 * public boolean encoreMob(int vague) {
-		for (Ennemi e : jeu.getDonj().getPopVague(vague)) {
-			if (e.getEtat().compareTo("vivant") == 0) {
-				return true;
-			}
-		}
-		return false;
-	}*/
 	/**
 	 * gere le tour du boss.
 	 */

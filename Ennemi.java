@@ -43,8 +43,8 @@ public class Ennemi extends Personnage {
 	public static final int enduranceSamourai = 300;
 	
 	//Icone des personnages
-	private ImageIcon icone1;
-	private ImageIcon icone2;
+	private ImageIcon icone1 = null;
+	private ImageIcon icone2 = null;
 	
 	//Xp reçu lorsqu un Hero tue un ennemi
 	private int xpMob;
@@ -64,6 +64,8 @@ public class Ennemi extends Personnage {
 		this.niveau = 1;
 		this.etat = "vivant";
 		this.xpMob = 20;
+		this.icone1 = new ImageIcon("src/info/img/gobelinB.png");
+		this.icone2 = new ImageIcon("src/info/img/gobelinB2.png");
 	}
 	/**
 	 * constructeur avec arguments
@@ -97,6 +99,34 @@ public class Ennemi extends Personnage {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return l icone 1 de l ennemi
+	 */
+	public ImageIcon getIcone1() {
+		return icone1;
+	}
+	/**
+	 * 
+	 * @param icone1 icone pour le bouton
+	 */
+	public void setIcone1(ImageIcon icone1) {
+		this.icone1 = icone1;
+	}
+	/**
+	 * 
+	 * @return l icone 2 de l ennemi
+	 */
+	public ImageIcon getIcone2() {
+		return icone2;
+	}
+	/**
+	 * 
+	 * @param icone2 icone pour le bouton
+	 */
+	public void setIcone2(ImageIcon icone2) {
+		this.icone2 = icone2;
+	}
 	/**
 	 * @Getter XpMob
 	 * @return XpMob : xp recue quand un ennemi meurt
@@ -139,7 +169,7 @@ public class Ennemi extends Personnage {
 			this.setUpPersonnage("gobelin", enduranceGobelin + ajustement, 2 * enduranceGobelin, forceGobelin + ajustement, armeGob, vitesseAttaqueGobelin + ajustVitesse);
 			this.xpMob = 20 * this.niveau;
 			this.icone1 = new ImageIcon("src/info/img/gobelinB.png");
-			//this.icone2 = new ImageIcon("src/info/img/gobelinB2.png");
+			this.icone2 = new ImageIcon("src/info/img/gobelinB2.png");
 			break;
 			
 		case 2 : 
@@ -147,7 +177,7 @@ public class Ennemi extends Personnage {
 			this.setUpPersonnage("troll", enduranceTroll + ajustement, 2 * enduranceTroll, forceTroll + ajustement, armeTroll, vitesseAttaqueTroll + ajustVitesse);
 			this.xpMob = 40 * this.niveau;
 			this.icone1 = new ImageIcon("src/info/img/trollB.png");
-			//this.icone2 = new ImageIcon("src/info/img/trollB2.png");
+			this.icone2 = new ImageIcon("src/info/img/trollB2.png");
 			break;
 			
 		case 3 : 
@@ -155,7 +185,7 @@ public class Ennemi extends Personnage {
 			this.setUpPersonnage("groupe gobelin", enduranceGroupeGobelin + ajustement, 2 * enduranceGroupeGobelin, forceGroupeGobelin + ajustement, armeGGob, vitesseAttaqueGroupeGobelin + ajustVitesse);
 			this.xpMob = 60 * this.niveau;
 			this.icone1 = new ImageIcon("src/info/img/groupegobelinB.png");
-			//this.icone2 = new ImageIcon("src/info/img/groupegobelinB2.png");
+			this.icone2 = new ImageIcon("src/info/img/groupegobelinB2.png");
 			break;
 			
 		case 4 : 
@@ -163,7 +193,7 @@ public class Ennemi extends Personnage {
 			this.setUpPersonnage("magicien noir", enduranceMagicienNoir + ajustement, 2 * enduranceMagicienNoir, forceMagicienNoir + ajustement, armeMag, vitesseAttaqueMagicienNoir + ajustVitesse);
 			this.xpMob = 50 * this.niveau;
 			this.icone1 = new ImageIcon("src/info/img/magicienB.png");
-			//this.icone2 = new ImageIcon("src/info/img/magicienB2.png");
+			this.icone2 = new ImageIcon("src/info/img/magicienB2.png");
 			break;
 			
 		case 991 :
@@ -187,7 +217,7 @@ public class Ennemi extends Personnage {
 			this.setUpPersonnage("samourai", enduranceSamourai + ajustement, 2 * enduranceSamourai, forceSamourai + ajustement, armeSam, 1+ ajustVitesse);
 			this.xpMob = 500 * this.niveau;
 			this.icone1 = new ImageIcon("src/info/img/samouraiB.png");
-			//this.icone2 = new ImageIcon("src/info/img/samouraiB2.png");
+			this.icone2 = new ImageIcon("src/info/img/samouraiB2.png");
 			break;
 			
 		default : 
@@ -195,7 +225,7 @@ public class Ennemi extends Personnage {
 			this.setUpPersonnage("gobelin", enduranceGobelin + ajustement, 2 * enduranceGobelin, forceGobelin + ajustement, armeDefaut, vitesseAttaqueGobelin + ajustVitesse);
 			this.xpMob = 20 * this.niveau;
 			this.icone1 = new ImageIcon("src/info/img/gobelinB.png");
-			//this.icone2 = new ImageIcon("src/info/img/gobelinB2.png");
+			this.icone2 = new ImageIcon("src/info/img/gobelinB2.png");
 			break;
 		}
 	}

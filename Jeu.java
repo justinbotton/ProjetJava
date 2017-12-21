@@ -409,8 +409,8 @@ public class Jeu extends Observable {
 			setChanged();
 	        notifyObservers();
 		}
-		//sauvegarderJoueurs();
-		//sauvegarderJeuModele();
+		sauvegarderJoueurs();
+		sauvegarderJeuModele();
 	}
 	
 	/**

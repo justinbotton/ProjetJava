@@ -13,41 +13,47 @@ import javax.swing.border.Border;
 public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 
 	ImageIcon jouerBimg = new ImageIcon("src/info/img/jouerB.png");
+	ImageIcon jouerB2img = new ImageIcon("src/info/img/jouerB2.png");
 	ImageIcon chargerBimg = new ImageIcon("src/info/img/chargerB.png");
+	ImageIcon chargerB2img = new ImageIcon("src/info/img/chargerB2.png");
 	ImageIcon quitterBimg = new ImageIcon("src/info/img/quitterB.png");
+	ImageIcon quitterB2img = new ImageIcon("src/info/img/quitterB2.png");
+	ImageIcon quitter2Bimg = new ImageIcon("src/info/img/quitter2B.png");
+	ImageIcon quitter2B2img = new ImageIcon("src/info/img/quitter2B2.png");
 	ImageIcon elfeBimg = new ImageIcon("src/info/img/elfeB.png");
+	ImageIcon elfeB2img = new ImageIcon("src/info/img/elfeB2.png");
 	ImageIcon nainBimg = new ImageIcon("src/info/img/nainB.png");
+	ImageIcon nainB2img = new ImageIcon("src/info/img/nainB2.png");
 	ImageIcon orqueBimg = new ImageIcon("src/info/img/orqueB.png");
+	ImageIcon orqueB2img = new ImageIcon("src/info/img/orqueB2.png");
 	ImageIcon humainBimg = new ImageIcon("src/info/img/humainB.png");
+	ImageIcon humainB2img = new ImageIcon("src/info/img/humainB2.png");
 	ImageIcon perso1Bimg = new ImageIcon("src/info/img/perso1B.png");
+	ImageIcon perso1B2img = new ImageIcon("src/info/img/perso1B1.png");
 	ImageIcon perso2Bimg = new ImageIcon("src/info/img/perso2B.png");
+	ImageIcon perso2B2img = new ImageIcon("src/info/img/perso2B2.png");
 	ImageIcon gobelinBimg = new ImageIcon("src/info/img/gobelinB.png");
-	ImageIcon groupeBimg = new ImageIcon("src/info/img/groupegobelinB.png");
-	ImageIcon magicienBimg = new ImageIcon("src/info/img/magicienB.png");
-	ImageIcon trollBimg = new ImageIcon("src/info/img/trollB.png");
-	ImageIcon grandmageBimg = new ImageIcon("src/info/img/grandmageB.png");
-	ImageIcon samuraiBimg = new ImageIcon("src/info/img/samouraiB.png");
+	ImageIcon gobelinB2img = new ImageIcon("src/info/img/gobelinB2.png");
 	
 	private JFrame jeuJFrame;
 	JFrame fiche;
-	JButton jouerB = new Button(jouerBimg);
-	JButton chargerB = new Button(chargerBimg);
-	JButton quitterB = new Button(quitterBimg);
-	JButton elfeB = new Button(elfeBimg);
-	JButton nainB = new Button(nainBimg);
-	JButton orqueB = new Button(orqueBimg);
-	JButton humainB = new Button(humainBimg);
-	JButton joueur1B = new JButton("J1");
-	JButton joueur2B = new JButton("J2");
-	JButton ennemi1B = new JButton("E1");
-	JButton ennemi2B = new JButton("E2");
-	JButton ennemi3B = new JButton("E3");
-	JButton ennemi4B = new JButton("E4");
-	JButton ennemi5B = new Button(perso1Bimg);
-	JButton perso1B = new Button(perso1Bimg);
-	JButton perso2B = new Button(perso2Bimg);
+	Button jouerB = new Button(jouerBimg, jouerB2img);
+	Button chargerB = new Button(chargerBimg, chargerB2img);
+	Button quitterB = new Button(quitterBimg, quitterB2img);
+	Button quitter2B = new Button(quitter2Bimg, quitter2B2img);
+	Button elfeB = new Button(elfeBimg, elfeB2img);
+	Button nainB = new Button(nainBimg, nainB2img);
+	Button orqueB = new Button(orqueBimg, orqueB2img);
+	Button humainB = new Button(humainBimg, humainB2img);
+	Button ennemi1B = new Button(gobelinBimg, gobelinB2img);
+	Button ennemi2B = new Button(gobelinBimg, gobelinB2img);
+	Button ennemi3B = new Button(gobelinBimg, gobelinB2img);
+	Button ennemi4B = new Button(gobelinBimg, gobelinB2img);
+	Button ennemi5B = new Button(gobelinBimg, gobelinB2img);
+	Button perso1B = new Button(perso1Bimg, perso1B2img);
+	Button perso2B = new Button(perso2Bimg, perso2B2img);
 	ArrayList<JButton> ennemiList = new ArrayList<JButton>();
-	JButton bossB = new JButton("BOSS");
+	Button bossB = new Button(gobelinBimg, gobelinBimg);
 	JLabel labelFiche = new JLabel("");
 	JLabel label = new JLabel("");
 	JLabel perso = new JLabel("");
@@ -95,16 +101,6 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	       
 	    menuDemarrer();
 	    fiche();		
-	    /*southBar = new JTextField();
-	    southBar.setText("Tour joueur : " + tourJoueur);
-	    southBar.setFont(font3);
-	    jeuJFrame.add(southBar, BorderLayout.SOUTH);
-	    southBar.setVisible(false);*/
-	    
-		/*menuFiche.add(perso1B);
-		menuFiche.add(perso2B);
-		jeuJFrame.add(menuFiche, BorderLayout.WEST);
-		menuFiche.setVisible(false);*/
 	    createMenuFiche();
 	    createMenuEnnemi();
 	    
@@ -115,6 +111,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		jouerB.addActionListener(this);
 		chargerB.addActionListener(this);
 		quitterB.addActionListener(this);
+		quitter2B.addActionListener(this);
 		elfeB.addActionListener(this);
 		nainB.addActionListener(this);
 		orqueB.addActionListener(this);
@@ -127,28 +124,23 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		bossB.addActionListener(this);
 		perso1B.addActionListener(this);
 		perso2B.addActionListener(this);
-		//persoB.addActionListener(this);
-		
-		//jeuJFrame.setContentPane(new Panneau());
-		/*textContent.setLayout(new BoxLayout(textContent, BoxLayout.Y_AXIS));
-		
-		jeuJFrame.add(textContent, BorderLayout.NORTH);
-		
-		JPanel fieldZone = new JPanel();
-		fieldZone.setLayout(new BoxLayout(fieldZone, BoxLayout.X_AXIS));
-		jeuJFrame.add(fieldZone, BorderLayout.CENTER);*/
 		
 	}
 	
-	private class Button extends JButton{
+	private class Button extends JButton {
 		private static final long serialVersionUID = 1L;
-
-		public Button(ImageIcon icone) {
+		
+		public Button(ImageIcon icone, ImageIcon clicIcone) {
 			super();
 			this.setContentAreaFilled(false);
 			this.setBorderPainted(false);
 			this.setFocusPainted(false);
 			this.setIcon(icone);
+			this.setRolloverIcon(clicIcone);
+		}
+		public void setImage(ImageIcon icone, ImageIcon clicIcone) {
+			this.setIcon(icone);
+			this.setRolloverIcon(clicIcone);
 		}
 	}
 	
@@ -180,12 +172,16 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		//On cree des conteneurs avec gestion horizontale
 	    Box b1 = Box.createHorizontalBox();
 	    Box b2 = Box.createHorizontalBox();
+	    Box b3 = Box.createHorizontalBox();
 	    b1.add(perso1B);
 	    b2.add(perso2B);
+	    b3.add(quitter2B);
+	    quitter2B.setVisible(false);
 	    //On cree un conteneur avec gestion verticale
 	    menuFiche = Box.createVerticalBox();
 	    menuFiche.add(b1);
 	    menuFiche.add(b2);
+	    menuFiche.add(b3);
 	    jeuJFrame.add(menuFiche, BorderLayout.WEST);
 	}
 	public void createMenuEnnemi() {
@@ -195,11 +191,13 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    Box e3 = Box.createHorizontalBox();
 	    Box e4 = Box.createHorizontalBox();
 	    Box e5 = Box.createHorizontalBox();
+	    Box e6 = Box.createHorizontalBox();
 	    e1.add(ennemi1B);
 	    e2.add(ennemi2B);
 	    e3.add(ennemi3B);
 	    e4.add(ennemi4B);
 	    e5.add(ennemi5B);
+	    e6.add(bossB);
 	    //On cree un conteneur avec gestion verticale
 	    menuEnnemi = Box.createVerticalBox();
 	    menuEnnemi.add(e1);
@@ -207,6 +205,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    menuEnnemi.add(e3);
 	    menuEnnemi.add(e4);
 	    menuEnnemi.add(e5);
+	    menuEnnemi.add(e6);
 	    menuEnnemi.setVisible(false);
 	    jeuJFrame.add(menuEnnemi, BorderLayout.EAST);
 	}
@@ -214,9 +213,6 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	@Override
 	public void affiche(String string) {
 		System.out.println(string);		
-	}
-	public void updateTable(){
-
 	}
 	@Override
 	public void update(Observable o, Object arg) {
@@ -230,9 +226,12 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    	 onClickJouer();
 	     }
 	     else if (source == chargerB) {
-	    	 
+	    	 onClickCharger();
 	     }    
 	     else if (source == quitterB) {
+	    	 onClickQuitter();
+	     }
+	     else if (source == quitter2B) {
 	    	 onClickQuitter();
 	     }
 	     else if (source == elfeB) {
@@ -263,7 +262,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    	 onClickEnnemi(ennemi5B, 5);
 	     }
 	     else if (source == bossB) {
-	    	 //TODO
+	    	 onClicBoss(bossB);
 	     }
 	     else if (source == perso1B) {
 	    	 afficheStat(1);
@@ -275,6 +274,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	public void fiche() {
 		perso1B.setVisible(false);
 		perso2B.setVisible(false);
+		quitter2B.setVisible(true);
 		fiche = new JFrame(" ");
     	fiche.setSize(400,200);
     	fiche.setPreferredSize(new Dimension(400,200));
@@ -323,7 +323,13 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		jControl.menu(1,1);
 	}
 	public void onClickCharger() {
-		
+		jouerB.setVisible(false);
+		quitterB.setVisible(false);
+		chargerB.setVisible(false);
+		label.setVisible(false);
+		afficheChoixPerso(1); // sert a pouvoir sauter les etapes de choix perso
+		jControl.menu(2, 1);
+		afficheJeu();
 	}
 	public void onClickQuitter() {
 		JDialog.setDefaultLookAndFeelDecorated(true);
@@ -347,22 +353,29 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 			jControl.printTextMenu(2,2);
 		}
 		else {
+			//jControl.jeu.setDonjonNum(5); //TODO test, donc enlever apres 
 			jControl.choixPersonnage(i);
-			race.setVisible(false);
-			jeuBTD(1);
-			menuFiche.setVisible(true);
-			perso1B.setVisible(true);
-			perso2B.setVisible(true);
-			menuEnnemi.setVisible(true);
-			tourJoueur = 1;
-			southBar = new JTextField();
-			southBar.setText("Tour joueur : " + jControl.jeu.getTourJ() + espace +"Vague n° : " + vagueNum 
-		    		+ espace +"Donjon n° :" + jControl.jeu.getDonjonNum());
-		    southBar.setFont(font3);
-		    jeuJFrame.add(southBar, BorderLayout.SOUTH);
-		    southBar.setEditable(false);
-		    southBar.setVisible(true);    
+			afficheJeu();
 		}
+	}
+	public void afficheJeu() {
+		race.setVisible(false);
+		jeuBTD(1);
+		menuFiche.setVisible(true);
+		perso1B.setVisible(true);
+		perso2B.setVisible(true);
+		quitter2B.setVisible(true);
+		menuEnnemi.setVisible(true);
+		tourJoueur = 1;
+		southBar = new JTextField();
+		southBar.setText("Tour joueur : " + jControl.jeu.getTourJ() + espace +"Vague n° : " + vagueNum 
+	    		+ espace +"Donjon n° :" + jControl.jeu.getDonjonNum());
+	    southBar.setFont(font3);
+	    jeuJFrame.add(southBar, BorderLayout.SOUTH);
+	    southBar.setEditable(false);
+	    southBar.setVisible(true);
+	    perso.setVisible(true);
+	    perso.setText("La partie commence !");
 	}
 	public void afficheChoixPerso(int i) {
 		perso.setFont(font2);
@@ -395,7 +408,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	}
 	//affiche le plateau a chaque nouveau donjon
 	public void affichePlateau(int num) {
-		perso.setVisible(false);
+		//perso.setVisible(false);
 		jeuJFrame.remove(race);
 		ImageIcon icone = new ImageIcon("C:/Users/louis/eclipse-workspace/TP2/src/info/img/map" + num +".png");
 		JLabel image = new JLabel(icone);
@@ -404,6 +417,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	}
 	public void onClickEnnemi(Object source, int numEnnemi) {
 		afficheJoueurTour();
+		Ennemi b = jControl.jeu.getDonj().getBoss();
 		//System.out.println("joueur avant clic : " + jControl.jeu.getTourJ());
 		int ret = jControl.combat(vagueNum, numEnnemi, jControl.jeu.getTourJ());
 		
@@ -411,15 +425,33 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 			JButton s = (JButton) source;
 			s.setVisible(false);
 		}
-		if (jControl.jeu.checkVagueClean(vagueNum) && (jControl.jeu.getDonj().getBoss() == null)) {
+		if (jControl.jeu.checkVagueClean(vagueNum) && (b == null)) {
 			perso.setText("Vous avez vaincu cette vague ! Passez a la piece suivante.");
 			perso.setVisible(true);
 			incVague();			
 			jeuBTD(vagueNum);
 		}
-		if (jControl.jeu.getTourJ() == 2) {
+		if (b != null) {
+			//bossB.setVisible(false);
+			if (vagueNum != 3 && jControl.jeu.checkVagueClean(vagueNum)) {
+				perso.setText("Vous avez vaincu cette vague ! Vous arrivez tout doucement vers le boss !");
+				perso.setVisible(true);
+				incVague();			
+				jeuBTD(vagueNum);
+			}
+			else if (vagueNum == 3){
+				perso.setText("Vous voici devant le boss !");
+				perso.setVisible(true);
+				incVague();	
+				bossB.setVisible(true);
+				jeuBTD(vagueNum);
+			}
+			
+		}
+		if (jControl.jeu.getTourJ() == 2 && b == null) {
 			jControl.tourMob(vagueNum);
 		}
+		
 		jControl.jeu.incrTourJ();
 		southBar.setText("Tour joueur : " + jControl.jeu.getTourJ() + espace +"Vague n° : " + vagueNum 
 	    		+ espace +"Donjon n° :" + jControl.jeu.getDonjonNum());
@@ -428,63 +460,79 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 		//System.out.println("joueur apres clic : " + jControl.jeu.getTourJ() + "\n");
 	}
 	
+	public void onClicBoss(Object source) {
+		int ret = jControl.combat(0, 1, jControl.jeu.getTourJ());
+		if (ret == 1) {
+			JButton s = (JButton) source;
+			s.setVisible(false);
+		}
+		int etatBoss = jControl.jeu.getDonj().getBoss().getEtat().compareTo("mort");
+		if (etatBoss == 0) {
+			perso.setText("Vous avez vaincu le maitre du donjon ! Felicitations, la partie est finie !");
+			perso.setFont(font3);
+			bossB.setVisible(true);
+			bossB.setEnabled(false);
+		}
+		if (jControl.jeu.getTourJ() == 2 && etatBoss != 0) {
+			jControl.tourBoss();
+		}
+		jControl.jeu.incrTourJ();
+		southBar.setText("Tour joueur : " + jControl.jeu.getTourJ() + espace +"Vague n° : " + vagueNum 
+	    		+ espace +"Donjon n° :" + jControl.jeu.getDonjonNum());
+	    southBar.setFont(font3);
+	    southBar.setEditable(false);
+	}
+	
 	// fait tourner la partie une fois les perso choisi
 	public void jeuBTD(int vague) {
 		if (vague == 1) {
 			affichePlateau(jControl.jeu.getDonjonNum());
-			jControl.creationDonjons();
 			if (first == false) {jControl.incrDonjonNum();}
+			jControl.creationDonjons();
 		}
 		d = jControl.jeu.getDonj();
-		if (d.getBoss() == null) {
-			prepareVague(d);
-		}
-		else {
-			prepareBoss(d);
-		}
-		//afficheJoueurTour();
+		
+		prepareVague(d);
 		
 		if (jControl.jeu.getEnVie() == 0){
 			perso.setText("Vous avez perdu !");
 			perso.setVisible(true);
 			System.exit(0);
 		}
-		else if (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() > 6 ){ //TODO remettre a 5 des que debug dans console
+		else if (jControl.jeu.getEnVie() > 0 && jControl.jeu.getDonjonNum() > 5 ){
 			perso.setText("Vous avez gagne !");
 			perso.setVisible(true);
 			System.exit(0);
 		}
 	}
 	public void prepareVague(Donjon d) {
-		ennemi1B.setText(d.getPopVague(vagueNum)[0].getClasse());
-		ennemi2B.setText(d.getPopVague(vagueNum)[1].getClasse());
-		ennemi1B.setVisible(true);
-		ennemi2B.setVisible(true);
+		if (vagueNum !=3 || d.getBoss() == null) {
+			ennemi1B.setImage(d.getPopVague(vagueNum)[0].getIcone1(), d.getPopVague(vagueNum)[0].getIcone2());
+			ennemi2B.setImage(d.getPopVague(vagueNum)[1].getIcone1(), d.getPopVague(vagueNum)[1].getIcone2());
+			ennemi1B.setVisible(true);
+			ennemi2B.setVisible(true);
+			bossB.setVisible(false);
+		}
 		if (vagueNum == 1) {
 			ennemi3B.setVisible(false);
 			ennemi4B.setVisible(false);
 			ennemi5B.setVisible(false);
-			//ennemi3B.setEnabled(false);
-			//ennemi4B.setEnabled(false);
-			//ennemi5B.setEnabled(false);
 		}
-		if (vagueNum >= 2) {
-			ennemi3B.setText(d.getPopVague(vagueNum)[2].getClasse());
+		if (vagueNum >= 2 && (vagueNum !=3 || d.getBoss() == null)) {
+			ennemi3B.setImage(d.getPopVague(vagueNum)[2].getIcone1(), d.getPopVague(vagueNum)[2].getIcone2());
 			ennemi3B.setVisible(true);
-			//ennemi3B.setEnabled(true);
 		}
-		if (vagueNum == 3) {
+		if (vagueNum == 3 && d.getBoss() == null) {
 			if (first) {first = false;}
-			ennemi4B.setText(d.getPopVague(vagueNum)[3].getClasse());
-			ennemi5B.setText(d.getPopVague(vagueNum)[4].getClasse());
+			ennemi4B.setImage(d.getPopVague(vagueNum)[3].getIcone1(), d.getPopVague(vagueNum)[3].getIcone2());
+			ennemi5B.setImage(d.getPopVague(vagueNum)[4].getIcone1(), d.getPopVague(vagueNum)[4].getIcone2());
 			ennemi4B.setVisible(true);
 			ennemi5B.setVisible(true);
-			//ennemi4B.setEnabled(true);
-			//ennemi5B.setEnabled(true);
 		}
-	}
-	public void prepareBoss(Donjon d) {
-		
+		if (vagueNum == 3 && d.getBoss() != null) {
+			bossB.setImage(d.getBoss().getIcone1(), d.getBoss().getIcone2());
+			bossB.setVisible(true);
+		}
 	}
 	public void incVague() {
 		if (vagueNum == 1 || vagueNum == 2 || vagueNum == 3) {vagueNum ++;}
