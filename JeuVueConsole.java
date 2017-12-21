@@ -27,7 +27,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	}
 	
 	/**
-	 * 
+	 * setter du playerTurn.
 	 */
 	public void setPlayerTurn(int playerTurn) {
 		this.playerTurn = playerTurn;
@@ -36,8 +36,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		//System.out.println(j);
-		//printHelp();
-		
+		//printHelp();		
 	}
 	/**
 	 * affiche l exception en cas de catch.
@@ -86,7 +85,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						gestionMenu2(i); // gestion choix joueur 2
 					}
 					//var de test
-					//jControl.jeu.setDonjonNum(5);
+					//jControl.jeu.setDonjonNum(2);
 					
 					affiche("---------- Votre partie de Beat The Donjon va commencer... ----------");
 					afficheTuto();
@@ -108,12 +107,12 @@ public class JeuVueConsole extends JeuVue implements Observer {
 						}
 						while(vagueNum < 3) { // boucle des vagues 1-2
 							vague(vagueNum, playerTurn);
-							gestionLoot();
+							gestionLoot(1);
 							vagueNum++;
 						}
 						if (!boss) { //vague 3
 							vague(vagueNum, playerTurn);
-							gestionLoot();
+							gestionLoot(1);
 							vagueNum++;
 							//jControl.jeu.incDonjonNum();
 						}
@@ -138,31 +137,17 @@ public class JeuVueConsole extends JeuVue implements Observer {
 							//jControl.jeu.incDonjonNum();
 						}
 						
-						//gerer loot 
-						
-						// jControl.gestionLoot un truc dans le genre
-						
-						//jControl.jeu.setEnVie(0);
 						if (jControl.jeu.getEnVie() <= 0) {
 							affiche("Vous avez succomber aux forces du Donjon. Vous avez perdu !\n");
 						}
 						else {
 							if(jControl.jeu.getDonjonNum() == 5) {
-								gestionLoot();
+								gestionLoot(1);
 								affiche("Vous avez suplante les forces du Donjon. Vous avez gagner !\n");
 							}
-							jControl.jeu.incDonjonNum(); // sortie de boucle des donjons
+							jControl.incrDonjonNum(); // sortie de boucle des donjons
 						}
 					}
-					
-					
-					/* TEST POUR COMPRENDRE UN TRUC
-					 * Hero h = jControl.jeu.getJoueur().get(0);
-					h.setForce(8000000);
-					//jControl.jeu.getJoueur().add(h);
-					for (Hero u : jControl.jeu.getJoueur()) {
-						System.out.println(u.getForce());
-					}*/
 					
 					affiche("---------- La partie est finie ! ----------");
 					fin();
@@ -241,11 +226,8 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			fin();
 			System.exit(0);
 			break;
-		/*case "n" :
-			System.out.println("Faites un nouveau choix :");
-			i = scan.nextInt();
-			break;*/
 		default :
+			break;
 		}
 	}
 	/**
@@ -275,10 +257,6 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		}
 		jControl.menu(i,1);
 		i++;
-		/*if (i == 1) {
-			jControl.menu(i,1);
-			i++;
-		}*/
 	}
 	/**
 	 * gere l affichage du choix de personnage joueur 1
@@ -293,11 +271,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			jControl.printTextMenu(2,1);
 			i = scan.nextInt();
 		}
-		//jControl.printTextMenu(2,1);	
 		jControl.choixPersonnage(i);
-		/*else {
-			jControl.choixPersonnage(i);
-		}*/
 		jControl.printTextMenu(2,2);
 		i++;
 	}
@@ -314,9 +288,6 @@ public class JeuVueConsole extends JeuVue implements Observer {
 			jControl.printTextMenu(2,2);
 			i = scan.nextInt();
 		}
-		/*else {
-			jControl.choixPersonnage(i);
-		}*/
 		jControl.choixPersonnage(i);
 		i++;
 	}
@@ -390,7 +361,7 @@ public class JeuVueConsole extends JeuVue implements Observer {
 	 * @param jTour numero du joueur.
 	 */
 	private void afficheTourJoueur(int jTour) {
-		affiche("-- JOUEUR " + jTour + " : A vous d'attaquer --");
+		jControl.afficheTour(jTour);
 	}
 	/**
 	 * lance le tour de l ennemi.
@@ -400,14 +371,17 @@ public class JeuVueConsole extends JeuVue implements Observer {
 		jControl.tourMob(vague);
 	}
 	/**
-	 * lanc le tour du boss.
+	 * lance le tour du boss.
 	 */
 	private void tourBoss() {
 		jControl.tourBoss();
 	}
 	
-	public void gestionLoot() {
-		jControl.gestionLoot();
+	/**
+	 *  lance la gestion des loots.
+	 */
+	public void gestionLoot(int vueNum) {
+		jControl.gestionLoot(vueNum);
 	}
 
 	@Override
