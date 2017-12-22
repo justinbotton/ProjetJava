@@ -21,31 +21,31 @@ import javax.swing.border.Border;
  */
 public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 
-	ImageIcon jouerBimg = new ImageIcon("src/info/img/jouerB.png");
-	ImageIcon jouerB2img = new ImageIcon("src/info/img/jouerB2.png");
-	ImageIcon chargerBimg = new ImageIcon("src/info/img/chargerB.png");
-	ImageIcon chargerB2img = new ImageIcon("src/info/img/chargerB2.png");
-	ImageIcon quitterBimg = new ImageIcon("src/info/img/quitterB.png");
-	ImageIcon quitterB2img = new ImageIcon("src/info/img/quitterB2.png");
-	ImageIcon quitter2Bimg = new ImageIcon("src/info/img/quitter2B.png");
-	ImageIcon quitter2B2img = new ImageIcon("src/info/img/quitter2B2.png");
-	ImageIcon elfeBimg = new ImageIcon("src/info/img/elfeB.png");
-	ImageIcon elfeB2img = new ImageIcon("src/info/img/elfeB2.png");
-	ImageIcon nainBimg = new ImageIcon("src/info/img/nainB.png");
-	ImageIcon nainB2img = new ImageIcon("src/info/img/nainB2.png");
-	ImageIcon orqueBimg = new ImageIcon("src/info/img/orqueB.png");
-	ImageIcon orqueB2img = new ImageIcon("src/info/img/orqueB2.png");
-	ImageIcon humainBimg = new ImageIcon("src/info/img/humainB.png");
-	ImageIcon humainB2img = new ImageIcon("src/info/img/humainB2.png");
-	ImageIcon perso1Bimg = new ImageIcon("src/info/img/perso1B.png");
-	ImageIcon perso1B2img = new ImageIcon("src/info/img/perso1B1.png");
-	ImageIcon perso2Bimg = new ImageIcon("src/info/img/perso2B.png");
-	ImageIcon perso2B2img = new ImageIcon("src/info/img/perso2B2.png");
-	ImageIcon gobelinBimg = new ImageIcon("src/info/img/gobelinB.png");
-	ImageIcon gobelinB2img = new ImageIcon("src/info/img/gobelinB2.png");
-	ImageIcon lootBimg = new ImageIcon("src/info/img/gobelinB.png");
-	ImageIcon lootB2img = new ImageIcon("src/info/img/gobelinB2.png");
-	
+	ImageIcon jouerBimg = getImageIcon("img/jouerB.png");
+	ImageIcon jouerB2img = getImageIcon("img/jouerB2.png");
+	ImageIcon chargerBimg = getImageIcon("img/chargerB.png");
+	ImageIcon chargerB2img = getImageIcon("img/chargerB2.png");
+	ImageIcon quitterBimg = getImageIcon("img/quitterB.png");
+	ImageIcon quitterB2img = getImageIcon("img/quitterB2.png");
+	ImageIcon quitter2Bimg = getImageIcon("img/quitter2B.png");
+	ImageIcon quitter2B2img = getImageIcon("img/quitter2B2.png");
+	ImageIcon elfeBimg = getImageIcon("img/elfeB.png");
+	ImageIcon elfeB2img = getImageIcon("img/elfeB2.png");
+	ImageIcon nainBimg = getImageIcon("img/nainB.png");
+	ImageIcon nainB2img = getImageIcon("img/nainB2.png");
+	ImageIcon orqueBimg = getImageIcon("img/orqueB.png");
+	ImageIcon orqueB2img = getImageIcon("img/orqueB2.png");
+	ImageIcon humainBimg = getImageIcon("img/humainB.png");
+	ImageIcon humainB2img = getImageIcon("img/humainB2.png");
+	ImageIcon perso1Bimg = getImageIcon("img/perso1B.png");
+	ImageIcon perso1B2img = getImageIcon("img/perso1B1.png");
+	ImageIcon perso2Bimg = getImageIcon("img/perso2B.png");
+	ImageIcon perso2B2img = getImageIcon("img/perso2B2.png");
+	ImageIcon gobelinBimg = getImageIcon("img/gobelinB.png");
+	ImageIcon gobelinB2img = getImageIcon("img/gobelinB2.png");
+	ImageIcon lootBimg = getImageIcon("img/lootB.png");
+	ImageIcon lootB2img = getImageIcon("img/lootB2.png");
+
 	private JFrame jeuJFrame;
 	JFrame fiche;
 	Button jouerB = new Button(jouerBimg, jouerB2img);
@@ -63,7 +63,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	Button ennemi5B = new Button(gobelinBimg, gobelinB2img);
 	Button perso1B = new Button(perso1Bimg, perso1B2img);
 	Button perso2B = new Button(perso2Bimg, perso2B2img);
-	Button lootB = new Button(gobelinBimg, gobelinB2img);
+	Button lootB = new Button(lootBimg, lootB2img);
 	ArrayList<JButton> ennemiList = new ArrayList<JButton>();
 	Button bossB = new Button(gobelinBimg, gobelinBimg);
 	JLabel labelFiche = new JLabel("");
@@ -116,7 +116,7 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	    perso.setFont(font3);
 	    
 	    jeuJFrame.add(label);
-	       
+	    
 	    menuDemarrer();
 	    fiche();		
 	    createMenuFiche();
@@ -165,6 +165,17 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 			this.setIcon(icone);
 			this.setRolloverIcon(clicIcone);
 		}
+	}
+	
+	/**
+     * permet de charger les images pour l execution en .jar
+     * @param iconName : path d une image
+     * @return imageIcon : un ImageIcon
+     */
+	public static ImageIcon getImageIcon(String iconName) {
+	    ImageIcon imageIcon = null;
+	    imageIcon = new ImageIcon(JeuVueGUI.class.getResource(iconName));
+	    return imageIcon;
 	}
 	
 	/**
@@ -476,11 +487,10 @@ public class JeuVueGUI extends JeuVue implements ActionListener, Observer {
 	 */
 	public void affichePlateau(int num) {
 		jeuJFrame.remove(race);
-		ImageIcon icone = new ImageIcon("src/info/img/map" + num +".png");
+		ImageIcon icone = getImageIcon("img/map" + num +".png");
 		image = new JLabel(icone);
 		image.setSize(new Dimension(1000, 500));
 		jeuJFrame.add(image, BorderLayout.CENTER);
-
 	}
 	/**
 	 * gere le clic sur un ennemi.
